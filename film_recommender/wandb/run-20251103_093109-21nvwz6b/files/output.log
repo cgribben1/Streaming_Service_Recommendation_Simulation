@@ -1,0 +1,18 @@
+2025-11-03 09:31:10,428 | trainer | INFO | 'Trainer' object instantiated; W&B run initialized.
+DEBUGGING trainer!!!!! True
+DEBUGGING main!!!!! False
+2025-11-03 09:31:10,436 | trainer | INFO | Loading in 'ratings' data...
+2025-11-03 09:31:10,439 | trainer | ERROR | Error occurred in loading in 'ratings' data.
+Traceback (most recent call last):
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender/trainer.py", line 59, in train_initial_model
+    self._load_ratings_data('start_date', 'end_date')
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender/trainer.py", line 205, in _load_ratings_data
+    rating_counts = ratings.groupby('user_id').size().reset_index(name='num_rated_films')
+NameError: name 'ratings' is not defined
+2025-11-03 09:31:10,465 | trainer | ERROR | Error occurred during intial model training.
+Traceback (most recent call last):
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender/trainer.py", line 59, in train_initial_model
+    self._load_ratings_data('start_date', 'end_date')
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender/trainer.py", line 205, in _load_ratings_data
+    rating_counts = ratings.groupby('user_id').size().reset_index(name='num_rated_films')
+NameError: name 'ratings' is not defined

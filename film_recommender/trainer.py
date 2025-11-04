@@ -21,8 +21,8 @@ logger_trainer = logging.getLogger('trainer') # TODO: change back to __name__
 
 class Trainer:
 
-    def __init__(self, sql_connector, new_user_threshold, wandb_auth_key, wandb_project_path, wandb_project_name):
-        self.sql_connector = sql_connector
+    def __init__(self, db_connector, new_user_threshold, wandb_auth_key, wandb_project_path, wandb_project_name):
+        self.db_connector = db_connector
         self.new_user_threshold = new_user_threshold
         self.wandb_auth_key = wandb_auth_key
         self.wandb_project_path = wandb_project_path
@@ -194,8 +194,7 @@ class Trainer:
     def _load_ratings_data(self, start_date, end_date): # for rolling window
         logger_trainer.info("Loading in 'ratings' data...")
 
-        #ratings = self.sql_connector.read_sql_table('ratings', sort_on='user_id').drop('created_at', axis=1)[:120000]
-        ### ratings is currently global...
+        ratings = self.db_connector.read_collection('ratings')
 
         rating_counts = ratings.groupby('user_id').size().reset_index(name='num_rated_films')
         ratings_with_rating_counts = ratings.merge(rating_counts, on="user_id")
@@ -337,8 +336,7 @@ class Trainer:
     def _load_genres_table(self):
         logger_trainer.info("Loading in 'genres' table...")
 
-        #genres_table = self.sql_connector.read_sql_table('titles_and_genres')[['film_id', 'genres']]
-        genres_table = pd.read_csv("../data/genres_table.csv")
+        genres_table = self.db_connector.read_collection('genres')
         
         genres_table['genres'] = genres_table['genres'].apply(lambda x: self._simplify_genres_list(x))
 
@@ -410,7 +408,7 @@ class Trainer:
 
         reader = Reader(rating_scale=(0, 5))
 
-        recent_ratings = self.ratings_old[-18000:] # hardcoded workaround due to lack of proper timestamps (around 1,800 users on average having viewed 10 films during scoring -> 18,000 new interactions)...
+        recent_ratings = self.ratings_old[self.ratings_old['original_data'] == False] # slight workaround due to lack of proper timestamps - returns all 'new' or 'simulated' data (works for this demo as I'm only retraining following one round of scoring)
 
         testset_df = pd.DataFrame(self.testset, columns=['user_id', 'film_id', 'rating']) # whole of block is just filtering to records in holdout 'testset', plus formatting necessary for scikit-surprise data objects...
         recent_ratings_testset = recent_ratings.merge(testset_df[['user_id', 'film_id']], on=['user_id', 'film_id'], how='inner')
