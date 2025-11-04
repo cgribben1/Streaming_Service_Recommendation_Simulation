@@ -1,0 +1,67 @@
+2025-11-04 10:44:51,392 | scorer | INFO | 'Scorer' object instantiated; W&B run initialized.
+2025-11-04 10:44:51,397 | scorer | INFO | Loading in 'ratings' data...
+2025-11-04 10:44:54,938 | db_connector | INFO | Successfully read collection 'ratings'. Shape of df: (120000, 4)
+2025-11-04 10:44:54,970 | scorer | INFO | Data successfully loaded!
+2025-11-04 10:44:54,973 | scorer | INFO | Number of 'Old' users: 1584 -> Using SVD collaborative filtering model to generate these recommendations...
+2025-11-04 10:44:54,978 | scorer | INFO | Number of 'New' users: 224 -> Falling back to cold-start strategy of recommending top 'n' films by popularity...
+2025-11-04 10:44:54,980 | scorer | INFO | Ratings data loaded successfully.
+2025-11-04 10:44:55,122 | db_connector | INFO | Successfully read collection 'genres'. Shape of df: (4877, 2)
+2025-11-04 10:44:55,233 | scorer | INFO | Genres table loaded successfully.
+2025-11-04 10:44:55,236 | scorer | INFO | Loading in model from W&B...
+[34m[1mwandb[0m:   1 of 1 files downloaded.
+2025-11-04 10:44:56,201 | scorer | INFO | Model successfully loaded!
+2025-11-04 10:44:56,203 | scorer | INFO | Model imported successfully.
+2025-11-04 10:44:56,205 | scorer | INFO | Scoring for 'old' users...
+DEBUG 1!!!!!!!!!!!
+DEBUG 2!!!!!!!!!!!
+DEBUG 3!!!!!!!!!!!
+DEBUG 4!!!!!!!!!!!
+DEBUG 5!!!!!!!!!!!
+DEBUG 6!!!!!!!!!!!
+2025-11-04 10:46:21,316 | scorer | INFO | Scoring complete for 'old' users!
+2025-11-04 10:46:21,415 | scorer | INFO | Rankings for old users generated successfully.
+2025-11-04 10:46:21,417 | scorer | INFO | Scoring for 'new' users...
+2025-11-04 10:46:21,485 | scorer | INFO | Scoring complete for 'new' users!
+2025-11-04 10:46:21,489 | scorer | INFO | Rankings for new users generated successfully.
+2025-11-04 10:46:21,491 | scorer | INFO | Simulating interactions for 'old' users...
+2025-11-04 10:46:29,084 | scorer | INFO | Simulation of 'old' users complete!
+2025-11-04 10:46:29,094 | scorer | INFO | New interactions for old users simulated successfully.
+2025-11-04 10:46:29,097 | scorer | INFO | Simulating interactions for 'new' users...
+2025-11-04 10:46:30,564 | scorer | INFO | Simulation of 'new' users complete!
+2025-11-04 10:46:30,567 | scorer | INFO | New interactions for new users simulated successfully.
+2025-11-04 10:46:30,570 | scorer | INFO | Updating ratings table...
+2025-11-04 10:46:30,578 | db_connector | ERROR | Error occurred while inserting into 'ratings'.
+Traceback (most recent call last):
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender/db_connector.py", line 70, in insert_documents
+    result = collection.insert_one(documents)
+  File "/usr/local/lib/python3.10/site-packages/pymongo/synchronous/collection.py", line 885, in insert_one
+    common.validate_is_document_type("document", document)
+  File "/usr/local/lib/python3.10/site-packages/pymongo/common.py", line 563, in validate_is_document_type
+    raise TypeError(
+TypeError: document must be an instance of dict, bson.son.SON, bson.raw_bson.RawBSONDocument, or a type that inherits from collections.MutableMapping
+2025-11-04 10:46:30,596 | scorer | ERROR | Failed to update ratings table.
+Traceback (most recent call last):
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender/scorer.py", line 123, in score_simulate_and_update_ratings_table
+    new_interactions_all_users = self._update_ratings_table(new_interactions_old_users, new_interactions_new_users)
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender/scorer.py", line 658, in _update_ratings_table
+    self.db_connector.insert_documents('ratings', new_interactions_all_users_subset_columns)
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender/db_connector.py", line 70, in insert_documents
+    result = collection.insert_one(documents)
+  File "/usr/local/lib/python3.10/site-packages/pymongo/synchronous/collection.py", line 885, in insert_one
+    common.validate_is_document_type("document", document)
+  File "/usr/local/lib/python3.10/site-packages/pymongo/common.py", line 563, in validate_is_document_type
+    raise TypeError(
+TypeError: document must be an instance of dict, bson.son.SON, bson.raw_bson.RawBSONDocument, or a type that inherits from collections.MutableMapping
+2025-11-04 10:46:30,606 | scorer | ERROR | Error occurred in running 'score_simulate_and_update_ratings_table()'.
+Traceback (most recent call last):
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender/scorer.py", line 123, in score_simulate_and_update_ratings_table
+    new_interactions_all_users = self._update_ratings_table(new_interactions_old_users, new_interactions_new_users)
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender/scorer.py", line 658, in _update_ratings_table
+    self.db_connector.insert_documents('ratings', new_interactions_all_users_subset_columns)
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender/db_connector.py", line 70, in insert_documents
+    result = collection.insert_one(documents)
+  File "/usr/local/lib/python3.10/site-packages/pymongo/synchronous/collection.py", line 885, in insert_one
+    common.validate_is_document_type("document", document)
+  File "/usr/local/lib/python3.10/site-packages/pymongo/common.py", line 563, in validate_is_document_type
+    raise TypeError(
+TypeError: document must be an instance of dict, bson.son.SON, bson.raw_bson.RawBSONDocument, or a type that inherits from collections.MutableMapping

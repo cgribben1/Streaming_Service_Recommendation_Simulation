@@ -1,0 +1,12 @@
+{"time":"2025-11-04T10:29:56.713203331Z","level":"INFO","msg":"stream: starting","core version":"0.22.1"}
+{"time":"2025-11-04T10:29:57.050159616Z","level":"INFO","msg":"stream: created new stream","id":"ehkm8d3c"}
+{"time":"2025-11-04T10:29:57.050679112Z","level":"INFO","msg":"handler: started","stream_id":"ehkm8d3c"}
+{"time":"2025-11-04T10:29:57.062412046Z","level":"INFO","msg":"stream: started","id":"ehkm8d3c"}
+{"time":"2025-11-04T10:29:57.065959308Z","level":"INFO","msg":"writer: started","stream_id":"ehkm8d3c"}
+{"time":"2025-11-04T10:29:57.065959303Z","level":"INFO","msg":"sender: started","stream_id":"ehkm8d3c"}
+{"time":"2025-11-04T10:30:06.834166805Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact training_performance_metrics","runtime_seconds":1.91876826},{"desc":"uploading artifact svd_model","runtime_seconds":0.590411594},{"desc":"updating run metadata","runtime_seconds":0.208098911}],"total_operations":3}}
+{"time":"2025-11-04T10:30:36.506330766Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-11-04T10:30:36.757083909Z","level":"INFO","msg":"stream: closing","id":"ehkm8d3c"}
+{"time":"2025-11-04T10:30:36.757635532Z","level":"INFO","msg":"handler: closed","stream_id":"ehkm8d3c"}
+{"time":"2025-11-04T10:30:36.760124895Z","level":"INFO","msg":"sender: closed","stream_id":"ehkm8d3c"}
+{"time":"2025-11-04T10:30:36.760582634Z","level":"INFO","msg":"stream: closed","id":"ehkm8d3c"}

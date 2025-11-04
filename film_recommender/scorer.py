@@ -21,8 +21,8 @@ logger_scorer = logging.getLogger('scorer') # TODO: change back to __name__
 
 class Scorer:
 
-    def __init__(self, sql_connector, wandb_auth_key, wandb_project_path, wandb_project_name, new_user_threshold, n_recs, max_interactions_between_scorings):
-        self.sql_connector = sql_connector
+    def __init__(self, db_connector, wandb_auth_key, wandb_project_path, wandb_project_name, new_user_threshold, n_recs, max_interactions_between_scorings):
+        self.db_connector = db_connector
         self.new_user_threshold = new_user_threshold
         self.wandb_auth_key = wandb_auth_key
         self.wandb_project_path = wandb_project_path
@@ -67,8 +67,6 @@ class Scorer:
             logger_scorer.info("No scoring W&B run currently open, therefore nothing to close.")
 
     def score_simulate_and_update_ratings_table(self, popularity_penalty_coef=0, popularity_transformation_for_penalty='Normalization', genre_to_penalize=None, genre_penalty=None):
-        global ratings ### temp
-
         try:
             try:
                 ratings, rating_counts, ratings_old, ratings_new, all_users, old_users, new_users = self._load_ratings_data()
@@ -412,8 +410,7 @@ class Scorer:
     def _load_ratings_data(self):
         logger_scorer.info("Loading in 'ratings' data...")
 
-        #ratings = self.sql_connector.read_sql_table('ratings', sort_on='user_id').drop('created_at', axis=1)[:120000]
-        ### ratings is currently global...
+        ratings = self.db_connector.read_collection('ratings')
 
         rating_counts = ratings.groupby('user_id').size().reset_index(name='num_rated_films')
         ratings_with_counts = ratings.merge(rating_counts, on="user_id")
@@ -454,8 +451,7 @@ class Scorer:
         return genres_table
 
     def _load_genres_table(self):
-        #genres_table = self.sql_connector.read_sql_table('titles_and_genres')[['film_id', 'genres']]
-        genres_table = pd.read_csv("../data/genres_table.csv")
+        genres_table = self.db_connector.read_collection('genres')
         
         genres_table['genres'] = genres_table['genres'].apply(lambda x: self._simplify_genres_list(x))
 
@@ -551,18 +547,30 @@ class Scorer:
     def _get_ranked_films_per_user_old(self, ratings_old, old_users, model, ratings, popularity_penalty_coef, popularity_transformation_for_penalty):
         logger_scorer.info("Scoring for 'old' users...")
 
+        print("DEBUG 1!!!!!!!!!!!") ###
+
         interaction_matrix = self._reconstruct_interaction_matrix_and_predict_ratings(ratings_old, old_users, model)
 
+        print("DEBUG 2!!!!!!!!!!!") ###
+
         pred_ratings_unpenalized = interaction_matrix.apply(lambda row: row.to_dict(), axis=1)
+
+        print("DEBUG 3!!!!!!!!!!!") ###
 
         del interaction_matrix
         gc.collect()
 
         film_popularities_dict = self._get_film_popularities(ratings, popularity_transformation_for_penalty)
 
+        print("DEBUG 4!!!!!!!!!!!") ###
+
         pred_ratings_popularity_penalized = pred_ratings_unpenalized.apply(lambda user_pred_ratings_dict: self._penalize_films_by_popularity(user_pred_ratings_dict, film_popularities_dict, popularity_penalty_coef))
 
+        print("DEBUG 5!!!!!!!!!!!") ###
+
         rankings_generated = pred_ratings_popularity_penalized.apply(lambda user_pred_ratings_dict: self._sort_and_crop_pred_ratings(user_pred_ratings_dict))
+
+        print("DEBUG 6!!!!!!!!!!!") ###
 
         logger_scorer.info("Scoring complete for 'old' users!")
         
@@ -607,7 +615,7 @@ class Scorer:
                 del ranking[interaction[1]]
                 n_recs -= 1
 
-        interactions_df = pd.DataFrame(interactions, columns=list(ratings.columns) + ['predicted_rating', 'genres'])
+        interactions_df = pd.DataFrame(interactions, columns=list(ratings.columns.drop('original_data')) + ['predicted_rating', 'genres'])
 
         logger_scorer.info(f"Simulation of '{user_group_label}' users complete!")
 
@@ -641,15 +649,15 @@ class Scorer:
         return rankings_generated
     
     def _update_ratings_table(self, new_interactions_old_users, new_interactions_new_users):
-        global ratings
-
         logger_scorer.info("Updating ratings table...")
 
         new_interactions_all_users = pd.concat([new_interactions_old_users, new_interactions_new_users], axis=0).reset_index(drop=True)
-        new_interactions_all_users_subset_columns = new_interactions_all_users.drop(['predicted_rating', 'genres'], axis=1)
 
-        ratings = pd.concat([ratings, new_interactions_all_users_subset_columns], axis=0) ### temp
-        #self.sql_connector.append_df_to_sql_table(new_interactions_all_users_subset_columns, 'ratings')
+        new_interactions_all_users_formatted = new_interactions_all_users.drop(['predicted_rating', 'genres'], axis=1)
+        new_interactions_all_users_formatted['original_data'] = False
+        new_interactions_all_users_formatted = new_interactions_all_users_formatted.to_dict("records")
+
+        self.db_connector.insert_documents('ratings', new_interactions_all_users_formatted)
 
         logger_scorer.info("Ratings table updated.")
 
