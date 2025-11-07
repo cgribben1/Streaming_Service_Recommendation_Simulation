@@ -1,0 +1,36 @@
+2025-11-07 12:05:52,431 | scorer | INFO | 'Scorer' object instantiated; W&B run initialized.
+2025-11-07 12:05:52,436 | scorer | INFO | Loading in 'ratings' data...
+2025-11-07 12:05:56,394 | db_connector | INFO | Successfully read collection 'ratings'. Shape of df: (120000, 4)
+2025-11-07 12:05:56,444 | scorer | INFO | Data successfully loaded!
+2025-11-07 12:05:56,448 | scorer | INFO | Number of 'existing' users: 1584 -> Using SVD collaborative filtering model to generate these recommendations...
+2025-11-07 12:05:56,451 | scorer | INFO | Number of 'New' users: 224 -> Falling back to cold-start strategy of recommending top 'n' films by popularity...
+2025-11-07 12:05:56,455 | scorer | INFO | Ratings data loaded successfully.
+2025-11-07 12:05:56,663 | db_connector | INFO | Successfully read collection 'genres'. Shape of df: (4877, 2)
+2025-11-07 12:05:56,835 | scorer | INFO | Genres table loaded successfully.
+2025-11-07 12:05:56,838 | scorer | INFO | Loading in model from W&B...
+[34m[1mwandb[0m:   1 of 1 files downloaded.
+2025-11-07 12:05:58,155 | scorer | INFO | Model successfully loaded!
+2025-11-07 12:05:58,158 | scorer | INFO | Model imported successfully.
+2025-11-07 12:05:58,161 | scorer | INFO | Scoring for 'existing' users...
+DEBUG 1!!!!!!!!!!!
+DEBUG 2!!!!!!!!!!!
+DEBUG 3!!!!!!!!!!!
+DEBUG 4!!!!!!!!!!!
+DEBUG 5!!!!!!!!!!!
+DEBUG 6!!!!!!!!!!!
+2025-11-07 12:07:27,601 | scorer | INFO | Scoring complete for 'existing' users!
+2025-11-07 12:07:27,724 | scorer | INFO | Rankings for existing users generated successfully.
+2025-11-07 12:07:27,728 | scorer | INFO | Scoring for 'new' users...
+2025-11-07 12:07:27,785 | scorer | INFO | Scoring complete for 'new' users!
+2025-11-07 12:07:27,788 | scorer | INFO | Rankings for new users generated successfully.
+2025-11-07 12:07:27,790 | scorer | INFO | Simulating interactions for 'existing' users...
+2025-11-07 12:07:34,155 | scorer | INFO | Simulation of 'existing' users complete!
+2025-11-07 12:07:34,164 | scorer | INFO | New interactions for existing users simulated successfully.
+2025-11-07 12:07:34,167 | scorer | INFO | Simulating interactions for 'new' users...
+2025-11-07 12:07:36,030 | scorer | INFO | Simulation of 'new' users complete!
+2025-11-07 12:07:36,036 | scorer | INFO | New interactions for new users simulated successfully.
+2025-11-07 12:07:36,038 | scorer | INFO | Updating ratings table...
+2025-11-07 12:07:45,882 | db_connector | INFO | Inserted 19100 documents into 'ratings'.
+2025-11-07 12:07:45,885 | scorer | INFO | Ratings table updated.
+2025-11-07 12:07:45,892 | scorer | INFO | Ratings table updated successfully.
+2025-11-07 12:07:45,896 | scorer | INFO | All processing completed successfully.

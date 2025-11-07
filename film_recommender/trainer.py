@@ -31,7 +31,7 @@ class Trainer:
         self.data_start_date = None
         self.data_end_date = None
         self.ratings = None
-        self.ratings_old = None
+        self.ratings_existing = None
         self.testset = None
         self.trained_model = None
         self.imported_current_champion_model = None
@@ -199,23 +199,23 @@ class Trainer:
         rating_counts = ratings.groupby('user_id').size().reset_index(name='num_rated_films')
         ratings_with_rating_counts = ratings.merge(rating_counts, on="user_id")
 
-        ratings_old = ratings_with_rating_counts[ratings_with_rating_counts["num_rated_films"] > self.new_user_threshold].drop('num_rated_films', axis=1).reset_index(drop=True)
+        ratings_existing = ratings_with_rating_counts[ratings_with_rating_counts["num_rated_films"] > self.new_user_threshold].drop('num_rated_films', axis=1).reset_index(drop=True)
 
         logger_trainer.info("Data successfully loaded!")
 
         self.data_start_date = start_date
         self.data_end_date = end_date
         self.ratings = ratings
-        self.ratings_old = ratings_old
+        self.ratings_existing = ratings_existing
 
-        return ratings, ratings_old
+        return ratings, ratings_existing
 
     def _train_svd_model(self):
         logger_trainer.info("Training SVD model...")
 
         reader = Reader(rating_scale=(0, 5))
 
-        data = Dataset.load_from_df(self.ratings_old[['user_id', 'film_id', 'rating']], reader)
+        data = Dataset.load_from_df(self.ratings_existing[['user_id', 'film_id', 'rating']], reader)
         trainset, testset = train_test_split(data, test_size=0.2, random_state=42)
 
         model = SVD(random_state=42)
@@ -408,7 +408,7 @@ class Trainer:
 
         reader = Reader(rating_scale=(0, 5))
 
-        recent_ratings = self.ratings_old[self.ratings_old['original_data'] == False] # slight workaround due to lack of proper timestamps - returns all 'new' or 'simulated' data (works for this demo as I'm only retraining following one round of scoring)
+        recent_ratings = self.ratings_existing[self.ratings_existing['original_data'] == False] # slight workaround due to lack of proper timestamps - returns all 'new' or 'simulated' data (works for this demo as I'm only retraining following one round of scoring)
 
         testset_df = pd.DataFrame(self.testset, columns=['user_id', 'film_id', 'rating']) # whole of block is just filtering to records in holdout 'testset', plus formatting necessary for scikit-surprise data objects...
         recent_ratings_testset = recent_ratings.merge(testset_df[['user_id', 'film_id']], on=['user_id', 'film_id'], how='inner')
@@ -440,8 +440,8 @@ class Trainer:
         benchmark_performance_metrics = self._access_artifact('training_performance_metrics')['Overall']
         benchmark_performance_metrics_by_genre = self._access_artifact('training_performance_metrics')['By Genre']
 
-        scoring_performance_metrics = self._access_artifact('scoring_performance_metrics_old_users')['Overall']
-        scoring_performance_metrics_by_genre = self._access_artifact('scoring_performance_metrics_old_users')['By Genre']
+        scoring_performance_metrics = self._access_artifact('scoring_performance_metrics_existing_users')['Overall']
+        scoring_performance_metrics_by_genre = self._access_artifact('scoring_performance_metrics_existing_users')['By Genre']
 
         degraded_metrics = {}
         stable_metrics = {}

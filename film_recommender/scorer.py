@@ -33,17 +33,17 @@ class Scorer:
         self.linked_model_artifact = None
         self.ratings = None
         self.rating_counts = None
-        self.ratings_old = None
+        self.ratings_existing = None
         self.ratings_new = None
         self.all_users = None
-        self.old_users = None
+        self.existing_users = None
         self.new_users = None
         self.genres_table = None
         self.model = None
-        self.rankings_generated_old_users = None
+        self.rankings_generated_existing_users = None
         self.rankings_generated_new_users = None
         self.rankings_generated_all_users = None
-        self.new_interactions_old_users = None
+        self.new_interactions_existing_users = None
         self.new_interactions_new_users = None
         self.new_interactions_all_users = None
         self.genre_avg_count_in_top_n_recs_per_user_group = None
@@ -69,7 +69,7 @@ class Scorer:
     def score_simulate_and_update_ratings_table(self, popularity_penalty_coef=0, popularity_transformation_for_penalty='Normalization', genre_to_penalize=None, genre_penalty=None):
         try:
             try:
-                ratings, rating_counts, ratings_old, ratings_new, all_users, old_users, new_users = self._load_ratings_data()
+                ratings, rating_counts, ratings_existing, ratings_new, all_users, existing_users, new_users = self._load_ratings_data()
                 logger_scorer.info("Ratings data loaded successfully.")
             except Exception:
                 logger_scorer.exception("Failed to load ratings data.")
@@ -92,10 +92,10 @@ class Scorer:
             #self.rankings_generated_all_users = None is this needed ?
 
             try:
-                rankings_generated_old_users = self._get_ranked_films_per_user_old(ratings_old, old_users, model, ratings, popularity_penalty_coef, popularity_transformation_for_penalty)
-                logger_scorer.info("Rankings for old users generated successfully.")
+                rankings_generated_existing_users = self._get_ranked_films_per_user_existing(ratings_existing, existing_users, model, ratings, popularity_penalty_coef, popularity_transformation_for_penalty)
+                logger_scorer.info("Rankings for existing users generated successfully.")
             except Exception:
-                logger_scorer.exception("Failed to generate rankings for old users.")
+                logger_scorer.exception("Failed to generate rankings for existing users.")
                 raise
 
             try:
@@ -106,10 +106,10 @@ class Scorer:
                 raise
 
             try:
-                new_interactions_old_users = self._simulate_batch_of_film_choices(old_users, rankings_generated_old_users, ratings,genres_table, genre_to_penalize, genre_penalty, 'old')
-                logger_scorer.info("New interactions for old users simulated successfully.")
+                new_interactions_existing_users = self._simulate_batch_of_film_choices(existing_users, rankings_generated_existing_users, ratings,genres_table, genre_to_penalize, genre_penalty, 'existing')
+                logger_scorer.info("New interactions for existing users simulated successfully.")
             except Exception:
-                logger_scorer.exception("Failed to simulate film choices for old users.")
+                logger_scorer.exception("Failed to simulate film choices for existing users.")
                 raise
 
             try:
@@ -120,7 +120,7 @@ class Scorer:
                 raise
 
             try:
-                new_interactions_all_users = self._update_ratings_table(new_interactions_old_users, new_interactions_new_users)
+                new_interactions_all_users = self._update_ratings_table(new_interactions_existing_users, new_interactions_new_users)
                 logger_scorer.info("Ratings table updated successfully.")
             except Exception:
                 logger_scorer.exception("Failed to update ratings table.")
@@ -129,17 +129,17 @@ class Scorer:
             try:
                 self.ratings = ratings
                 self.rating_counts = rating_counts
-                self.ratings_old = ratings_old
+                self.ratings_existing = ratings_existing
                 self.ratings_new = ratings_new
                 self.all_users = all_users
-                self.old_users = old_users
+                self.existing_users = existing_users
                 self.new_users = new_users
                 self.genres_table = genres_table
                 self.model = model
-                self.rankings_generated_old_users = rankings_generated_old_users
+                self.rankings_generated_existing_users = rankings_generated_existing_users
                 self.rankings_generated_new_users = rankings_generated_new_users
-                self.rankings_generated_all_users = pd.concat([rankings_generated_old_users, rankings_generated_new_users], axis=0)
-                self.new_interactions_old_users = new_interactions_old_users
+                self.rankings_generated_all_users = pd.concat([rankings_generated_existing_users, rankings_generated_new_users], axis=0)
+                self.new_interactions_existing_users = new_interactions_existing_users
                 self.new_interactions_new_users = new_interactions_new_users
                 self.new_interactions_all_users = new_interactions_all_users
             except Exception:
@@ -149,9 +149,9 @@ class Scorer:
             logger_scorer.info("All processing completed successfully.")
 
             try:
-                del rankings_generated_old_users
+                del rankings_generated_existing_users
                 del rankings_generated_new_users
-                del new_interactions_old_users
+                del new_interactions_existing_users
                 del new_interactions_new_users
                 del new_interactions_all_users
             except Exception:
@@ -167,7 +167,7 @@ class Scorer:
     def get_genre_avg_counts_in_top_n_recs(self):
         try:
             genre_avg_count_in_top_n_recs_per_user_group = {}
-            for user_group in ['all', 'new', 'old']:
+            for user_group in ['all', 'new', 'existing']:
                 genre_avg_count_in_top_n_recs = self._get_genre_avg_counts_in_top_n_recs(user_group)
                 genre_avg_count_in_top_n_recs_per_user_group[f"{user_group}_users"] = genre_avg_count_in_top_n_recs
 
@@ -185,8 +185,8 @@ class Scorer:
 
         if user_group == 'all':
             rankings_generated = self.rankings_generated_all_users
-        elif user_group == 'old':
-            rankings_generated = self.rankings_generated_old_users
+        elif user_group == 'existing':
+            rankings_generated = self.rankings_generated_existing_users
         elif user_group == 'new':
             rankings_generated = self.rankings_generated_new_users
 
@@ -218,7 +218,7 @@ class Scorer:
     def get_coverage_scores(self):
         try:
             coverage_score_per_user_group = {}
-            for user_group in ['all', 'new', 'old']:
+            for user_group in ['all', 'new', 'existing']:
                 coverage_score = self._get_coverage_score(user_group)
                 coverage_score_per_user_group[f"{user_group}_users"] = coverage_score
 
@@ -233,8 +233,8 @@ class Scorer:
     def _get_coverage_score(self, user_group):
         if user_group == 'all':
             rankings_generated = self.rankings_generated_all_users
-        elif user_group == 'old':
-            rankings_generated = self.rankings_generated_old_users
+        elif user_group == 'existing':
+            rankings_generated = self.rankings_generated_existing_users
         elif user_group == 'new':
             rankings_generated = self.rankings_generated_new_users
 
@@ -256,7 +256,7 @@ class Scorer:
     def get_avg_diversity_scores(self):
         try:
             avg_diversity_score_per_user_group = {}
-            for user_group in ['all', 'new', 'old']:
+            for user_group in ['all', 'new', 'existing']:
                 avg_score = self._get_avg_diversity_score(user_group)
                 avg_diversity_score_per_user_group[f"{user_group}_users"] = avg_score
 
@@ -271,8 +271,8 @@ class Scorer:
     def _get_avg_diversity_score(self, user_group):
         if user_group == 'all':
             rankings_generated = self.rankings_generated_all_users
-        elif user_group == 'old':
-            rankings_generated = self.rankings_generated_old_users
+        elif user_group == 'existing':
+            rankings_generated = self.rankings_generated_existing_users
         elif user_group == 'new':
             rankings_generated = self.rankings_generated_new_users
 
@@ -308,7 +308,7 @@ class Scorer:
     def get_avg_personalization_scores(self, plot_scores_by_num_films_rated=False):
         try:
             personalization_scores_per_user_group = {}
-            for user_group in ['all', 'new', 'old']:
+            for user_group in ['all', 'new', 'existing']:
                 score = self._get_avg_personalization_score(user_group, plot_scores_by_num_films_rated)
                 personalization_scores_per_user_group[f"{user_group}_users"] = score
 
@@ -323,8 +323,8 @@ class Scorer:
     def _get_avg_personalization_score(self, user_group, plot_scores_by_num_films_rated=False):
         if user_group == 'all':
             rankings_generated = self.rankings_generated_all_users
-        elif user_group == 'old':
-            rankings_generated = self.rankings_generated_old_users
+        elif user_group == 'existing':
+            rankings_generated = self.rankings_generated_existing_users
         elif user_group == 'new':
             rankings_generated = self.rankings_generated_new_users
 
@@ -383,7 +383,7 @@ class Scorer:
     def evaluate_performance_metrics(self):
         try:
             performance_metrics_per_user_group = {}
-            for user_group in ['all', 'new', 'old']:
+            for user_group in ['all', 'new', 'existing']:
                 metrics = self._evaluate_performance_metrics(user_group)
                 performance_metrics_per_user_group[f"{user_group}_users"] = metrics
 
@@ -415,18 +415,18 @@ class Scorer:
         rating_counts = ratings.groupby('user_id').size().reset_index(name='num_rated_films')
         ratings_with_counts = ratings.merge(rating_counts, on="user_id")
 
-        ratings_old = ratings_with_counts[ratings_with_counts["num_rated_films"] > self.new_user_threshold].drop('num_rated_films', axis=1).reset_index(drop=True)
+        ratings_existing = ratings_with_counts[ratings_with_counts["num_rated_films"] > self.new_user_threshold].drop('num_rated_films', axis=1).reset_index(drop=True)
         ratings_new = ratings_with_counts[ratings_with_counts["num_rated_films"] <= self.new_user_threshold].drop('num_rated_films', axis=1).reset_index(drop=True)
 
         all_users = list(range(1, ratings['user_id'].max() + 1))
-        old_users = sorted(ratings_old['user_id'].unique())
-        new_users = list(set(all_users) - set(old_users))
+        existing_users = sorted(ratings_existing['user_id'].unique())
+        new_users = list(set(all_users) - set(existing_users))
 
         logger_scorer.info("Data successfully loaded!")
-        logger_scorer.info(f"Number of 'Old' users: {len(old_users)} -> Using SVD collaborative filtering model to generate these recommendations...")
+        logger_scorer.info(f"Number of 'existing' users: {len(existing_users)} -> Using SVD collaborative filtering model to generate these recommendations...")
         logger_scorer.info(f"Number of 'New' users: {len(new_users)} -> Falling back to cold-start strategy of recommending top 'n' films by popularity...")
 
-        return ratings, rating_counts, ratings_old, ratings_new, all_users, old_users, new_users
+        return ratings, rating_counts, ratings_existing, ratings_new, all_users, existing_users, new_users
     
     @staticmethod
     def _simplify_genres_list(x):
@@ -487,15 +487,15 @@ class Scorer:
 
         logger_scorer.info(f"'{label}' successfully logged as artifact in W&B.")
 
-    def _reconstruct_interaction_matrix_and_predict_ratings(self, ratings_old, old_users, model):
-        all_films = sorted(ratings_old['film_id'].unique())
-        full_index = list(product(old_users, all_films))
+    def _reconstruct_interaction_matrix_and_predict_ratings(self, ratings_existing, existing_users, model):
+        all_films = sorted(ratings_existing['film_id'].unique())
+        full_index = list(product(existing_users, all_films))
         predictions = [model.predict(user, film).est for user, film in full_index]
 
         df = pd.DataFrame(full_index, columns=['user_id', 'film_id'])
         df['predicted_rating'] = predictions
 
-        past_interactions = ratings_old[["user_id", "film_id"]].copy()
+        past_interactions = ratings_existing[["user_id", "film_id"]].copy()
         past_interactions["already_rated"] = True
 
         processed_chunks = []
@@ -544,12 +544,12 @@ class Scorer:
     def _sort_and_crop_pred_ratings(self, user_pred_ratings_dict):
         return dict(sorted(user_pred_ratings_dict.items(), key=lambda x: x[1], reverse=True)[:self.n_recs + self.max_interactions_between_scorings])
 
-    def _get_ranked_films_per_user_old(self, ratings_old, old_users, model, ratings, popularity_penalty_coef, popularity_transformation_for_penalty):
-        logger_scorer.info("Scoring for 'old' users...")
+    def _get_ranked_films_per_user_existing(self, ratings_existing, existing_users, model, ratings, popularity_penalty_coef, popularity_transformation_for_penalty):
+        logger_scorer.info("Scoring for 'existing' users...")
 
         print("DEBUG 1!!!!!!!!!!!") ###
 
-        interaction_matrix = self._reconstruct_interaction_matrix_and_predict_ratings(ratings_old, old_users, model)
+        interaction_matrix = self._reconstruct_interaction_matrix_and_predict_ratings(ratings_existing, existing_users, model)
 
         print("DEBUG 2!!!!!!!!!!!") ###
 
@@ -572,7 +572,7 @@ class Scorer:
 
         print("DEBUG 6!!!!!!!!!!!") ###
 
-        logger_scorer.info("Scoring complete for 'old' users!")
+        logger_scorer.info("Scoring complete for 'existing' users!")
         
         return rankings_generated
 
@@ -648,10 +648,10 @@ class Scorer:
 
         return rankings_generated
     
-    def _update_ratings_table(self, new_interactions_old_users, new_interactions_new_users):
+    def _update_ratings_table(self, new_interactions_existing_users, new_interactions_new_users):
         logger_scorer.info("Updating ratings table...")
 
-        new_interactions_all_users = pd.concat([new_interactions_old_users, new_interactions_new_users], axis=0).reset_index(drop=True)
+        new_interactions_all_users = pd.concat([new_interactions_existing_users, new_interactions_new_users], axis=0).reset_index(drop=True)
 
         new_interactions_all_users_formatted = new_interactions_all_users.drop(['predicted_rating', 'genres'], axis=1)
         new_interactions_all_users_formatted['original_data'] = False
@@ -666,8 +666,8 @@ class Scorer:
     def _evaluate_performance_metrics_overall(self, user_group):
         if user_group == 'all':
             interactions = self.new_interactions_all_users
-        elif user_group == 'old':
-            interactions = self.new_interactions_old_users
+        elif user_group == 'existing':
+            interactions = self.new_interactions_existing_users
         elif user_group == 'new':
             interactions = self.new_interactions_new_users
 
@@ -690,8 +690,8 @@ class Scorer:
     def _evaluate_performance_metrics_by_genre(self, user_group):
         if user_group == 'all':
             interactions = self.new_interactions_all_users
-        elif user_group == 'old':
-            interactions = self.new_interactions_old_users
+        elif user_group == 'existing':
+            interactions = self.new_interactions_existing_users
         elif user_group == 'new':
             interactions = self.new_interactions_new_users
 
