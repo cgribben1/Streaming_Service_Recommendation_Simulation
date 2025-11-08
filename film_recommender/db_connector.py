@@ -20,7 +20,7 @@ class DBConnector:
     def get_connection(self):
         try:
             self.client = MongoClient(self.uri, server_api=ServerApi('1'))
-            self.client.admin.command('ping')  # verify connection
+            self.client.admin.command('ping')
             self.db = self.client[self.db_name]
 
             logger_db_connector.info("Successfully connected to DB.")

@@ -1,0 +1,10 @@
+2025-11-07 14:48:53,088 INFO    MainThread:14381 [wandb_init.py:setup_run_log_directory():705] Logging user logs to /app/Streaming_Service_Recommendation_Simulation/wandb/run-20251107_144853-8aoi6vuo/logs/debug.log
+2025-11-07 14:48:53,088 INFO    MainThread:14381 [wandb_init.py:setup_run_log_directory():706] Logging internal logs to /app/Streaming_Service_Recommendation_Simulation/wandb/run-20251107_144853-8aoi6vuo/logs/debug-internal.log
+2025-11-07 14:48:53,089 INFO    MainThread:14381 [wandb_init.py:init():832] calling init triggers
+2025-11-07 14:48:53,089 INFO    MainThread:14381 [wandb_init.py:init():837] wandb.init called with sweep_config: {}
+config: {'_wandb': {}}
+2025-11-07 14:48:53,089 INFO    MainThread:14381 [wandb_init.py:init():880] starting backend
+2025-11-07 14:48:53,090 INFO    MainThread:14381 [wandb_init.py:init():883] sending inform_init request
+2025-11-07 14:48:53,094 INFO    MainThread:14381 [wandb_init.py:init():891] backend started and connected
+2025-11-07 14:48:53,095 INFO    MainThread:14381 [wandb_init.py:init():961] updated telemetry
+2025-11-07 14:48:53,190 INFO    MainThread:14381 [wandb_init.py:init():985] communicating run to backend with 90.0 second timeout

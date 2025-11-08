@@ -14,3 +14,8 @@ dependencies = ["pandas", "numpy"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::sklearn.exceptions.UndefinedMetricWarning"
+]
