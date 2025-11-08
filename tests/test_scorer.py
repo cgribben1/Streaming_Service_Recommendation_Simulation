@@ -13,7 +13,7 @@ def mock_db_connector():
 @pytest.fixture
 def scorer_instance(mock_db_connector):
     """Instantiate a Scorer with mocked W&B login/init and DB connector."""
-    with patch("scorer.wandb.login"), patch("scorer.wandb.init") as mock_init:
+    with patch("wandb.login"), patch("wandb.init") as mock_init:
         mock_run = MagicMock()
         mock_init.return_value = mock_run
         scorer = Scorer(
@@ -83,7 +83,7 @@ def test_score_simulate_and_update_ratings_table(scorer_instance):
 
 def test_wandb_run_closed_on_exception(mock_db_connector):
     """Ensure W&B run is closed if an exception occurs."""
-    with patch("scorer.wandb.login"), patch("scorer.wandb.init") as mock_init:
+    with patch("wandb.login"), patch("wandb.init") as mock_init:
         mock_run = MagicMock()
         mock_init.return_value = mock_run
         scorer = Scorer(
