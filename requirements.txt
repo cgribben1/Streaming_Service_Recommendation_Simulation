@@ -1,0 +1,7 @@
+pandas==2.3.3
+numpy==1.26.4
+matplotlib==3.10.6
+scikit-learn==1.7.2
+scikit-surprise==1.1.4
+pymongo==4.15.3
+wandb==0.22.1

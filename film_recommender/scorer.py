@@ -547,30 +547,18 @@ class Scorer:
     def _get_ranked_films_per_user_existing(self, ratings_existing, existing_users, model, ratings, popularity_penalty_coef, popularity_transformation_for_penalty):
         logger_scorer.info("Scoring for 'existing' users...")
 
-        print("DEBUG 1!!!!!!!!!!!") ###
-
         interaction_matrix = self._reconstruct_interaction_matrix_and_predict_ratings(ratings_existing, existing_users, model)
 
-        print("DEBUG 2!!!!!!!!!!!") ###
-
         pred_ratings_unpenalized = interaction_matrix.apply(lambda row: row.to_dict(), axis=1)
-
-        print("DEBUG 3!!!!!!!!!!!") ###
 
         del interaction_matrix
         gc.collect()
 
         film_popularities_dict = self._get_film_popularities(ratings, popularity_transformation_for_penalty)
 
-        print("DEBUG 4!!!!!!!!!!!") ###
-
         pred_ratings_popularity_penalized = pred_ratings_unpenalized.apply(lambda user_pred_ratings_dict: self._penalize_films_by_popularity(user_pred_ratings_dict, film_popularities_dict, popularity_penalty_coef))
 
-        print("DEBUG 5!!!!!!!!!!!") ###
-
         rankings_generated = pred_ratings_popularity_penalized.apply(lambda user_pred_ratings_dict: self._sort_and_crop_pred_ratings(user_pred_ratings_dict))
-
-        print("DEBUG 6!!!!!!!!!!!") ###
 
         logger_scorer.info("Scoring complete for 'existing' users!")
         
