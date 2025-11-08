@@ -19,3 +19,4 @@ where = ["film_recommender"]
 filterwarnings = [
     "ignore::sklearn.exceptions.UndefinedMetricWarning"
 ]
+norecursedirs = [".git", "venv", "__pycache__", "wandb"]
