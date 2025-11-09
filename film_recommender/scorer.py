@@ -17,7 +17,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.linear_model import LinearRegression
 
-from db_connector import DBConnector
+from film_recommender.db_connector import DBConnector
 
 logger_scorer = logging.getLogger(__name__)
 

@@ -18,7 +18,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from typing import Any, Dict, List, Tuple, Optional, Union
 
-from db_connector import DBConnector
+from film_recommender.db_connector import DBConnector
 
 logger_trainer = logging.getLogger(__name__)
 
