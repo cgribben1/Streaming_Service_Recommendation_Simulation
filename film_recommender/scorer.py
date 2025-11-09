@@ -17,11 +17,39 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.linear_model import LinearRegression
 
-logger_scorer = logging.getLogger('scorer') # TODO: change back to __name__
+from film_recommender.db_connector import DBConnector
+
+logger_scorer = logging.getLogger(__name__)
+
 
 class Scorer:
+    """
+    Class responsible for scoring a film recommender system, simulating user interactions,
+    updating the ratings table, and logging results to Weights & Biases (W&B).
+    """
 
-    def __init__(self, db_connector, wandb_auth_key, wandb_project_path, wandb_project_name, new_user_threshold, n_recs, max_interactions_between_scorings):
+    def __init__(
+        self,
+        db_connector: DBConnector,
+        wandb_auth_key: str,
+        wandb_project_path: str,
+        wandb_project_name: str,
+        new_user_threshold: int,
+        n_recs: int,
+        max_interactions_between_scorings: int
+    ):
+        """
+        Initializes the Scorer object and W&B run.
+
+        Args:
+            db_connector (DBConnector): Instance of DBConnector for database access.
+            wandb_auth_key (str): W&B authentication key.
+            wandb_project_path (str): Path to the W&B project artifacts.
+            wandb_project_name (str): Name of the W&B project.
+            new_user_threshold (int): Minimum number of interactions to consider a user as existing.
+            n_recs (int): Number of recommendations to generate per user.
+            max_interactions_between_scorings (int): Max interactions allowed between scoring runs.
+        """
         self.db_connector = db_connector
         self.new_user_threshold = new_user_threshold
         self.wandb_auth_key = wandb_auth_key
@@ -59,14 +87,33 @@ class Scorer:
 
         logger_scorer.info("'Scorer' object instantiated; W&B run initialized.")
 
-    def close_wandb_run(self):
+    def close_wandb_run(self) -> None:
+        """
+        Closes the currently active W&B run if it exists.
+        """
         if self.wandb_run:
             self.wandb_run.finish()
             logger_scorer.info("Scoring W&B run closed.")
         else:
             logger_scorer.info("No scoring W&B run currently open, therefore nothing to close.")
 
-    def score_simulate_and_update_ratings_table(self, popularity_penalty_coef=0, popularity_transformation_for_penalty='Normalization', genre_to_penalize=None, genre_penalty=None):
+    def score_simulate_and_update_ratings_table(
+        self,
+        popularity_penalty_coef: float = 0,
+        popularity_transformation_for_penalty: str = 'Normalization',
+        genre_to_penalize: str = None,
+        genre_penalty: float = None
+    ) -> None:
+        """
+        Main method to score the recommender system, simulate user interactions, 
+        update the ratings table, and assign results to object attributes.
+
+        Args:
+            popularity_penalty_coef (float): Coefficient for popularity penalty in ranking.
+            popularity_transformation_for_penalty (str): Method to transform popularity before penalty.
+            genre_to_penalize (str): Specific genre to apply a penalty to.
+            genre_penalty (float): Value of the genre penalty.
+        """
         try:
             try:
                 ratings, rating_counts, ratings_existing, ratings_new, all_users, existing_users, new_users = self._load_ratings_data()
@@ -89,38 +136,66 @@ class Scorer:
                 logger_scorer.exception("Failed to import model.")
                 raise
 
-            #self.rankings_generated_all_users = None is this needed ?
-
             try:
-                rankings_generated_existing_users = self._get_ranked_films_per_user_existing(ratings_existing, existing_users, model, ratings, popularity_penalty_coef, popularity_transformation_for_penalty)
+                rankings_generated_existing_users = self._get_ranked_films_per_user_existing(
+                    ratings_existing,
+                    existing_users,
+                    model,
+                    ratings,
+                    popularity_penalty_coef,
+                    popularity_transformation_for_penalty
+                )
                 logger_scorer.info("Rankings for existing users generated successfully.")
             except Exception:
                 logger_scorer.exception("Failed to generate rankings for existing users.")
                 raise
 
             try:
-                rankings_generated_new_users = self._get_ranked_films_per_user_new(ratings, ratings_new, new_users)
+                rankings_generated_new_users = self._get_ranked_films_per_user_new(
+                    ratings,
+                    ratings_new,
+                    new_users
+                )
                 logger_scorer.info("Rankings for new users generated successfully.")
             except Exception:
                 logger_scorer.exception("Failed to generate rankings for new users.")
                 raise
 
             try:
-                new_interactions_existing_users = self._simulate_batch_of_film_choices(existing_users, rankings_generated_existing_users, ratings,genres_table, genre_to_penalize, genre_penalty, 'existing')
+                new_interactions_existing_users = self._simulate_batch_of_film_choices(
+                    existing_users,
+                    rankings_generated_existing_users,
+                    ratings,
+                    genres_table,
+                    genre_to_penalize,
+                    genre_penalty,
+                    'existing'
+                )
                 logger_scorer.info("New interactions for existing users simulated successfully.")
             except Exception:
                 logger_scorer.exception("Failed to simulate film choices for existing users.")
                 raise
 
             try:
-                new_interactions_new_users = self._simulate_batch_of_film_choices(new_users, rankings_generated_new_users, ratings,genres_table, genre_to_penalize, genre_penalty, 'new')
+                new_interactions_new_users = self._simulate_batch_of_film_choices(
+                    new_users,
+                    rankings_generated_new_users,
+                    ratings,
+                    genres_table,
+                    genre_to_penalize,
+                    genre_penalty,
+                    'new'
+                )
                 logger_scorer.info("New interactions for new users simulated successfully.")
             except Exception:
                 logger_scorer.exception("Failed to simulate film choices for new users.")
                 raise
 
             try:
-                new_interactions_all_users = self._update_ratings_table(new_interactions_existing_users, new_interactions_new_users)
+                new_interactions_all_users = self._update_ratings_table(
+                    new_interactions_existing_users,
+                    new_interactions_new_users
+                )
                 logger_scorer.info("Ratings table updated successfully.")
             except Exception:
                 logger_scorer.exception("Failed to update ratings table.")
@@ -164,7 +239,15 @@ class Scorer:
             self.close_wandb_run()
             raise
         
-    def get_genre_avg_counts_in_top_n_recs(self):
+    def get_genre_avg_counts_in_top_n_recs(self) -> dict:
+        """
+        Calculates the average number of times each genre appears in the top 'n' 
+        recommendations for each user group ('all', 'new', 'existing').
+
+        Returns:
+            dict: A dictionary with user groups as keys and dictionaries of genre 
+            average counts as values.
+        """
         try:
             genre_avg_count_in_top_n_recs_per_user_group = {}
             for user_group in ['all', 'new', 'existing']:
@@ -179,7 +262,17 @@ class Scorer:
             self.close_wandb_run()
             raise
 
-    def _get_genre_avg_counts_in_top_n_recs(self, user_group):
+    def _get_genre_avg_counts_in_top_n_recs(self, user_group: str) -> dict:
+        """
+        Calculates average counts of genres in top 'n' recommendations for a 
+        specific user group.
+
+        Args:
+            user_group (str): One of 'all', 'new', 'existing'.
+
+        Returns:
+            dict: Dictionary mapping genres to their average counts in top 'n' recommendations.
+        """
         len_each_ranking_generated = self.n_recs + self.max_interactions_between_scorings
         top_n_to_analyse = 100 if len_each_ranking_generated > 100 else len_each_ranking_generated
 
@@ -215,7 +308,14 @@ class Scorer:
 
         return genre_avg_count_in_top_n_recs
 
-    def get_coverage_scores(self):
+    def get_coverage_scores(self) -> dict:
+        """
+        Computes coverage metrics for all user groups, i.e., the proportion of films 
+        in the catalogue that were recommended at least once.
+
+        Returns:
+            dict: Coverage score per user group.
+        """
         try:
             coverage_score_per_user_group = {}
             for user_group in ['all', 'new', 'existing']:
@@ -230,7 +330,16 @@ class Scorer:
             self.close_wandb_run()
             raise
 
-    def _get_coverage_score(self, user_group):
+    def _get_coverage_score(self, user_group: str) -> float:
+        """
+        Computes coverage for a specific user group.
+
+        Args:
+            user_group (str): One of 'all', 'new', 'existing'.
+
+        Returns:
+            float: Coverage score as a fraction of total catalogue films recommended.
+        """
         if user_group == 'all':
             rankings_generated = self.rankings_generated_all_users
         elif user_group == 'existing':
@@ -253,11 +362,21 @@ class Scorer:
 
         return coverage
 
-    def get_avg_diversity_scores(self):
+    def get_avg_diversity_scores(self, plot_boxplots: bool = False) -> dict:
+        """
+        Computes the average diversity score for each user group based on pairwise 
+        distances between film embeddings in users' recommendations.
+
+        Args:
+            plot_boxplots (bool): Whether to plot boxplots of average personalization scores.
+
+        Returns:
+            dict: Average diversity scores per user group.
+        """
         try:
             avg_diversity_score_per_user_group = {}
             for user_group in ['all', 'new', 'existing']:
-                avg_score = self._get_avg_diversity_score(user_group)
+                avg_score = self._get_avg_diversity_score(user_group, plot_boxplots)
                 avg_diversity_score_per_user_group[f"{user_group}_users"] = avg_score
 
             self.avg_diversity_scores_per_user_group = avg_diversity_score_per_user_group
@@ -268,7 +387,17 @@ class Scorer:
             self.close_wandb_run()
             raise
 
-    def _get_avg_diversity_score(self, user_group):
+    def _get_avg_diversity_score(self, user_group: str, plot_boxplot: bool) -> float:
+        """
+        Computes the mean diversity score for a given user group.
+
+        Args:
+            user_group (str): One of 'all', 'new', 'existing'.
+            plot_boxplot (bool): Whether to plot boxplot of average personalization scores.
+
+        Returns:
+            float: Mean diversity score for the user group.
+        """
         if user_group == 'all':
             rankings_generated = self.rankings_generated_all_users
         elif user_group == 'existing':
@@ -294,10 +423,11 @@ class Scorer:
         avg_diversity_score = sum(user_diversity_scores) / len(user_diversity_scores)
         logger_scorer.info(f"### Mean diversity score for scoring session ('{user_group.title()}'): {avg_diversity_score:.2f} ###")
 
-        plt.boxplot(user_diversity_scores)
-        plt.title(f"User Diversity Scores ('{user_group.title()}')")
-        plt.ylabel("Diversity Score")
-        plt.show()
+        if plot_boxplot:
+            plt.boxplot(user_diversity_scores)
+            plt.title(f"User Diversity Scores ('{user_group.title()}')")
+            plt.ylabel("Diversity Score")
+            plt.show()
 
         avg_diversity_score_dict = {'mean_diversity_score': avg_diversity_score}
 
@@ -305,11 +435,23 @@ class Scorer:
 
         return avg_diversity_score
 
-    def get_avg_personalization_scores(self, plot_scores_by_num_films_rated=False):
+    def get_avg_personalization_scores(self, plot_boxplots: bool = False, plot_scores_by_num_films_rated: bool = False) -> dict:
+        """
+        Calculates the average personalization score per user group, optionally plotting
+        personalization vs. number of films rated.
+
+        Args:
+            plot_boxplots (bool): Whether to plot boxplots of average personalization scores.
+            plot_scores_by_num_films_rated (bool): Whether to generate a scatter plot 
+            showing personalization score vs. number of films rated.
+
+        Returns:
+            dict: Average personalization scores per user group.
+        """
         try:
             personalization_scores_per_user_group = {}
             for user_group in ['all', 'new', 'existing']:
-                score = self._get_avg_personalization_score(user_group, plot_scores_by_num_films_rated)
+                score = self._get_avg_personalization_score(user_group, plot_boxplots, plot_scores_by_num_films_rated)
                 personalization_scores_per_user_group[f"{user_group}_users"] = score
 
             self.avg_personalization_scores_per_user_group = personalization_scores_per_user_group
@@ -320,7 +462,18 @@ class Scorer:
             self.close_wandb_run()
             raise
 
-    def _get_avg_personalization_score(self, user_group, plot_scores_by_num_films_rated=False):
+    def _get_avg_personalization_score(self, user_group: str, plot_boxplot: bool, plot_scores_by_num_films_rated: bool) -> float:
+        """
+        Calculates the average personalization score for a specific user group.
+
+        Args:
+            user_group (str): One of 'all', 'new', 'existing'.
+            plot_boxplot (bool): Whether to plot boxplot of average personalization scores.
+            plot_scores_by_num_films_rated (bool): Whether to plot personalization vs. number of films rated.
+
+        Returns:
+            float: Average personalization score.
+        """
         if user_group == 'all':
             rankings_generated = self.rankings_generated_all_users
         elif user_group == 'existing':
@@ -350,10 +503,11 @@ class Scorer:
 
         logger_scorer.info(f"### Average personalization score ('{user_group.title()}'): {avg_personalization_score:.3f} ###")
 
-        plt.boxplot(cosine_similarities_list)
-        plt.title(f"User Personalization Scores ('{user_group.title()}')")
-        plt.ylabel("Personalization Score")
-        plt.show()
+        if plot_boxplot:
+            plt.boxplot(cosine_similarities_list)
+            plt.title(f"User Personalization Scores ('{user_group.title()}')")
+            plt.ylabel("Personalization Score")
+            plt.show()
 
         if plot_scores_by_num_films_rated:
             rating_counts_df = self.rating_counts
@@ -380,7 +534,14 @@ class Scorer:
 
         return avg_personalization_score
 
-    def evaluate_performance_metrics(self):
+    def evaluate_performance_metrics(self) -> dict:
+        """
+        Evaluates overall and per-genre model performance metrics (RMSE, R²) 
+        for each user group.
+
+        Returns:
+            dict: Dictionary with performance metrics per user group.
+        """
         try:
             performance_metrics_per_user_group = {}
             for user_group in ['all', 'new', 'existing']:
@@ -395,7 +556,17 @@ class Scorer:
             self.close_wandb_run()
             raise
 
-    def _evaluate_performance_metrics(self, user_group):
+    def _evaluate_performance_metrics(self, user_group: str) -> dict:
+        """
+        Evaluates performance metrics for a given user group, including overall 
+        and by-genre metrics.
+
+        Args:
+            user_group (str): One of 'all', 'new', 'existing'.
+
+        Returns:
+            dict: Nested dictionary containing performance metrics.
+        """
         logger_scorer.info("Evaluating model performance on new (simulated) data...")
 
         all_performance_metrics = {
@@ -407,7 +578,14 @@ class Scorer:
         logger_scorer.info("Evaluation complete!")
         return all_performance_metrics
 
-    def _load_ratings_data(self):
+    def _load_ratings_data(self) -> tuple:
+        """
+        Loads and processes the ratings table from the database, splitting users 
+        into 'existing' and 'new' based on interaction thresholds.
+
+        Returns:
+            tuple: (ratings, rating_counts, ratings_existing, ratings_new, all_users, existing_users, new_users)
+        """
         logger_scorer.info("Loading in 'ratings' data...")
 
         ratings = self.db_connector.read_collection('ratings')
@@ -429,14 +607,33 @@ class Scorer:
         return ratings, rating_counts, ratings_existing, ratings_new, all_users, existing_users, new_users
     
     @staticmethod
-    def _simplify_genres_list(x):
+    def _simplify_genres_list(x) -> list:
+        """
+        Converts raw JSON-like genre data to a list of genre names.
+
+        Args:
+            x: Raw genres data.
+
+        Returns:
+            list: List of genre names.
+        """
         raw_genres_list = eval(x)
         simplified_genres_list = [raw_genres_list[i]['name'] for i in range(len(raw_genres_list))]
         
         return simplified_genres_list
     
     @staticmethod
-    def _fill_in_missing_ids(genres_table):
+    def _fill_in_missing_ids(genres_table: pd.DataFrame) -> pd.DataFrame:
+        """
+        Ensures the genres table contains all film IDs up to a fixed range, filling 
+        missing films with 'Undisclosed'.
+
+        Args:
+            genres_table (pd.DataFrame): Original genres table.
+
+        Returns:
+            pd.DataFrame: Genres table with all film IDs included.
+        """
         full_film_ids = pd.Series(range(1, 5000), name='film_id')
         missing_film_ids = full_film_ids[~full_film_ids.isin(genres_table['film_id'])]
 
@@ -450,7 +647,13 @@ class Scorer:
 
         return genres_table
 
-    def _load_genres_table(self):
+    def _load_genres_table(self) -> pd.DataFrame:
+        """
+        Loads and processes the genres table from the database.
+
+        Returns:
+            pd.DataFrame: Processed genres table with simplified genres and missing films filled.
+        """
         genres_table = self.db_connector.read_collection('genres')
         
         genres_table['genres'] = genres_table['genres'].apply(lambda x: self._simplify_genres_list(x))
@@ -460,6 +663,12 @@ class Scorer:
         return genres_table 
 
     def _import_model(self):
+        """
+        Downloads the trained SVD model artifact from W&B and loads it.
+
+        Returns:
+            model: Loaded SVD model.
+        """
         logger_scorer.info("Loading in model from W&B...")
 
         model_dir = self.linked_model_artifact.download()
@@ -472,7 +681,14 @@ class Scorer:
 
         return model
 
-    def _log_artifact(self, label, data):
+    def _log_artifact(self, label: str, data: dict) -> None:
+        """
+        Logs a JSON-formatted metric to W&B as an artifact.
+
+        Args:
+            label (str): Name for the artifact.
+            data (dict): Metric data to log.
+        """
         tmp_path = f"{label}.json"  
 
         with open(tmp_path, "w") as f:
@@ -487,7 +703,19 @@ class Scorer:
 
         logger_scorer.info(f"'{label}' successfully logged as artifact in W&B.")
 
-    def _reconstruct_interaction_matrix_and_predict_ratings(self, ratings_existing, existing_users, model):
+    def _reconstruct_interaction_matrix_and_predict_ratings(self, ratings_existing: pd.DataFrame, existing_users: list, model) -> pd.DataFrame:
+        """
+        Reconstructs the full user-item interaction matrix and predicts ratings 
+        for all unseen films for existing users.
+
+        Args:
+            ratings_existing (pd.DataFrame): Ratings of existing users.
+            existing_users (list): List of existing user IDs.
+            model: Trained SVD model.
+
+        Returns:
+            pd.DataFrame: Interaction matrix with predicted ratings for each user-item pair.
+        """
         all_films = sorted(ratings_existing['film_id'].unique())
         full_index = list(product(existing_users, all_films))
         predictions = [model.predict(user, film).est for user, film in full_index]
@@ -510,7 +738,17 @@ class Scorer:
 
         return interaction_matrix
     
-    def _get_film_popularities(self, ratings, popularity_transformation_for_penalty):
+    def _get_film_popularities(self, ratings: pd.DataFrame, popularity_transformation_for_penalty: str) -> dict:
+        """
+        Calculates film popularity for use in ranking penalties.
+
+        Args:
+            ratings (pd.DataFrame): Ratings dataframe.
+            popularity_transformation_for_penalty (str): 'Normalization' or 'Log-scaling'.
+
+        Returns:
+            dict: Film popularity scores keyed by film ID.
+        """
         film_popularities = ratings.groupby('film_id')['rating'].count()
 
         if popularity_transformation_for_penalty == 'Normalization':
@@ -531,7 +769,18 @@ class Scorer:
 
             return film_popularities_log_scaled_and_normalized.to_dict()
 
-    def _penalize_films_by_popularity(self, user_pred_ratings_dict, film_popularities_dict, popularity_penalty_coef):
+    def _penalize_films_by_popularity(self, user_pred_ratings_dict: dict, film_popularities_dict: dict, popularity_penalty_coef: float) -> dict:
+        """
+        Applies a popularity penalty to a user's predicted ratings.
+
+        Args:
+            user_pred_ratings_dict (dict): User's predicted ratings.
+            film_popularities_dict (dict): Film popularity values.
+            popularity_penalty_coef (float): Coefficient for penalty.
+
+        Returns:
+            dict: Updated predicted ratings after popularity penalty.
+        """
         for film_id, pred_rating in user_pred_ratings_dict.items():
             film_popularity = film_popularities_dict[film_id]
 
@@ -541,10 +790,44 @@ class Scorer:
 
         return user_pred_ratings_dict
     
-    def _sort_and_crop_pred_ratings(self, user_pred_ratings_dict):
+    def _sort_and_crop_pred_ratings(self, user_pred_ratings_dict: dict) -> dict:
+        """
+        Sorts predicted ratings in descending order and keeps only top N+extra recommendations.
+
+        Args:
+            user_pred_ratings_dict (dict): User predicted ratings.
+
+        Returns:
+            dict: Sorted and cropped predicted ratings.
+        """
         return dict(sorted(user_pred_ratings_dict.items(), key=lambda x: x[1], reverse=True)[:self.n_recs + self.max_interactions_between_scorings])
 
-    def _get_ranked_films_per_user_existing(self, ratings_existing, existing_users, model, ratings, popularity_penalty_coef, popularity_transformation_for_penalty):
+    def _get_ranked_films_per_user_existing(
+        self,
+        ratings_existing: pd.DataFrame,
+        existing_users: list[int],
+        model: "SVD",  # 'surprise.SVD' model - have set to string here to avoid potential import-time errors
+        ratings: pd.DataFrame,
+        popularity_penalty_coef: float,
+        popularity_transformation_for_penalty: str
+    ) -> pd.Series:
+        """
+        Generate ranked film recommendations for existing users using the collaborative
+        filtering model (SVD), applying a popularity penalty if specified.
+
+        Args:
+            ratings_existing (pd.DataFrame): Ratings of existing users.
+            existing_users (list[int]): List of user IDs considered 'existing'.
+            model (SVD): Trained SVD model from Surprise library.
+            ratings (pd.DataFrame): Full ratings table for all users.
+            popularity_penalty_coef (float): Coefficient to penalize popular films.
+            popularity_transformation_for_penalty (str): Method to transform popularity before penalization 
+                ('Normalization' or 'Log-scaling').
+
+        Returns:
+            pd.Series: Series indexed by user_id, each entry is a dict mapping film_id to
+                    predicted (and penalized) rating, sorted in descending order.
+        """
         logger_scorer.info("Scoring for 'existing' users...")
 
         interaction_matrix = self._reconstruct_interaction_matrix_and_predict_ratings(ratings_existing, existing_users, model)
@@ -564,8 +847,13 @@ class Scorer:
         
         return rankings_generated
 
-    @staticmethod
-    def _sample_noisy_rating(chosen_film_genres, predicted_rating, genre_to_penalize, genre_penalty, calibration_factor=0.545):
+    def _sample_noisy_rating(chosen_film_genres: list, predicted_rating: float, genre_to_penalize: str, genre_penalty: float, calibration_factor: float = 0.545) -> float:
+        """
+        Samples a noisy rating for a film based on predicted rating and optional genre penalty.
+
+        Returns:
+            float: Simulated rating.
+        """
         if genre_to_penalize and genre_penalty and chosen_film_genres:
                 if genre_to_penalize.title() in chosen_film_genres:
                     predicted_rating *= genre_penalty
@@ -578,7 +866,14 @@ class Scorer:
 
         return noisy_rating
 
-    def _simulate_single_user_film_choice(self, user_id, ranking, n_recs, genres_table, genre_to_penalize, genre_penalty, decay=0.1):
+    def _simulate_single_user_film_choice(self, user_id: int, ranking: dict, n_recs: int, genres_table: pd.DataFrame, genre_to_penalize: str, genre_penalty: float, decay: float = 0.1) -> list:
+        """
+        Simulates a single film choice by a user, returning the chosen film, 
+        predicted rating, and noisy rating.
+
+        Returns:
+            list: [user_id, chosen_film_id, simulated_rating, predicted_rating, genres]
+        """
         ranks = np.arange(n_recs)
         weights = np.exp(-decay * ranks)
         probabilities = weights / weights.sum()
@@ -590,7 +885,13 @@ class Scorer:
 
         return [user_id, chosen_film_id, simmed_rating, predicted_rating, chosen_film_genres]
 
-    def _simulate_batch_of_film_choices(self, user_segment, ranked_films_per_user, ratings, genres_table, genre_to_penalize, genre_penalty, user_group_label):
+    def _simulate_batch_of_film_choices(self, user_segment: list, ranked_films_per_user: pd.Series, ratings: pd.DataFrame, genres_table: pd.DataFrame, genre_to_penalize: str, genre_penalty: float, user_group_label: str) -> pd.DataFrame:
+        """
+        Simulates a batch of film choices for a user segment.
+
+        Returns:
+            pd.DataFrame: Simulated interactions.
+        """
         logger_scorer.info(f"Simulating interactions for '{user_group_label}' users...")
 
         interactions = []
@@ -609,7 +910,13 @@ class Scorer:
 
         return interactions_df
 
-    def _get_ranked_films_per_user_new(self, ratings, ratings_new, new_users):
+    def _get_ranked_films_per_user_new(self, ratings: pd.DataFrame, ratings_new: pd.DataFrame, new_users: list) -> pd.Series:
+        """
+        Generates ranked film recommendations for new users using cold-start strategy.
+
+        Returns:
+            pd.Series: Film rankings for each new user.
+        """
         logger_scorer.info("Scoring for 'new' users...")
 
         film_counts = ratings.groupby('film_id').size().reset_index(name='rating_count')
@@ -636,7 +943,13 @@ class Scorer:
 
         return rankings_generated
     
-    def _update_ratings_table(self, new_interactions_existing_users, new_interactions_new_users):
+    def _update_ratings_table(self, new_interactions_existing_users: pd.DataFrame, new_interactions_new_users: pd.DataFrame) -> pd.DataFrame:
+        """
+        Updates the ratings table in the database with newly simulated interactions.
+
+        Returns:
+            pd.DataFrame: Concatenated dataframe of new interactions for all users.
+        """
         logger_scorer.info("Updating ratings table...")
 
         new_interactions_all_users = pd.concat([new_interactions_existing_users, new_interactions_new_users], axis=0).reset_index(drop=True)
@@ -651,7 +964,13 @@ class Scorer:
 
         return new_interactions_all_users
     
-    def _evaluate_performance_metrics_overall(self, user_group):
+    def _evaluate_performance_metrics_overall(self, user_group: str) -> dict:
+        """
+        Computes overall RMSE and R² for predicted vs simulated ratings.
+
+        Returns:
+            dict: Performance metrics.
+        """
         if user_group == 'all':
             interactions = self.new_interactions_all_users
         elif user_group == 'existing':
@@ -675,7 +994,13 @@ class Scorer:
 
         return performance_metrics
     
-    def _evaluate_performance_metrics_by_genre(self, user_group):
+    def _evaluate_performance_metrics_by_genre(self, user_group: str) -> dict:
+        """
+        Computes RMSE and R² for predicted vs simulated ratings by genre.
+
+        Returns:
+            dict: Performance metrics by genre.
+        """
         if user_group == 'all':
             interactions = self.new_interactions_all_users
         elif user_group == 'existing':
