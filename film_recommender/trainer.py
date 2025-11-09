@@ -16,12 +16,34 @@ from sklearn.metrics import mean_squared_error, r2_score
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from typing import Any, Dict, List, Tuple, Optional, Union
 
-logger_trainer = logging.getLogger('trainer') # TODO: change back to __name__
+from db_connector import DBConnector
+
+logger_trainer = logging.getLogger(__name__)
+
 
 class Trainer:
+    """Handles model training, evaluation, retraining logic, and artifact management for the film recommender system."""
 
-    def __init__(self, db_connector, new_user_threshold, wandb_auth_key, wandb_project_path, wandb_project_name):
+    def __init__(
+        self,
+        db_connector: DBConnector,
+        new_user_threshold: int,
+        wandb_auth_key: str,
+        wandb_project_path: str,
+        wandb_project_name: str
+    ) -> None:
+        """
+        Initialize Trainer with database connector and Weights & Biases project details.
+
+        Args:
+            db_connector: Database connector instance.
+            new_user_threshold: Minimum number of films rated for a user to be considered existing.
+            wandb_auth_key: Weights & Biases API key.
+            wandb_project_path: Full project path in W&B (e.g., 'user/project').
+            wandb_project_name: Name of the W&B project.
+        """
         self.db_connector = db_connector
         self.new_user_threshold = new_user_threshold
         self.wandb_auth_key = wandb_auth_key
@@ -41,14 +63,16 @@ class Trainer:
 
         logger_trainer.info("'Trainer' object instantiated; W&B run initialized.")
 
-    def close_wandb_run(self):
+    def close_wandb_run(self) -> None:
+        """Close the active Weights & Biases run, if open."""
         if self.wandb_run:
             self.wandb_run.finish()
             logger_trainer.info("Training W&B run closed.")
         else:
             logger_trainer.info("No training W&B run currently open, therefore nothing to close.")
 
-    def train_initial_model(self):
+    def train_initial_model(self) -> None:
+        """Train the initial SVD model, evaluate it, and upload it to Weights & Biases."""
         try:
             try:
                 self._load_ratings_data('start_date', 'end_date')
@@ -67,20 +91,29 @@ class Trainer:
             except Exception:
                 logger_trainer.exception("Error occurred in evaluating model performance.")
                 raise
-        
+
             try:
                 self._upload_trained_model('prod')
             except Exception:
                 logger_trainer.exception("Error occurred in uploading trained model to Weights & Biases.")
                 raise
-            
+
         except Exception:
-            logger_trainer.exception(f"Error occurred during intial model training.")
+            logger_trainer.exception("Error occurred during intial model training.")
             raise
         finally:
             self.close_wandb_run()
 
-    def check_if_retraining_required(self):
+    def check_if_retraining_required(self) -> Tuple[bool, Dict[str, Any], Dict[str, Any]]:
+        """
+        Check whether retraining is required by comparing benchmark and scoring metrics.
+
+        Returns:
+            A tuple containing:
+                - retraining_required: Whether retraining is necessary.
+                - degraded_metrics: Metrics that have degraded.
+                - stable_metrics: Metrics that remained stable.
+        """
         print("Checking if retraining required...")
 
         try:
@@ -96,45 +129,56 @@ class Trainer:
             self.close_wandb_run()
             raise
 
-    def retrain(self, degraded_metrics, stable_metrics):
+    def retrain(self, degraded_metrics: Dict[str, Any], stable_metrics: Dict[str, Any]) -> None:
+        """
+        Retrain the model if metrics have degraded and evaluate whether the new model should replace the current one.
+
+        Args:
+            degraded_metrics: Metrics identified as degraded.
+            stable_metrics: Metrics identified as stable.
+        """
         try:
             try:
-                self._load_ratings_data('start_date', 'end_date') # could insert logic to implement rolling window/recency weighting...
+                self._load_ratings_data('start_date', 'end_date')
             except Exception:
                 logger_trainer.exception("Error occurred in initializing retrainer object.")
                 raise
 
             try:
-                champion = self._import_current_champion_model() # importing current 'Champion' model
+                champion = self._import_current_champion_model()
             except Exception:
                 logger_trainer.exception("Error occurred in importing current 'champion' model.")
                 raise
-            
+
             try:
-                challenger = self._train_svd_model() # training new 'Challenger' model
-                self._evaluate_model_performance() # getting newly-trained 'Challenger' train performance metrics for upload later...
+                challenger = self._train_svd_model()
+                self._evaluate_model_performance()
             except Exception:
                 logger_trainer.exception("Error occurred in training and evaluating new 'challenger' model.")
                 raise
-            
+
             try:
-                champion_performance_metrics = self._evaluate_model_recent_performance(champion) # just a note to stress that metrics here are purely demonstrative - retraining on original + simulated data is ultimately taking from two entirely different data distributions, hence the relatively poor performance following retraining in both the champion and challenger. these metrics would be better in a real-world scenario...
+                champion_performance_metrics = self._evaluate_model_recent_performance(champion)
             except Exception:
                 logger_trainer.exception("Error occurred in evaluating 'champion' model performance metrics on recent data.")
                 raise
-            
+
             try:
                 challenger_performance_metrics = self._evaluate_model_recent_performance(challenger)
             except Exception:
                 logger_trainer.exception("Error occurred in evaluating 'challenger' model performance metrics on recent data.")
                 raise
-            
+
             try:
                 degraded_metric_names = self._get_metric_names(degraded_metrics)
                 stable_metric_names = self._get_metric_names(stable_metrics)
 
-                degraded_metric_comparison_outcomes = self._get_metric_comparison_outcomes(champion_performance_metrics, challenger_performance_metrics, degraded_metric_names, 'degraded', tolerance=0.05)
-                stable_metric_comparison_outcomes = self._get_metric_comparison_outcomes(champion_performance_metrics, challenger_performance_metrics, stable_metric_names, 'stable', tolerance=0.05)
+                degraded_metric_comparison_outcomes = self._get_metric_comparison_outcomes(
+                    champion_performance_metrics, challenger_performance_metrics, degraded_metric_names, 'degraded', tolerance=0.05
+                )
+                stable_metric_comparison_outcomes = self._get_metric_comparison_outcomes(
+                    champion_performance_metrics, challenger_performance_metrics, stable_metric_names, 'stable', tolerance=0.05
+                )
 
                 retraining_outcome = self._get_overall_retraining_outcome(degraded_metric_comparison_outcomes, stable_metric_comparison_outcomes)
 
@@ -164,12 +208,12 @@ class Trainer:
                     The challenger model produced mixed results — some metrics improved while others degraded beyond tolerance.
                     The retraining outcome requires human review before promotion decisions can be made.
                     Please review retraining outcome in Weights & Biases - run information below:
-                    Project: https://wandb.ai/{wandb_project_path}
+                    Project: https://wandb.ai/{self.wandb_project_path}
                     Run name: {self.wandb_run.name}
                     """)
 
                     subject = 'Human Review Required for Film Recommender Model Retraining'
-                    message = f"""\
+                    message = f"""\ 
                     The latest retraining run for the Film Recommender model requires human review.
 
                     One or more performance metrics degraded during automated evaluation, and the model
@@ -178,20 +222,32 @@ class Trainer:
                     Please review the logged challenger and champion model performance in Weights & Biases
                     to determine whether manual promotion or further tuning is needed.
 
-                    Weights & Biases project: https://wandb.ai/{wandb_project_name}
+                    Weights & Biases project: https://wandb.ai/{self.wandb_project_name}
                     Run name: {self.wandb_run.name}
                     """
 
-                    self._notify_team(subject, message, 'curtisgribben1@gmail.com', 'curtisgribben1@gmail.com', 'umrs swlv lxmd pswj') # app-specific password for added security
-                
+                    self._notify_team(subject, message, 'curtisgribben1@gmail.com', 'curtisgribben1@gmail.com', 'umrs swlv lxmd pswj')
+
             except Exception:
-                logger_trainer.exception("Error occurred in logic surrounding comparison of 'challenger' vs 'champion' model performance on recent data, and subsequent implementation of outcome.")
+                logger_trainer.exception("Error occurred in logic surrounding comparison of 'challenger' vs 'champion' model performance.")
                 raise
 
         finally:
             self.close_wandb_run()
 
-    def _load_ratings_data(self, start_date, end_date): # for rolling window
+    def _load_ratings_data(self, start_date: str, end_date: str) -> Tuple[pd.DataFrame, pd.DataFrame]:
+        """
+        Load ratings data from the database and split users into 'existing' and 'new' based on the rating threshold.
+
+        Args:
+            start_date: Start date for the data window (placeholder in this demo).
+            end_date: End date for the data window (placeholder in this demo).
+
+        Returns:
+            A tuple containing:
+                - ratings: Complete ratings DataFrame.
+                - ratings_existing: Ratings DataFrame filtered for existing users.
+        """
         logger_trainer.info("Loading in 'ratings' data...")
 
         ratings = self.db_connector.read_collection('ratings')
@@ -210,7 +266,13 @@ class Trainer:
 
         return ratings, ratings_existing
 
-    def _train_svd_model(self):
+    def _train_svd_model(self) -> SVD:
+        """
+        Train a Singular Value Decomposition (SVD) model using Surprise on the ratings dataset.
+
+        Returns:
+            The trained SVD model instance.
+        """
         logger_trainer.info("Training SVD model...")
 
         reader = Reader(rating_scale=(0, 5))
@@ -228,7 +290,13 @@ class Trainer:
 
         return model
 
-    def _evaluate_model_performance(self):
+    def _evaluate_model_performance(self) -> Dict[str, Dict[str, Dict[str, Optional[float]]]]:
+        """
+        Evaluate model performance both overall and by genre.
+
+        Returns:
+            Nested dictionary of performance metrics (RMSE, R²) overall and by genre.
+        """
         logger_trainer.info("Evaluating SVD model...")
 
         model = self.trained_model
@@ -246,7 +314,13 @@ class Trainer:
 
         return all_performance_metrics
     
-    def _upload_trained_model(self, environment):
+    def _upload_trained_model(self, environment: str) -> None:
+        """
+        Upload the trained model to Weights & Biases as an artifact.
+
+        Args:
+            environment: The model environment tag ('prod' or 'staging').
+        """
         logger_trainer.info(f"Logging SVD model in W&B...")
 
         model_path = '/tmp/svd_model.pkl'
@@ -264,7 +338,14 @@ class Trainer:
 
         os.remove(model_path)
 
-    def _log_artifact(self, label, data):
+    def _log_artifact(self, label: str, data: Dict[str, Any]) -> None:
+        """
+        Log a JSON artifact to Weights & Biases.
+
+        Args:
+            label: Artifact name label.
+            data: Data to be serialized and logged.
+        """
         tmp_path = f"{label}.json"  
 
         with open(tmp_path, "w") as f:
@@ -279,7 +360,16 @@ class Trainer:
 
         logger_trainer.info(f"'{label}' successfully logged as artifact in W&B.")
 
-    def _access_artifact(self, artifact_name):
+    def _access_artifact(self, artifact_name: str) -> Dict[str, Any]:
+        """
+        Retrieve and load a JSON artifact from Weights & Biases.
+
+        Args:
+            artifact_name: Name of the artifact to access.
+
+        Returns:
+            The loaded artifact content as a dictionary.
+        """
         api = wandb.Api() # no login required as will already be logged in within runtime...
 
         artifact = api.artifact(f"{os.path.join(self.wandb_project_path, artifact_name)}:latest")
@@ -291,7 +381,17 @@ class Trainer:
 
         return loaded_artifact
 
-    def _evaluate_performance_metrics_overall(self, model, testset):
+    def _evaluate_performance_metrics_overall(self, model: SVD, testset: List[Tuple[Any, Any, float]]) -> Dict[str, float]:
+        """
+        Evaluate the model’s overall RMSE and R² performance.
+
+        Args:
+            model: Trained SVD model.
+            testset: List of testset tuples (user_id, film_id, rating).
+
+        Returns:
+            Dictionary with overall RMSE and R².
+        """
         predictions = model.test(testset)
 
         rmse = round(accuracy.rmse(predictions, verbose=False), 3)
@@ -312,14 +412,32 @@ class Trainer:
         return performance_metrics
     
     @staticmethod
-    def _simplify_genres_list(x):
+    def _simplify_genres_list(x: str) -> List[str]:
+        """
+        Simplify a stringified list of genre dictionaries into a list of genre names.
+
+        Args:
+            x: String representation of genre list (e.g., "[{'id': 1, 'name': 'Action'}]").
+
+        Returns:
+            List of genre names.
+        """
         raw_genres_list = eval(x)
         simplified_genres_list = [raw_genres_list[i]['name'] for i in range(len(raw_genres_list))]
         
         return simplified_genres_list
     
     @staticmethod
-    def _fill_in_missing_ids(genres_table):
+    def _fill_in_missing_ids(genres_table: pd.DataFrame) -> pd.DataFrame:
+        """
+        Fill in missing film IDs in the genres table with placeholder 'Undisclosed' entries.
+
+        Args:
+            genres_table: DataFrame containing 'film_id' and 'genres' columns.
+
+        Returns:
+            Updated genres DataFrame with all film IDs present.
+        """
         full_film_ids = pd.Series(range(1, 5000), name='film_id')
         missing_film_ids = full_film_ids[~full_film_ids.isin(genres_table['film_id'])]
 
@@ -333,7 +451,13 @@ class Trainer:
 
         return genres_table
     
-    def _load_genres_table(self):
+    def _load_genres_table(self) -> pd.DataFrame:
+        """
+        Load and preprocess the genres table from the database.
+
+        Returns:
+            Cleaned genres DataFrame with simplified genre lists and missing IDs filled.
+        """
         logger_trainer.info("Loading in 'genres' table...")
 
         genres_table = self.db_connector.read_collection('genres')
@@ -346,7 +470,17 @@ class Trainer:
 
         return genres_table 
 
-    def _evaluate_performance_metrics_by_genre(self, model, testset):
+    def _evaluate_performance_metrics_by_genre(self, model: SVD, testset: List[Tuple[Any, Any, float]]) -> Dict[str, Dict[str, Optional[float]]]:
+        """
+        Evaluate model performance metrics grouped by genre.
+
+        Args:
+            model: Trained SVD model.
+            testset: List of testset tuples (user_id, film_id, rating).
+
+        Returns:
+            Dictionary mapping genres to RMSE and R² performance metrics.
+        """
         predictions = model.test(testset)
 
         predictions = pd.DataFrame(
@@ -386,7 +520,13 @@ class Trainer:
 
         return performance_metrics
 
-    def _import_current_champion_model(self):
+    def _import_current_champion_model(self) -> SVD:
+        """
+        Import the current champion SVD model artifact from Weights & Biases.
+
+        Returns:
+            The loaded champion SVD model instance.
+        """
         logger_trainer.info("Importing 'Champion' SVD model from Weights & Biases...")
 
         artifact_path = os.path.join(self.wandb_project_path, 'svd_model:latest')
@@ -403,7 +543,16 @@ class Trainer:
 
         return model
 
-    def _evaluate_model_recent_performance(self, model):
+    def _evaluate_model_recent_performance(self, model: SVD) -> Dict[str, Dict[str, Dict[str, Optional[float]]]]:
+        """
+        Evaluate a model’s performance on recent ratings data.
+
+        Args:
+            model: SVD model to evaluate.
+
+        Returns:
+            Nested dictionary containing overall and by-genre performance metrics.
+        """
         logger_trainer.info("Evaluating model performance on recent data...")
 
         reader = Reader(rating_scale=(0, 5))
@@ -424,7 +573,16 @@ class Trainer:
         return all_performance_metrics
 
     @staticmethod
-    def _get_metric_names(metric_dict):
+    def _get_metric_names(metric_dict: Dict[str, Any]) -> List[str]:
+        """
+        Extract all metric names (overall and by genre) from a nested metrics dictionary.
+
+        Args:
+            metric_dict: Dictionary of performance metrics.
+
+        Returns:
+            List of metric names.
+        """
         metric_names = []
 
         for k, v in metric_dict.items():
@@ -436,7 +594,15 @@ class Trainer:
 
         return metric_names
 
-    def _get_degraded_metrics(self):
+    def _get_degraded_metrics(self) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+        """
+        Compare benchmark and scoring metrics to determine which have degraded or remained stable.
+
+        Returns:
+            A tuple containing:
+                - degraded_metrics: Metrics that have degraded.
+                - stable_metrics: Metrics that remained stable.
+        """
         benchmark_performance_metrics = self._access_artifact('training_performance_metrics')['Overall']
         benchmark_performance_metrics_by_genre = self._access_artifact('training_performance_metrics')['By Genre']
 
@@ -482,7 +648,26 @@ class Trainer:
         return degraded_metrics, stable_metrics
 
     @staticmethod
-    def _get_metric_comparison_outcomes(champion_performance_metrics, challenger_performance_metrics, relevant_metric_names, degraded_or_stable, tolerance=0.05):
+    def _get_metric_comparison_outcomes(
+        champion_performance_metrics: Dict[str, Any],
+        challenger_performance_metrics: Dict[str, Any],
+        relevant_metric_names: List[str],
+        degraded_or_stable: str,
+        tolerance: float = 0.05
+    ) -> Dict[str, Any]:
+        """
+        Compare performance metrics between the champion and challenger models.
+
+        Args:
+            champion_performance_metrics: Metrics of the current production model.
+            challenger_performance_metrics: Metrics of the newly trained model.
+            relevant_metric_names: List of metrics to compare.
+            degraded_or_stable: Whether the metrics are considered degraded or stable.
+            tolerance: Threshold for acceptable performance difference.
+
+        Returns:
+            Dictionary summarizing the comparison outcomes for each metric.
+        """
         metric_comparison_outcomes = {}
 
         for metric_name in relevant_metric_names:
@@ -523,7 +708,23 @@ class Trainer:
         return metric_comparison_outcomes
 
     @staticmethod
-    def _get_high_level_metric_comparison_outcomes(degraded_metric_comparison_outcomes, stable_metric_comparison_outcomes):
+    def _get_high_level_metric_comparison_outcomes(
+        degraded_metric_comparison_outcomes: Dict[str, Any],
+        stable_metric_comparison_outcomes: Dict[str, Any]
+    ) -> Tuple[bool, bool, bool]:
+        """
+        Aggregate and summarize comparison outcomes across all degraded and stable metrics.
+
+        Args:
+            degraded_metric_comparison_outcomes: Comparison outcomes for degraded metrics.
+            stable_metric_comparison_outcomes: Comparison outcomes for stable metrics.
+
+        Returns:
+            Tuple of booleans:
+                - any_degraded_improved
+                - any_degraded_further_degraded
+                - any_stable_degraded
+        """
         degraded_outcomes_listed = []
         stable_outcomes_listed = []
 
@@ -549,7 +750,21 @@ class Trainer:
 
         return any_degraded_improved, any_degraded_further_degraded, any_stable_degraded
 
-    def _get_overall_retraining_outcome(self, degraded_metric_comparison_outcomes, stable_metric_comparison_outcomes):
+    def _get_overall_retraining_outcome(
+        self,
+        degraded_metric_comparison_outcomes: Dict[str, Any],
+        stable_metric_comparison_outcomes: Dict[str, Any]
+    ) -> str:
+        """
+        Determine whether to promote, reject, or flag the challenger model for human review.
+
+        Args:
+            degraded_metric_comparison_outcomes: Comparison outcomes for degraded metrics.
+            stable_metric_comparison_outcomes: Comparison outcomes for stable metrics.
+
+        Returns:
+            String decision outcome ('Promote Challenger', 'Reject Challenger', or 'Human Review').
+        """
         any_degraded_improved, any_degraded_further_degraded, any_stable_degraded = self._get_high_level_metric_comparison_outcomes(degraded_metric_comparison_outcomes, stable_metric_comparison_outcomes)
 
         decision_matrix = {
@@ -568,7 +783,27 @@ class Trainer:
         return overall_outcome
 
     @staticmethod
-    def _notify_team(subject, message, recipients, sender_email, sender_password, smtp_server="smtp.gmail.com", smtp_port=587):
+    def _notify_team(
+        subject: str,
+        message: str,
+        recipients: Union[str, List[str]],
+        sender_email: str,
+        sender_password: str,
+        smtp_server: str = "smtp.gmail.com",
+        smtp_port: int = 587
+    ) -> None:
+        """
+        Send an email notification to the team when human review is required.
+
+        Args:
+            subject: Email subject line.
+            message: Email body content.
+            recipients: Single recipient email or list of emails.
+            sender_email: Email address used to send the message.
+            sender_password: Password or app password for the sender email.
+            smtp_server: SMTP server address.
+            smtp_port: SMTP server port.
+        """
         if isinstance(recipients, str):
             recipients = [recipients]
 

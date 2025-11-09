@@ -1,0 +1,60 @@
+2025-11-09 12:52:42,055 | trainer | INFO | 'Trainer' object instantiated; W&B run initialized.
+2025-11-09 12:52:42,059 | trainer | INFO | Loading in 'ratings' data...
+2025-11-09 12:52:48,603 | db_connector | INFO | Successfully read collection 'ratings'. Shape of df: (139100, 4)
+2025-11-09 12:52:48,691 | trainer | INFO | Data successfully loaded!
+2025-11-09 12:52:48,695 | trainer | INFO | Training SVD model...
+2025-11-09 12:52:52,114 | trainer | INFO | SVD model successfully trained!
+2025-11-09 12:52:52,130 | trainer | INFO | Evaluating SVD model...
+2025-11-09 12:52:52,792 | trainer | INFO | ### Model Performance Metrics (Overall): ###
+2025-11-09 12:52:52,796 | trainer | INFO | RMSE: 0.833
+2025-11-09 12:52:52,800 | trainer | INFO | squared: 0.299
+2025-11-09 12:52:53,271 | trainer | INFO | Loading in 'genres' table...
+2025-11-09 12:52:53,505 | db_connector | INFO | Successfully read collection 'genres'. Shape of df: (4877, 2)
+2025-11-09 12:52:53,739 | trainer | INFO | Table successfully loaded!
+2025-11-09 12:52:53,755 | trainer | INFO | ### Model Performance Metrics (by Genre): ###
+2025-11-09 12:52:53,782 | trainer | INFO | 'Mystery' rmse = 0.807
+2025-11-09 12:52:53,786 | trainer | INFO | 'Mystery' r-squared = 0.322
+2025-11-09 12:52:53,830 | trainer | INFO | 'TV Movie' rmse = Insufficient Data
+2025-11-09 12:52:53,833 | trainer | INFO | 'TV Movie' r-squared = Insufficient Data
+2025-11-09 12:52:53,884 | trainer | INFO | 'Science Fiction' rmse = 0.872
+2025-11-09 12:52:53,889 | trainer | INFO | 'Science Fiction' r-squared = 0.332
+2025-11-09 12:52:53,913 | trainer | INFO | 'Crime' rmse = 0.802
+2025-11-09 12:52:53,923 | trainer | INFO | 'Crime' r-squared = 0.328
+2025-11-09 12:52:53,950 | trainer | INFO | 'Documentary' rmse = 0.801
+2025-11-09 12:52:53,958 | trainer | INFO | 'Documentary' r-squared = 0.09
+2025-11-09 12:52:53,983 | trainer | INFO | 'Undisclosed' rmse = Insufficient Data
+2025-11-09 12:52:53,987 | trainer | INFO | 'Undisclosed' r-squared = Insufficient Data
+2025-11-09 12:52:54,011 | trainer | INFO | 'Romance' rmse = 0.863
+2025-11-09 12:52:54,017 | trainer | INFO | 'Romance' r-squared = 0.247
+2025-11-09 12:52:54,042 | trainer | INFO | 'Fantasy' rmse = 0.889
+2025-11-09 12:52:54,046 | trainer | INFO | 'Fantasy' r-squared = 0.291
+2025-11-09 12:52:54,068 | trainer | INFO | 'Horror' rmse = 0.914
+2025-11-09 12:52:54,074 | trainer | INFO | 'Horror' r-squared = 0.3
+2025-11-09 12:52:54,105 | trainer | INFO | 'Animation' rmse = 0.815
+2025-11-09 12:52:54,113 | trainer | INFO | 'Animation' r-squared = 0.28
+2025-11-09 12:52:54,139 | trainer | INFO | 'War' rmse = 0.731
+2025-11-09 12:52:54,144 | trainer | INFO | 'War' r-squared = 0.261
+2025-11-09 12:52:54,171 | trainer | INFO | 'Thriller' rmse = 0.812
+2025-11-09 12:52:54,175 | trainer | INFO | 'Thriller' r-squared = 0.33
+2025-11-09 12:52:54,198 | trainer | INFO | 'Foreign' rmse = 0.698
+2025-11-09 12:52:54,202 | trainer | INFO | 'Foreign' r-squared = 0.126
+2025-11-09 12:52:54,227 | trainer | INFO | 'Action' rmse = 0.856
+2025-11-09 12:52:54,233 | trainer | INFO | 'Action' r-squared = 0.316
+2025-11-09 12:52:54,256 | trainer | INFO | 'Music' rmse = 0.885
+2025-11-09 12:52:54,259 | trainer | INFO | 'Music' r-squared = 0.197
+2025-11-09 12:52:54,285 | trainer | INFO | 'Western' rmse = 0.816
+2025-11-09 12:52:54,289 | trainer | INFO | 'Western' r-squared = 0.295
+2025-11-09 12:52:54,313 | trainer | INFO | 'Family' rmse = 0.873
+2025-11-09 12:52:54,316 | trainer | INFO | 'Family' r-squared = 0.284
+2025-11-09 12:52:54,345 | trainer | INFO | 'Comedy' rmse = 0.863
+2025-11-09 12:52:54,350 | trainer | INFO | 'Comedy' r-squared = 0.276
+2025-11-09 12:52:54,373 | trainer | INFO | 'Drama' rmse = 0.8
+2025-11-09 12:52:54,379 | trainer | INFO | 'Drama' r-squared = 0.257
+2025-11-09 12:52:54,409 | trainer | INFO | 'Adventure' rmse = 0.852
+2025-11-09 12:52:54,414 | trainer | INFO | 'Adventure' r-squared = 0.323
+2025-11-09 12:52:54,443 | trainer | INFO | 'History' rmse = 0.78
+2025-11-09 12:52:54,447 | trainer | INFO | 'History' r-squared = 0.189
+2025-11-09 12:52:55,738 | trainer | INFO | 'training_performance_metrics' successfully logged as artifact in W&B.
+2025-11-09 12:52:55,750 | trainer | INFO | Evaluation of SVD model complete!
+2025-11-09 12:52:55,756 | trainer | INFO | Logging SVD model in W&B...
+2025-11-09 12:52:57,550 | trainer | INFO | SVD model successfully logged!

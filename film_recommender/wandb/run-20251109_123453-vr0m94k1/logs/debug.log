@@ -1,0 +1,31 @@
+2025-11-09 12:34:53,763 INFO    MainThread:1013 [wandb_setup.py:_flush():81] Current SDK version is 0.22.1
+2025-11-09 12:34:53,763 INFO    MainThread:1013 [wandb_setup.py:_flush():81] Configure stats pid to 1013
+2025-11-09 12:34:53,764 INFO    MainThread:1013 [wandb_setup.py:_flush():81] Loading settings from /root/.config/wandb/settings
+2025-11-09 12:34:53,765 INFO    MainThread:1013 [wandb_setup.py:_flush():81] Loading settings from /app/Streaming_Service_Recommendation_Simulation/film_recommender/wandb/settings
+2025-11-09 12:34:53,766 INFO    MainThread:1013 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2025-11-09 12:34:53,767 INFO    MainThread:1013 [wandb_init.py:setup_run_log_directory():705] Logging user logs to /app/Streaming_Service_Recommendation_Simulation/film_recommender/wandb/run-20251109_123453-vr0m94k1/logs/debug.log
+2025-11-09 12:34:53,768 INFO    MainThread:1013 [wandb_init.py:setup_run_log_directory():706] Logging internal logs to /app/Streaming_Service_Recommendation_Simulation/film_recommender/wandb/run-20251109_123453-vr0m94k1/logs/debug-internal.log
+2025-11-09 12:34:53,769 INFO    MainThread:1013 [wandb_init.py:monkeypatch_ipython():624] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x72dd84df85e0>
+2025-11-09 12:34:53,770 INFO    MainThread:1013 [wandb_init.py:init():832] calling init triggers
+2025-11-09 12:34:53,771 INFO    MainThread:1013 [wandb_init.py:init():837] wandb.init called with sweep_config: {}
+config: {'_wandb': {}}
+2025-11-09 12:34:53,771 INFO    MainThread:1013 [wandb_init.py:init():880] starting backend
+2025-11-09 12:34:54,398 INFO    MainThread:1013 [wandb_init.py:init():883] sending inform_init request
+2025-11-09 12:34:54,419 INFO    MainThread:1013 [wandb_init.py:init():891] backend started and connected
+2025-11-09 12:34:54,430 INFO    MainThread:1013 [wandb_run.py:_label_probe_notebook():1330] probe notebook
+2025-11-09 12:34:54,469 INFO    MainThread:1013 [wandb_init.py:init():961] updated telemetry
+2025-11-09 12:34:54,723 INFO    MainThread:1013 [wandb_init.py:init():985] communicating run to backend with 90.0 second timeout
+2025-11-09 12:34:55,301 INFO    MainThread:1013 [wandb_init.py:init():1036] starting run threads in backend
+2025-11-09 12:34:55,790 INFO    MainThread:1013 [wandb_run.py:_console_start():2506] atexit reg
+2025-11-09 12:34:55,792 INFO    MainThread:1013 [wandb_run.py:_redirect():2354] redirect: wrap_raw
+2025-11-09 12:34:55,793 INFO    MainThread:1013 [wandb_run.py:_redirect():2423] Wrapping output streams.
+2025-11-09 12:34:55,795 INFO    MainThread:1013 [wandb_run.py:_redirect():2446] Redirects installed.
+2025-11-09 12:34:55,803 INFO    MainThread:1013 [wandb_init.py:init():1076] run started, returning control to user process
+2025-11-09 12:35:07,979 INFO    MainThread:1013 [wandb_run.py:_finish():2272] finishing run curtisgribben1-personal-capital/film_recommender/vr0m94k1
+2025-11-09 12:35:08,213 INFO    MainThread:1013 [jupyter.py:save_history():480] not saving jupyter history
+2025-11-09 12:35:08,214 INFO    MainThread:1013 [jupyter.py:save_ipynb():404] not saving jupyter notebook
+2025-11-09 12:35:08,215 INFO    MainThread:1013 [wandb_init.py:_jupyter_teardown():609] cleaning up jupyter logic
+2025-11-09 12:35:08,216 INFO    MainThread:1013 [wandb_run.py:_atexit_cleanup():2471] got exitcode: 0
+2025-11-09 12:35:08,218 INFO    MainThread:1013 [wandb_run.py:_restore():2453] restore
+2025-11-09 12:35:08,219 INFO    MainThread:1013 [wandb_run.py:_restore():2459] restore done
+2025-11-09 12:35:43,860 INFO    MainThread:1013 [wandb_run.py:_footer_sync_info():3869] logging synced files

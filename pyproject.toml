@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "film_recommender_cg"
-version = "0.1.0"
+version = "1.0.0"
 description = "A Film Recommendation Engine Package"
 authors = [{ name = "Curtis Gribben", email = "curtisgribben1@gmail.com" }]
 readme = "README.md"
 requires-python = ">=3.8"
-license = { text = "Apache" }
+license = { text = "Apache 2.0" }
 dependencies = ["pandas", "numpy", "matplotlib", "scikit-learn", "scikit-surprise", "pymongo", "wandb"]
 
 [tool.setuptools.packages.find]
