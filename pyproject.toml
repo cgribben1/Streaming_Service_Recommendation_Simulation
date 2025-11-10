@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "film_recommender_cg"
-version = "1.0.2"
+version = "1.0.3"
 description = "A Film Recommendation Engine Package"
 authors = [{ name = "Curtis Gribben", email = "curtisgribben1@gmail.com" }]
 readme = "README.md"
@@ -13,7 +13,8 @@ license = { text = "Apache 2.0" }
 dependencies = ["pandas", "numpy", "matplotlib", "scikit-learn", "scikit-surprise", "pymongo", "wandb"]
 
 [tool.setuptools.packages.find]
-where = ["film_recommender_cg"]
+where = ["."]
+include = ["film_recommender_cg*"]
 
 [tool.pytest.ini_options]
 filterwarnings = [
