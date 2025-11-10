@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch, mock_open
 import pandas as pd
 import numpy as np
 
-from film_recommender.trainer import Trainer
+from film_recommender_cg.trainer import Trainer
 
 @pytest.fixture
 def mock_db_connector():

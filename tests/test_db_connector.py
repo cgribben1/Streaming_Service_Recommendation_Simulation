@@ -7,11 +7,11 @@ import pandas as pd
 from unittest.mock import patch
 import mongomock
 
-from film_recommender.db_connector import DBConnector
+from film_recommender_cg.db_connector import DBConnector
 
 @pytest.fixture
 def db_connector():
-    with patch("film_recommender.db_connector.MongoClient", new=mongomock.MongoClient):
+    with patch("film_recommender_cg.db_connector.MongoClient", new=mongomock.MongoClient):
         connector = DBConnector(uri="mongodb://localhost:27017", db_name="test_db")
         connector.get_connection()
         yield connector

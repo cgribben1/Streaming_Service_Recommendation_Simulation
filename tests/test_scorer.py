@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 import pandas as pd
 import numpy as np
 
-from film_recommender.scorer import Scorer
+from film_recommender_cg.scorer import Scorer
 
 @pytest.fixture
 def mock_db_connector():
