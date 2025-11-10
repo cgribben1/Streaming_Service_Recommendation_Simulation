@@ -13,7 +13,8 @@ license = { text = "Apache 2.0" }
 dependencies = ["pandas", "numpy", "matplotlib", "scikit-learn", "scikit-surprise", "pymongo", "wandb"]
 
 [tool.setuptools.packages.find]
-where = ["film_recommender_cg"]
+where = ["."]
+include = ["film_recommender_cg*"]
 
 [tool.pytest.ini_options]
 filterwarnings = [
