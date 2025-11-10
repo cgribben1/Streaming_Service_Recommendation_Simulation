@@ -5,7 +5,7 @@ on:
     branches:
       - main
     tags:
-      - 'v*'        
+      - 'v*'
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -31,6 +31,20 @@ jobs:
           pip install build wheel twine pytest
           pip install -r requirements.txt
           pip install -r requirements-dev.txt
+
+      - name: Clean previous builds
+        run: rm -rf build dist **/*.egg-info
+
+      - name: Check version matches tag
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          TOML_VERSION=$(grep '^version' pyproject.toml | head -1 | cut -d'"' -f2)
+          TAG_VERSION="${GITHUB_REF##*/}"
+          echo "Tag: $TAG_VERSION | pyproject.toml version: $TOML_VERSION"
+          if [[ "v$TOML_VERSION" != "$TAG_VERSION" ]]; then
+            echo "Tag version and pyproject.toml version do not match!"
+            exit 1
+          fi
 
       - name: Install package
         run: pip install .
