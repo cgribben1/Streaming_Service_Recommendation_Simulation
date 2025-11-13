@@ -31,9 +31,7 @@ class Scorer:
     def __init__(
         self,
         db_connector: DBConnector,
-        wandb_auth_key: str,
-        wandb_project_path: str,
-        wandb_project_name: str,
+        wandb_config: dict,
         new_user_threshold: int,
         n_recs: int,
         max_interactions_between_scorings: int
@@ -43,18 +41,16 @@ class Scorer:
 
         Args:
             db_connector (DBConnector): Instance of DBConnector for database access.
-            wandb_auth_key (str): W&B authentication key.
-            wandb_project_path (str): Path to the W&B project artifacts.
-            wandb_project_name (str): Name of the W&B project.
+            wandb_config (dict): Dict containing Weights & Biases configs.
             new_user_threshold (int): Minimum number of interactions to consider a user as existing.
             n_recs (int): Number of recommendations to generate per user.
             max_interactions_between_scorings (int): Max interactions allowed between scoring runs.
         """
         self.db_connector = db_connector
         self.new_user_threshold = new_user_threshold
-        self.wandb_auth_key = wandb_auth_key
-        self.wandb_project_path = wandb_project_path
-        self.wandb_project_name = wandb_project_name
+        self.wandb_auth_key = wandb_config['auth_key']
+        self.wandb_project_path = wandb_config['project_path']
+        self.wandb_project_name = wandb_config['project_name']
         self.n_recs = n_recs
         self.max_interactions_between_scorings = max_interactions_between_scorings
         self.wandb_run = None
@@ -80,9 +76,9 @@ class Scorer:
         self.avg_personalization_score_per_user_group = None
         self.performance_metrics_per_user_group = None
 
-        wandb.login(key=wandb_auth_key)
-        self.wandb_run = wandb.init(project=wandb_project_name, job_type='scoring', tags=["scoring"])
-        artifact_path = os.path.join(wandb_project_path, 'svd_model:prod')
+        wandb.login(key=self.wandb_auth_key)
+        self.wandb_run = wandb.init(project=self.wandb_project_name, job_type='scoring', tags=["scoring"])
+        artifact_path = os.path.join(self.wandb_project_path, 'svd_model:prod')
         self.linked_model_artifact = self.wandb_run.use_artifact(artifact_path, type="model")
 
         logger_scorer.info("'Scorer' object instantiated; W&B run initialized.")
