@@ -5,6 +5,13 @@ import numpy as np
 
 from film_recommender_cg.trainer import Trainer
 
+wandb_config = {
+    'auth_key': 'fake_auth_key',
+    'team_name': 'fake_team_name',
+    'project_name': 'fake_project_name',
+    'project_path': 'fake_project_path'
+                 }
+
 @pytest.fixture
 def mock_db_connector():
     connector = MagicMock()
@@ -48,13 +55,11 @@ def trainer_instance():
         mock_login.return_value = None
         mock_log.return_value = None
         mock_finish.return_value = None
-
+        
         trainer = Trainer(
             db_connector=mock_db_connector,
+            wandb_config=wandb_config,
             new_user_threshold=0,
-            wandb_auth_key="fake_key",
-            wandb_project_path="fake_project_path",
-            wandb_project_name="fake_project_name"
         )
 
     yield trainer
