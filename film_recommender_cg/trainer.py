@@ -29,26 +29,22 @@ class Trainer:
     def __init__(
         self,
         db_connector: DBConnector,
-        new_user_threshold: int,
-        wandb_auth_key: str,
-        wandb_project_path: str,
-        wandb_project_name: str
+        wandb_config: dict,
+        new_user_threshold: int
     ) -> None:
         """
         Initialize Trainer with database connector and Weights & Biases project details.
 
         Args:
             db_connector: Database connector instance.
+            wandb_config (dict): Dict containing Weights & Biases configs.
             new_user_threshold: Minimum number of films rated for a user to be considered existing.
-            wandb_auth_key: Weights & Biases API key.
-            wandb_project_path: Full project path in W&B (e.g., 'user/project').
-            wandb_project_name: Name of the W&B project.
         """
         self.db_connector = db_connector
         self.new_user_threshold = new_user_threshold
-        self.wandb_auth_key = wandb_auth_key
-        self.wandb_project_path = wandb_project_path
-        self.wandb_project_name = wandb_project_name
+        self.wandb_auth_key = wandb_config['auth_key']
+        self.wandb_project_path = wandb_config['project_path']
+        self.wandb_project_name = wandb_config['project_name']
         self.wandb_run = None
         self.data_start_date = None
         self.data_end_date = None
@@ -58,8 +54,8 @@ class Trainer:
         self.trained_model = None
         self.imported_current_champion_model = None
 
-        wandb.login(key=wandb_auth_key)
-        self.wandb_run = wandb.init(project=wandb_project_name, job_type='training', tags=["training"])
+        wandb.login(key=self.wandb_auth_key)
+        self.wandb_run = wandb.init(project=self.wandb_project_name, job_type='training', tags=["training"])
 
         logger_trainer.info("'Trainer' object instantiated; W&B run initialized.")
 
