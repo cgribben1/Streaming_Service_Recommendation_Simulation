@@ -1,0 +1,82 @@
+2025-11-13 11:09:13,517 | __main__ | INFO | 'Trainer' object instantiated; W&B run initialized.
+Checking if retraining required...
+[34m[1mwandb[0m:   1 of 1 files downloaded.
+[34m[1mwandb[0m:   1 of 1 files downloaded.
+[34m[1mwandb[0m:   1 of 1 files downloaded.
+[34m[1mwandb[0m:   1 of 1 files downloaded.
+Retraining required as at least one performance metric found to have degraded in the current model...
+2025-11-13 11:09:21,382 | __main__ | INFO | Loading in 'ratings' data...
+2025-11-13 11:09:26,389 | film_recommender_cg.db_connector | INFO | Successfully read collection 'ratings'. Shape of df: (162540, 4)
+2025-11-13 11:09:26,428 | __main__ | INFO | Data successfully loaded!
+2025-11-13 11:09:26,431 | __main__ | INFO | Importing 'Champion' SVD model from Weights & Biases...
+[34m[1mwandb[0m:   1 of 1 files downloaded.
+2025-11-13 11:09:28,809 | __main__ | INFO | Model successfully imported!
+2025-11-13 11:09:28,813 | __main__ | INFO | Training SVD model...
+2025-11-13 11:09:29,722 | __main__ | INFO | SVD model successfully trained!
+2025-11-13 11:09:29,727 | __main__ | INFO | Evaluating SVD model...
+DEBUGGING LEN TESTSET 7965
+2025-11-13 11:09:29,847 | __main__ | INFO | ### Model Performance Metrics (Overall): ###
+2025-11-13 11:09:29,851 | __main__ | INFO | RMSE: 0.897
+2025-11-13 11:09:29,855 | __main__ | INFO | squared: 0.273
+2025-11-13 11:09:31,691 | __main__ | INFO | Loading in 'genres' table...
+2025-11-13 11:09:31,891 | film_recommender_cg.db_connector | INFO | Successfully read collection 'genres'. Shape of df: (4877, 2)
+2025-11-13 11:09:32,006 | __main__ | INFO | Table successfully loaded!
+2025-11-13 11:09:32,014 | __main__ | INFO | ### Model Performance Metrics (by Genre): ###
+2025-11-13 11:09:32,021 | __main__ | INFO | 'Fantasy' rmse = 0.909
+2025-11-13 11:09:32,023 | __main__ | INFO | 'Fantasy' r-squared = 0.282
+2025-11-13 11:09:32,033 | __main__ | INFO | 'Music' rmse = 1.006
+2025-11-13 11:09:32,036 | __main__ | INFO | 'Music' r-squared = 0.217
+2025-11-13 11:09:32,045 | __main__ | INFO | 'Drama' rmse = 0.886
+2025-11-13 11:09:32,048 | __main__ | INFO | 'Drama' r-squared = 0.225
+2025-11-13 11:09:32,058 | __main__ | INFO | 'Romance' rmse = 0.928
+2025-11-13 11:09:32,062 | __main__ | INFO | 'Romance' r-squared = 0.214
+2025-11-13 11:09:32,071 | __main__ | INFO | 'Comedy' rmse = 0.923
+2025-11-13 11:09:32,076 | __main__ | INFO | 'Comedy' r-squared = 0.251
+2025-11-13 11:09:32,083 | __main__ | INFO | 'Adventure' rmse = 0.886
+2025-11-13 11:09:32,085 | __main__ | INFO | 'Adventure' r-squared = 0.315
+2025-11-13 11:09:32,095 | __main__ | INFO | 'Science Fiction' rmse = 0.885
+2025-11-13 11:09:32,097 | __main__ | INFO | 'Science Fiction' r-squared = 0.325
+2025-11-13 11:09:32,109 | __main__ | INFO | 'Mystery' rmse = 0.852
+2025-11-13 11:09:32,111 | __main__ | INFO | 'Mystery' r-squared = 0.315
+2025-11-13 11:09:32,117 | __main__ | INFO | 'Undisclosed' rmse = Insufficient Data
+2025-11-13 11:09:32,130 | __main__ | INFO | 'Undisclosed' r-squared = Insufficient Data
+2025-11-13 11:09:32,154 | __main__ | INFO | 'Crime' rmse = 0.851
+2025-11-13 11:09:32,157 | __main__ | INFO | 'Crime' r-squared = 0.312
+2025-11-13 11:09:32,177 | __main__ | INFO | 'Family' rmse = 0.937
+2025-11-13 11:09:32,180 | __main__ | INFO | 'Family' r-squared = 0.222
+2025-11-13 11:09:32,200 | __main__ | INFO | 'Action' rmse = 0.875
+2025-11-13 11:09:32,202 | __main__ | INFO | 'Action' r-squared = 0.339
+2025-11-13 11:09:32,235 | __main__ | INFO | 'Western' rmse = 0.89
+2025-11-13 11:09:32,237 | __main__ | INFO | 'Western' r-squared = 0.266
+2025-11-13 11:09:32,245 | __main__ | INFO | 'War' rmse = 0.873
+2025-11-13 11:09:32,248 | __main__ | INFO | 'War' r-squared = 0.283
+2025-11-13 11:09:32,266 | __main__ | INFO | 'Thriller' rmse = 0.866
+2025-11-13 11:09:32,269 | __main__ | INFO | 'Thriller' r-squared = 0.312
+2025-11-13 11:09:32,287 | __main__ | INFO | 'Horror' rmse = 0.964
+2025-11-13 11:09:32,289 | __main__ | INFO | 'Horror' r-squared = 0.279
+2025-11-13 11:09:32,296 | __main__ | INFO | 'Documentary' rmse = Insufficient Data
+2025-11-13 11:09:32,298 | __main__ | INFO | 'Documentary' r-squared = Insufficient Data
+2025-11-13 11:09:32,312 | __main__ | INFO | 'Foreign' rmse = Insufficient Data
+2025-11-13 11:09:32,328 | __main__ | INFO | 'Foreign' r-squared = Insufficient Data
+2025-11-13 11:09:32,336 | __main__ | INFO | 'History' rmse = 0.823
+2025-11-13 11:09:32,344 | __main__ | INFO | 'History' r-squared = 0.189
+2025-11-13 11:09:32,349 | __main__ | INFO | 'TV Movie' rmse = Insufficient Data
+2025-11-13 11:09:32,352 | __main__ | INFO | 'TV Movie' r-squared = Insufficient Data
+2025-11-13 11:09:32,375 | __main__ | INFO | 'Animation' rmse = 0.906
+2025-11-13 11:09:32,377 | __main__ | INFO | 'Animation' r-squared = 0.199
+2025-11-13 11:09:33,604 | __main__ | INFO | 'training_performance_metrics' successfully logged as artifact in W&B.
+2025-11-13 11:09:33,606 | __main__ | INFO | Evaluation of SVD model complete!
+2025-11-13 11:09:33,607 | __main__ | INFO | Evaluating model performance on recent data...
+DEBUGGING RECENT RATINGS TESTSET []
+DEBUGGING LEN TESTSET 0
+2025-11-13 11:09:33,633 | __main__ | ERROR | Error occurred in evaluating 'champion' model performance metrics on recent data.
+Traceback (most recent call last):
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/trainer.py", line 157, in retrain
+    champion_performance_metrics = self._evaluate_model_recent_performance(champion)
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/trainer.py", line 567, in _evaluate_model_recent_performance
+    all_performance_metrics['Overall'] = self._evaluate_performance_metrics_overall(model, recent_ratings_testset)
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/trainer.py", line 394, in _evaluate_performance_metrics_overall
+    rmse = round(accuracy.rmse(predictions, verbose=False), 3)
+  File "/usr/local/lib/python3.10/site-packages/surprise/accuracy.py", line 44, in rmse
+    raise ValueError("Prediction list is empty.")
+ValueError: Prediction list is empty.

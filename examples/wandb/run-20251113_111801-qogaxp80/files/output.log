@@ -1,0 +1,99 @@
+2025-11-13 11:18:04,097 | __main__ | INFO | 'Scorer' object instantiated; W&B run initialized.
+2025-11-13 11:18:04,100 | __main__ | INFO | Loading in 'ratings' data...
+2025-11-13 11:18:09,916 | film_recommender_cg.db_connector | INFO | Successfully read collection 'ratings'. Shape of df: (168400, 4)
+2025-11-13 11:18:09,939 | __main__ | INFO | Data successfully loaded!
+2025-11-13 11:18:09,942 | __main__ | INFO | Number of 'existing' users: 506 -> Using SVD collaborative filtering model to generate these recommendations...
+2025-11-13 11:18:09,945 | __main__ | INFO | Number of 'New' users: 61 -> Falling back to cold-start strategy of recommending top 'n' films by popularity...
+2025-11-13 11:18:09,947 | __main__ | INFO | Ratings data loaded successfully.
+2025-11-13 11:18:10,138 | film_recommender_cg.db_connector | INFO | Successfully read collection 'genres'. Shape of df: (4877, 2)
+2025-11-13 11:18:10,260 | __main__ | INFO | Genres table loaded successfully.
+2025-11-13 11:18:10,263 | __main__ | INFO | Loading in model from W&B...
+[34m[1mwandb[0m:   1 of 1 files downloaded.
+2025-11-13 11:18:11,234 | __main__ | INFO | Model successfully loaded!
+2025-11-13 11:18:11,237 | __main__ | INFO | Model imported successfully.
+2025-11-13 11:18:11,239 | __main__ | INFO | Scoring for 'existing' users...
+2025-11-13 11:18:33,230 | __main__ | INFO | Scoring complete for 'existing' users!
+2025-11-13 11:18:33,263 | __main__ | INFO | Rankings for existing users generated successfully.
+2025-11-13 11:18:33,265 | __main__ | INFO | Scoring for 'new' users...
+2025-11-13 11:18:33,302 | __main__ | INFO | Scoring complete for 'new' users!
+2025-11-13 11:18:33,310 | __main__ | INFO | Rankings for new users generated successfully.
+2025-11-13 11:18:33,313 | __main__ | INFO | Simulating interactions for 'existing' users...
+2025-11-13 11:18:36,527 | __main__ | INFO | Simulation of 'existing' users complete!
+2025-11-13 11:18:36,532 | __main__ | INFO | New interactions for existing users simulated successfully.
+2025-11-13 11:18:36,535 | __main__ | INFO | Simulating interactions for 'new' users...
+2025-11-13 11:18:36,950 | __main__ | INFO | Simulation of 'new' users complete!
+2025-11-13 11:18:36,953 | __main__ | INFO | New interactions for new users simulated successfully.
+2025-11-13 11:18:36,955 | __main__ | INFO | Updating ratings table...
+2025-11-13 11:18:42,096 | film_recommender_cg.db_connector | INFO | Inserted 6155 documents into 'ratings'.
+2025-11-13 11:18:42,098 | __main__ | INFO | Ratings table updated.
+2025-11-13 11:18:42,103 | __main__ | INFO | Ratings table updated successfully.
+2025-11-13 11:18:42,106 | __main__ | INFO | All processing completed successfully.
+2025-11-13 11:18:44,373 | __main__ | INFO | ### Genre average counts in top 100 recommendations (all users): ###
+2025-11-13 11:18:44,375 | __main__ | INFO | Fantasy = 5.8
+2025-11-13 11:18:44,377 | __main__ | INFO | Music = 4.1
+2025-11-13 11:18:44,380 | __main__ | INFO | Western = 2.5
+2025-11-13 11:18:44,383 | __main__ | INFO | Animation = 1.8
+2025-11-13 11:18:44,385 | __main__ | INFO | History = 3.7
+2025-11-13 11:18:44,388 | __main__ | INFO | Adventure = 6.9
+2025-11-13 11:18:44,391 | __main__ | INFO | Comedy = 31.7
+2025-11-13 11:18:44,395 | __main__ | INFO | War = 4.9
+2025-11-13 11:18:44,403 | __main__ | INFO | Foreign = 3.0
+2025-11-13 11:18:44,411 | __main__ | INFO | Science Fiction = 5.3
+2025-11-13 11:18:44,415 | __main__ | INFO | Romance = 26.2
+2025-11-13 11:18:44,423 | __main__ | INFO | Horror = 4.5
+2025-11-13 11:18:44,428 | __main__ | INFO | Action = 4.3
+2025-11-13 11:18:44,431 | __main__ | INFO | TV Movie = 0.4
+2025-11-13 11:18:44,434 | __main__ | INFO | Crime = 11.8
+2025-11-13 11:18:44,436 | __main__ | INFO | Thriller = 15.3
+2025-11-13 11:18:44,443 | __main__ | INFO | Undisclosed = 0.1
+2025-11-13 11:18:44,446 | __main__ | INFO | Family = 3.9
+2025-11-13 11:18:44,450 | __main__ | INFO | Drama = 65.5
+2025-11-13 11:18:44,454 | __main__ | INFO | Documentary = 6.3
+2025-11-13 11:18:44,457 | __main__ | INFO | Mystery = 8.2
+2025-11-13 11:18:45,677 | __main__ | INFO | 'scoring_genre_avg_count_in_top_n_recs_all_users' successfully logged as artifact in W&B.
+2025-11-13 11:18:45,957 | __main__ | INFO | ### Genre average counts in top 100 recommendations (new users): ###
+2025-11-13 11:18:45,960 | __main__ | INFO | Fantasy = 16.4
+2025-11-13 11:18:45,962 | __main__ | INFO | Music = 2.0
+2025-11-13 11:18:45,964 | __main__ | INFO | Western = 1.0
+2025-11-13 11:18:45,966 | __main__ | INFO | Animation = 7.0
+2025-11-13 11:18:45,968 | __main__ | INFO | History = 3.9
+2025-11-13 11:18:45,970 | __main__ | INFO | Adventure = 29.6
+2025-11-13 11:18:45,972 | __main__ | INFO | Comedy = 26.6
+2025-11-13 11:18:45,974 | __main__ | INFO | War = 5.0
+2025-11-13 11:18:45,978 | __main__ | INFO | Foreign = 0.0
+2025-11-13 11:18:45,987 | __main__ | INFO | Science Fiction = 20.6
+2025-11-13 11:18:45,989 | __main__ | INFO | Romance = 13.0
+2025-11-13 11:18:45,992 | __main__ | INFO | Horror = 4.1
+2025-11-13 11:18:45,995 | __main__ | INFO | Action = 28.5
+2025-11-13 11:18:45,997 | __main__ | INFO | TV Movie = 0.0
+2025-11-13 11:18:46,000 | __main__ | INFO | Crime = 19.6
+2025-11-13 11:18:46,002 | __main__ | INFO | Thriller = 26.7
+2025-11-13 11:18:46,004 | __main__ | INFO | Undisclosed = 0.0
+2025-11-13 11:18:46,011 | __main__ | INFO | Family = 12.9
+2025-11-13 11:18:46,014 | __main__ | INFO | Drama = 43.7
+2025-11-13 11:18:46,015 | __main__ | INFO | Documentary = 0.0
+2025-11-13 11:18:46,016 | __main__ | INFO | Mystery = 7.9
+2025-11-13 11:18:47,231 | __main__ | INFO | 'scoring_genre_avg_count_in_top_n_recs_new_users' successfully logged as artifact in W&B.
+2025-11-13 11:18:48,988 | __main__ | INFO | ### Genre average counts in top 100 recommendations (existing users): ###
+2025-11-13 11:18:48,990 | __main__ | INFO | Fantasy = 4.5
+2025-11-13 11:18:48,992 | __main__ | INFO | Music = 4.3
+2025-11-13 11:18:48,994 | __main__ | INFO | Western = 2.7
+2025-11-13 11:18:48,997 | __main__ | INFO | Animation = 1.2
+2025-11-13 11:18:49,000 | __main__ | INFO | History = 3.6
+2025-11-13 11:18:49,003 | __main__ | INFO | Adventure = 4.2
+2025-11-13 11:18:49,006 | __main__ | INFO | Comedy = 32.3
+2025-11-13 11:18:49,008 | __main__ | INFO | War = 4.9
+2025-11-13 11:18:49,013 | __main__ | INFO | Foreign = 3.3
+2025-11-13 11:18:49,019 | __main__ | INFO | Science Fiction = 3.4
+2025-11-13 11:18:49,023 | __main__ | INFO | Romance = 27.8
+2025-11-13 11:18:49,026 | __main__ | INFO | Horror = 4.6
+2025-11-13 11:18:49,032 | __main__ | INFO | Action = 1.4
+2025-11-13 11:18:49,035 | __main__ | INFO | TV Movie = 0.4
+2025-11-13 11:18:49,037 | __main__ | INFO | Crime = 10.9
+2025-11-13 11:18:49,039 | __main__ | INFO | Thriller = 13.9
+2025-11-13 11:18:49,041 | __main__ | INFO | Undisclosed = 0.1
+2025-11-13 11:18:49,042 | __main__ | INFO | Family = 2.8
+2025-11-13 11:18:49,049 | __main__ | INFO | Drama = 68.1
+2025-11-13 11:18:49,052 | __main__ | INFO | Documentary = 7.0
+2025-11-13 11:18:49,058 | __main__ | INFO | Mystery = 8.2
+2025-11-13 11:18:50,181 | __main__ | INFO | 'scoring_genre_avg_count_in_top_n_recs_existing_users' successfully logged as artifact in W&B.

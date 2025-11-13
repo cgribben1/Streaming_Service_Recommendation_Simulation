@@ -1,0 +1,42 @@
+2025-11-13 10:07:13,191 | __main__ | INFO | 'Scorer' object instantiated; W&B run initialized.
+2025-11-13 10:07:13,195 | __main__ | INFO | Loading in 'ratings' data...
+2025-11-13 10:07:17,151 | film_recommender_cg.db_connector | INFO | Successfully read collection 'ratings'. Shape of df: (139100, 4)
+2025-11-13 10:07:17,193 | __main__ | INFO | Data successfully loaded!
+2025-11-13 10:07:17,197 | __main__ | INFO | Number of 'existing' users: 1786 -> Using SVD collaborative filtering model to generate these recommendations...
+2025-11-13 10:07:17,200 | __main__ | INFO | Number of 'New' users: 22 -> Falling back to cold-start strategy of recommending top 'n' films by popularity...
+2025-11-13 10:07:17,202 | __main__ | INFO | Ratings data loaded successfully.
+2025-11-13 10:07:17,377 | film_recommender_cg.db_connector | INFO | Successfully read collection 'genres'. Shape of df: (4877, 2)
+2025-11-13 10:07:17,532 | __main__ | INFO | Genres table loaded successfully.
+2025-11-13 10:07:17,535 | __main__ | INFO | Loading in model from W&B...
+[34m[1mwandb[0m:   1 of 1 files downloaded.
+2025-11-13 10:07:20,073 | __main__ | INFO | Model successfully loaded!
+2025-11-13 10:07:20,076 | __main__ | INFO | Model imported successfully.
+2025-11-13 10:07:20,079 | __main__ | INFO | Scoring for 'existing' users...
+2025-11-13 10:08:40,703 | __main__ | INFO | Scoring complete for 'existing' users!
+2025-11-13 10:08:40,843 | __main__ | INFO | Rankings for existing users generated successfully.
+2025-11-13 10:08:40,846 | __main__ | INFO | Scoring for 'new' users...
+2025-11-13 10:08:40,891 | __main__ | INFO | Scoring complete for 'new' users!
+2025-11-13 10:08:40,894 | __main__ | INFO | Rankings for new users generated successfully.
+2025-11-13 10:08:40,897 | __main__ | INFO | Simulating interactions for 'existing' users...
+2025-11-13 10:08:40,910 | __main__ | ERROR | Failed to simulate film choices for existing users.
+Traceback (most recent call last):
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 161, in score_simulate_and_update_ratings_table
+    new_interactions_existing_users = self._simulate_batch_of_film_choices(
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 898, in _simulate_batch_of_film_choices
+    interaction = self._simulate_single_user_film_choice(user_id, ranking, n_recs, genres_table, genre_to_penalize, genre_penalty)
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 880, in _simulate_single_user_film_choice
+    simmed_rating = self._sample_noisy_rating(chosen_film_genres, predicted_rating, genre_to_penalize, genre_penalty)
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 854, in _sample_noisy_rating
+    if genre_to_penalize.title() in chosen_film_genres:
+AttributeError: 'float' object has no attribute 'title'
+2025-11-13 10:08:40,923 | __main__ | ERROR | Error occurred in running 'score_simulate_and_update_ratings_table()'.
+Traceback (most recent call last):
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 161, in score_simulate_and_update_ratings_table
+    new_interactions_existing_users = self._simulate_batch_of_film_choices(
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 898, in _simulate_batch_of_film_choices
+    interaction = self._simulate_single_user_film_choice(user_id, ranking, n_recs, genres_table, genre_to_penalize, genre_penalty)
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 880, in _simulate_single_user_film_choice
+    simmed_rating = self._sample_noisy_rating(chosen_film_genres, predicted_rating, genre_to_penalize, genre_penalty)
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 854, in _sample_noisy_rating
+    if genre_to_penalize.title() in chosen_film_genres:
+AttributeError: 'float' object has no attribute 'title'

@@ -1,0 +1,60 @@
+2025-11-13 11:14:03,209 | __main__ | INFO | 'Trainer' object instantiated; W&B run initialized.
+2025-11-13 11:14:03,217 | __main__ | INFO | Loading in 'ratings' data...
+2025-11-13 11:14:10,429 | film_recommender_cg.db_connector | INFO | Successfully read collection 'ratings'. Shape of df: (162540, 4)
+2025-11-13 11:14:10,473 | __main__ | INFO | Data successfully loaded!
+2025-11-13 11:14:10,476 | __main__ | INFO | Training SVD model...
+2025-11-13 11:14:14,118 | __main__ | INFO | SVD model successfully trained!
+2025-11-13 11:14:14,131 | __main__ | INFO | Evaluating SVD model...
+2025-11-13 11:14:14,605 | __main__ | INFO | ### Model Performance Metrics (Overall): ###
+2025-11-13 11:14:14,608 | __main__ | INFO | RMSE: 0.788
+2025-11-13 11:14:14,611 | __main__ | INFO | squared: 0.327
+2025-11-13 11:14:15,009 | __main__ | INFO | Loading in 'genres' table...
+2025-11-13 11:14:15,527 | film_recommender_cg.db_connector | INFO | Successfully read collection 'genres'. Shape of df: (4877, 2)
+2025-11-13 11:14:15,781 | __main__ | INFO | Table successfully loaded!
+2025-11-13 11:14:15,792 | __main__ | INFO | ### Model Performance Metrics (by Genre): ###
+2025-11-13 11:14:15,815 | __main__ | INFO | 'Fantasy' rmse = 0.87
+2025-11-13 11:14:15,819 | __main__ | INFO | 'Fantasy' r-squared = 0.31
+2025-11-13 11:14:15,836 | __main__ | INFO | 'Music' rmse = 0.817
+2025-11-13 11:14:15,839 | __main__ | INFO | 'Music' r-squared = 0.287
+2025-11-13 11:14:15,864 | __main__ | INFO | 'Western' rmse = 0.749
+2025-11-13 11:14:15,867 | __main__ | INFO | 'Western' r-squared = 0.337
+2025-11-13 11:14:15,884 | __main__ | INFO | 'Animation' rmse = 0.841
+2025-11-13 11:14:15,887 | __main__ | INFO | 'Animation' r-squared = 0.215
+2025-11-13 11:14:15,908 | __main__ | INFO | 'History' rmse = 0.744
+2025-11-13 11:14:15,912 | __main__ | INFO | 'History' r-squared = 0.225
+2025-11-13 11:14:15,937 | __main__ | INFO | 'Adventure' rmse = 0.85
+2025-11-13 11:14:15,940 | __main__ | INFO | 'Adventure' r-squared = 0.313
+2025-11-13 11:14:15,963 | __main__ | INFO | 'Comedy' rmse = 0.82
+2025-11-13 11:14:15,966 | __main__ | INFO | 'Comedy' r-squared = 0.31
+2025-11-13 11:14:15,982 | __main__ | INFO | 'War' rmse = 0.716
+2025-11-13 11:14:15,984 | __main__ | INFO | 'War' r-squared = 0.306
+2025-11-13 11:14:16,005 | __main__ | INFO | 'Foreign' rmse = 0.594
+2025-11-13 11:14:16,007 | __main__ | INFO | 'Foreign' r-squared = 0.374
+2025-11-13 11:14:16,024 | __main__ | INFO | 'Science Fiction' rmse = 0.856
+2025-11-13 11:14:16,028 | __main__ | INFO | 'Science Fiction' r-squared = 0.34
+2025-11-13 11:14:16,047 | __main__ | INFO | 'Romance' rmse = 0.805
+2025-11-13 11:14:16,051 | __main__ | INFO | 'Romance' r-squared = 0.283
+2025-11-13 11:14:16,070 | __main__ | INFO | 'Horror' rmse = 0.885
+2025-11-13 11:14:16,074 | __main__ | INFO | 'Horror' r-squared = 0.331
+2025-11-13 11:14:16,091 | __main__ | INFO | 'Action' rmse = 0.826
+2025-11-13 11:14:16,098 | __main__ | INFO | 'Action' r-squared = 0.314
+2025-11-13 11:14:16,117 | __main__ | INFO | 'TV Movie' rmse = Insufficient Data
+2025-11-13 11:14:16,120 | __main__ | INFO | 'TV Movie' r-squared = Insufficient Data
+2025-11-13 11:14:16,142 | __main__ | INFO | 'Crime' rmse = 0.749
+2025-11-13 11:14:16,145 | __main__ | INFO | 'Crime' r-squared = 0.343
+2025-11-13 11:14:16,166 | __main__ | INFO | 'Thriller' rmse = 0.783
+2025-11-13 11:14:16,169 | __main__ | INFO | 'Thriller' r-squared = 0.334
+2025-11-13 11:14:16,182 | __main__ | INFO | 'Undisclosed' rmse = Insufficient Data
+2025-11-13 11:14:16,186 | __main__ | INFO | 'Undisclosed' r-squared = Insufficient Data
+2025-11-13 11:14:16,205 | __main__ | INFO | 'Family' rmse = 0.867
+2025-11-13 11:14:16,207 | __main__ | INFO | 'Family' r-squared = 0.275
+2025-11-13 11:14:16,225 | __main__ | INFO | 'Drama' rmse = 0.742
+2025-11-13 11:14:16,227 | __main__ | INFO | 'Drama' r-squared = 0.299
+2025-11-13 11:14:16,243 | __main__ | INFO | 'Documentary' rmse = 0.589
+2025-11-13 11:14:16,246 | __main__ | INFO | 'Documentary' r-squared = 0.339
+2025-11-13 11:14:16,263 | __main__ | INFO | 'Mystery' rmse = 0.752
+2025-11-13 11:14:16,266 | __main__ | INFO | 'Mystery' r-squared = 0.322
+2025-11-13 11:14:17,590 | __main__ | INFO | 'training_performance_metrics' successfully logged as artifact in W&B.
+2025-11-13 11:14:17,593 | __main__ | INFO | Evaluation of SVD model complete!
+2025-11-13 11:14:17,596 | __main__ | INFO | Logging SVD model in W&B...
+2025-11-13 11:14:19,133 | __main__ | INFO | SVD model successfully logged!

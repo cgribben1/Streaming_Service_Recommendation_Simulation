@@ -1,0 +1,26 @@
+2025-11-13 11:09:12,618 INFO    MainThread:49568 [wandb_init.py:setup_run_log_directory():706] Logging user logs to /app/Streaming_Service_Recommendation_Simulation/examples/wandb/run-20251113_110912-3dnidaoa/logs/debug.log
+2025-11-13 11:09:12,620 INFO    MainThread:49568 [wandb_init.py:setup_run_log_directory():707] Logging internal logs to /app/Streaming_Service_Recommendation_Simulation/examples/wandb/run-20251113_110912-3dnidaoa/logs/debug-internal.log
+2025-11-13 11:09:12,621 INFO    MainThread:49568 [wandb_init.py:monkeypatch_ipython():625] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x7d593e4e53c0>
+2025-11-13 11:09:12,623 INFO    MainThread:49568 [wandb_init.py:init():833] calling init triggers
+2025-11-13 11:09:12,625 INFO    MainThread:49568 [wandb_init.py:init():838] wandb.init called with sweep_config: {}
+config: {'_wandb': {}}
+2025-11-13 11:09:12,628 INFO    MainThread:49568 [wandb_init.py:init():881] starting backend
+2025-11-13 11:09:12,630 INFO    MainThread:49568 [wandb_init.py:init():884] sending inform_init request
+2025-11-13 11:09:12,674 INFO    MainThread:49568 [wandb_init.py:init():892] backend started and connected
+2025-11-13 11:09:12,696 INFO    MainThread:49568 [wandb_run.py:_label_probe_notebook():1328] probe notebook
+2025-11-13 11:09:12,729 INFO    MainThread:49568 [wandb_init.py:init():962] updated telemetry
+2025-11-13 11:09:13,063 INFO    MainThread:49568 [wandb_init.py:init():986] communicating run to backend with 90.0 second timeout
+2025-11-13 11:09:13,302 INFO    MainThread:49568 [wandb_init.py:init():1033] starting run threads in backend
+2025-11-13 11:09:13,506 INFO    MainThread:49568 [wandb_run.py:_console_start():2506] atexit reg
+2025-11-13 11:09:13,507 INFO    MainThread:49568 [wandb_run.py:_redirect():2354] redirect: wrap_raw
+2025-11-13 11:09:13,509 INFO    MainThread:49568 [wandb_run.py:_redirect():2423] Wrapping output streams.
+2025-11-13 11:09:13,510 INFO    MainThread:49568 [wandb_run.py:_redirect():2446] Redirects installed.
+2025-11-13 11:09:13,517 INFO    MainThread:49568 [wandb_init.py:init():1073] run started, returning control to user process
+2025-11-13 11:09:33,652 INFO    MainThread:49568 [wandb_run.py:_finish():2272] finishing run curtisgribben1-personal-capital/film_recommender/3dnidaoa
+2025-11-13 11:09:33,654 INFO    MainThread:49568 [jupyter.py:save_history():429] not saving jupyter history
+2025-11-13 11:09:33,655 INFO    MainThread:49568 [jupyter.py:save_ipynb():353] not saving jupyter notebook
+2025-11-13 11:09:33,655 INFO    MainThread:49568 [wandb_init.py:_jupyter_teardown():610] cleaning up jupyter logic
+2025-11-13 11:09:33,656 INFO    MainThread:49568 [wandb_run.py:_atexit_cleanup():2471] got exitcode: 0
+2025-11-13 11:09:33,657 INFO    MainThread:49568 [wandb_run.py:_restore():2453] restore
+2025-11-13 11:09:33,658 INFO    MainThread:49568 [wandb_run.py:_restore():2459] restore done
+2025-11-13 11:09:34,790 INFO    MainThread:49568 [wandb_run.py:_footer_sync_info():3835] logging synced files

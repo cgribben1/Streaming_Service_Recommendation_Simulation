@@ -477,7 +477,7 @@ class Scorer:
         elif user_group == 'new':
             rankings_generated = self.rankings_generated_new_users
 
-        all_film_ids = sorted({film_id for recs in rankings_generated.values() for film_id in recs.keys()})
+        all_film_ids = sorted({film_id for recs in rankings_generated.values for film_id in recs.keys()})
         film_index_map = {film_id: idx for idx, film_id in enumerate(all_film_ids)}
 
         user_vectors = []
@@ -843,6 +843,7 @@ class Scorer:
         
         return rankings_generated
 
+    @staticmethod
     def _sample_noisy_rating(chosen_film_genres: list, predicted_rating: float, genre_to_penalize: str, genre_penalty: float, calibration_factor: float = 0.545) -> float:
         """
         Samples a noisy rating for a film based on predicted rating and optional genre penalty.
