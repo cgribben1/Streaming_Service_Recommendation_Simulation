@@ -1,0 +1,270 @@
+2025-11-13 11:15:01,536 | __main__ | INFO | 'Scorer' object instantiated; W&B run initialized.
+2025-11-13 11:15:01,542 | __main__ | INFO | Loading in 'ratings' data...
+2025-11-13 11:15:09,183 | film_recommender_cg.db_connector | INFO | Successfully read collection 'ratings'. Shape of df: (162540, 4)
+2025-11-13 11:15:09,201 | __main__ | INFO | Data successfully loaded!
+2025-11-13 11:15:09,206 | __main__ | INFO | Number of 'existing' users: 506 -> Using SVD collaborative filtering model to generate these recommendations...
+2025-11-13 11:15:09,208 | __main__ | INFO | Number of 'New' users: 61 -> Falling back to cold-start strategy of recommending top 'n' films by popularity...
+2025-11-13 11:15:09,210 | __main__ | INFO | Ratings data loaded successfully.
+2025-11-13 11:15:09,489 | film_recommender_cg.db_connector | INFO | Successfully read collection 'genres'. Shape of df: (4877, 2)
+2025-11-13 11:15:09,815 | __main__ | INFO | Genres table loaded successfully.
+2025-11-13 11:15:09,819 | __main__ | INFO | Loading in model from W&B...
+[34m[1mwandb[0m:   1 of 1 files downloaded.
+2025-11-13 11:15:11,425 | __main__ | INFO | Model successfully loaded!
+2025-11-13 11:15:11,431 | __main__ | INFO | Model imported successfully.
+2025-11-13 11:15:11,434 | __main__ | INFO | Scoring for 'existing' users...
+2025-11-13 11:15:30,849 | __main__ | INFO | Scoring complete for 'existing' users!
+2025-11-13 11:15:30,882 | __main__ | INFO | Rankings for existing users generated successfully.
+2025-11-13 11:15:30,885 | __main__ | INFO | Scoring for 'new' users...
+2025-11-13 11:15:30,915 | __main__ | INFO | Scoring complete for 'new' users!
+2025-11-13 11:15:30,918 | __main__ | INFO | Rankings for new users generated successfully.
+2025-11-13 11:15:30,919 | __main__ | INFO | Simulating interactions for 'existing' users...
+2025-11-13 11:15:33,630 | __main__ | INFO | Simulation of 'existing' users complete!
+2025-11-13 11:15:33,635 | __main__ | INFO | New interactions for existing users simulated successfully.
+2025-11-13 11:15:33,637 | __main__ | INFO | Simulating interactions for 'new' users...
+2025-11-13 11:15:33,932 | __main__ | INFO | Simulation of 'new' users complete!
+2025-11-13 11:15:33,935 | __main__ | INFO | New interactions for new users simulated successfully.
+2025-11-13 11:15:33,937 | __main__ | INFO | Updating ratings table...
+2025-11-13 11:15:39,510 | film_recommender_cg.db_connector | INFO | Inserted 5860 documents into 'ratings'.
+2025-11-13 11:15:39,519 | __main__ | INFO | Ratings table updated.
+2025-11-13 11:15:39,525 | __main__ | INFO | Ratings table updated successfully.
+2025-11-13 11:15:39,535 | __main__ | INFO | All processing completed successfully.
+2025-11-13 11:15:42,705 | __main__ | INFO | ### Genre average counts in top 100 recommendations (all users): ###
+2025-11-13 11:15:42,732 | __main__ | INFO | Fantasy = 5.8
+2025-11-13 11:15:42,736 | __main__ | INFO | Music = 4.1
+2025-11-13 11:15:42,740 | __main__ | INFO | Western = 2.5
+2025-11-13 11:15:42,745 | __main__ | INFO | Animation = 1.8
+2025-11-13 11:15:42,748 | __main__ | INFO | History = 3.7
+2025-11-13 11:15:42,755 | __main__ | INFO | Adventure = 6.9
+2025-11-13 11:15:42,758 | __main__ | INFO | Comedy = 31.7
+2025-11-13 11:15:42,760 | __main__ | INFO | War = 4.9
+2025-11-13 11:15:42,762 | __main__ | INFO | Foreign = 3.0
+2025-11-13 11:15:42,773 | __main__ | INFO | Science Fiction = 5.3
+2025-11-13 11:15:42,782 | __main__ | INFO | Romance = 26.2
+2025-11-13 11:15:42,786 | __main__ | INFO | Horror = 4.5
+2025-11-13 11:15:42,791 | __main__ | INFO | Action = 4.3
+2025-11-13 11:15:42,799 | __main__ | INFO | TV Movie = 0.4
+2025-11-13 11:15:42,809 | __main__ | INFO | Crime = 11.8
+2025-11-13 11:15:42,813 | __main__ | INFO | Thriller = 15.3
+2025-11-13 11:15:42,823 | __main__ | INFO | Undisclosed = 0.1
+2025-11-13 11:15:42,834 | __main__ | INFO | Family = 3.9
+2025-11-13 11:15:42,837 | __main__ | INFO | Drama = 65.5
+2025-11-13 11:15:42,842 | __main__ | INFO | Documentary = 6.3
+2025-11-13 11:15:42,845 | __main__ | INFO | Mystery = 8.2
+2025-11-13 11:15:44,684 | __main__ | INFO | 'scoring_genre_avg_count_in_top_n_recs_all_users' successfully logged as artifact in W&B.
+2025-11-13 11:15:44,950 | __main__ | INFO | ### Genre average counts in top 100 recommendations (new users): ###
+2025-11-13 11:15:44,953 | __main__ | INFO | Fantasy = 16.4
+2025-11-13 11:15:44,956 | __main__ | INFO | Music = 2.0
+2025-11-13 11:15:44,959 | __main__ | INFO | Western = 1.0
+2025-11-13 11:15:44,961 | __main__ | INFO | Animation = 7.0
+2025-11-13 11:15:44,964 | __main__ | INFO | History = 3.9
+2025-11-13 11:15:44,967 | __main__ | INFO | Adventure = 29.6
+2025-11-13 11:15:44,971 | __main__ | INFO | Comedy = 26.6
+2025-11-13 11:15:44,977 | __main__ | INFO | War = 5.0
+2025-11-13 11:15:44,980 | __main__ | INFO | Foreign = 0.0
+2025-11-13 11:15:44,985 | __main__ | INFO | Science Fiction = 20.6
+2025-11-13 11:15:44,989 | __main__ | INFO | Romance = 13.0
+2025-11-13 11:15:44,996 | __main__ | INFO | Horror = 4.1
+2025-11-13 11:15:44,999 | __main__ | INFO | Action = 28.5
+2025-11-13 11:15:45,003 | __main__ | INFO | TV Movie = 0.0
+2025-11-13 11:15:45,008 | __main__ | INFO | Crime = 19.6
+2025-11-13 11:15:45,011 | __main__ | INFO | Thriller = 26.7
+2025-11-13 11:15:45,013 | __main__ | INFO | Undisclosed = 0.0
+2025-11-13 11:15:45,020 | __main__ | INFO | Family = 12.9
+2025-11-13 11:15:45,022 | __main__ | INFO | Drama = 43.7
+2025-11-13 11:15:45,024 | __main__ | INFO | Documentary = 0.0
+2025-11-13 11:15:45,028 | __main__ | INFO | Mystery = 7.9
+2025-11-13 11:15:46,185 | __main__ | INFO | 'scoring_genre_avg_count_in_top_n_recs_new_users' successfully logged as artifact in W&B.
+2025-11-13 11:15:48,665 | __main__ | INFO | ### Genre average counts in top 100 recommendations (existing users): ###
+2025-11-13 11:15:48,668 | __main__ | INFO | Fantasy = 4.5
+2025-11-13 11:15:48,671 | __main__ | INFO | Music = 4.3
+2025-11-13 11:15:48,674 | __main__ | INFO | Western = 2.7
+2025-11-13 11:15:48,677 | __main__ | INFO | Animation = 1.2
+2025-11-13 11:15:48,680 | __main__ | INFO | History = 3.6
+2025-11-13 11:15:48,683 | __main__ | INFO | Adventure = 4.2
+2025-11-13 11:15:48,688 | __main__ | INFO | Comedy = 32.3
+2025-11-13 11:15:48,690 | __main__ | INFO | War = 4.9
+2025-11-13 11:15:48,694 | __main__ | INFO | Foreign = 3.3
+2025-11-13 11:15:48,697 | __main__ | INFO | Science Fiction = 3.4
+2025-11-13 11:15:48,699 | __main__ | INFO | Romance = 27.8
+2025-11-13 11:15:48,702 | __main__ | INFO | Horror = 4.6
+2025-11-13 11:15:48,705 | __main__ | INFO | Action = 1.4
+2025-11-13 11:15:48,713 | __main__ | INFO | TV Movie = 0.4
+2025-11-13 11:15:48,717 | __main__ | INFO | Crime = 10.9
+2025-11-13 11:15:48,729 | __main__ | INFO | Thriller = 13.9
+2025-11-13 11:15:48,756 | __main__ | INFO | Undisclosed = 0.1
+2025-11-13 11:15:48,760 | __main__ | INFO | Family = 2.8
+2025-11-13 11:15:48,764 | __main__ | INFO | Drama = 68.1
+2025-11-13 11:15:48,774 | __main__ | INFO | Documentary = 7.0
+2025-11-13 11:15:48,777 | __main__ | INFO | Mystery = 8.2
+2025-11-13 11:15:50,069 | __main__ | INFO | 'scoring_genre_avg_count_in_top_n_recs_existing_users' successfully logged as artifact in W&B.
+2025-11-13 11:15:50,157 | __main__ | INFO | ### Coverage for scoring session ('All' users): 38.40% ###
+2025-11-13 11:15:51,397 | __main__ | INFO | 'scoring_coverage_all_users' successfully logged as artifact in W&B.
+2025-11-13 11:15:51,410 | __main__ | INFO | ### Coverage for scoring session ('New' users): 3.65% ###
+2025-11-13 11:15:52,952 | __main__ | INFO | 'scoring_coverage_new_users' successfully logged as artifact in W&B.
+2025-11-13 11:15:52,996 | __main__ | INFO | ### Coverage for scoring session ('Existing' users): 35.87% ###
+2025-11-13 11:15:54,331 | __main__ | INFO | 'scoring_coverage_existing_users' successfully logged as artifact in W&B.
+2025-11-13 11:15:55,576 | __main__ | INFO | ### Mean diversity score for scoring session ('All'): 0.99 ###
+2025-11-13 11:15:57,007 | __main__ | INFO | 'scoring_avg_diversity_score_all_users' successfully logged as artifact in W&B.
+2025-11-13 11:15:57,892 | __main__ | INFO | ### Mean diversity score for scoring session ('New'): 0.99 ###
+2025-11-13 11:15:59,285 | __main__ | INFO | 'scoring_avg_diversity_score_new_users' successfully logged as artifact in W&B.
+2025-11-13 11:16:01,170 | __main__ | INFO | ### Mean diversity score for scoring session ('Existing'): 0.99 ###
+2025-11-13 11:16:02,827 | __main__ | INFO | 'scoring_avg_diversity_score_existing_users' successfully logged as artifact in W&B.
+2025-11-13 11:16:03,263 | __main__ | INFO | ### Average personalization score ('All'): 0.661 ###
+2025-11-13 11:16:03,917 | __main__ | INFO | R² for Personalization vs. Films Rated: 0.000
+2025-11-13 11:16:03,919 | __main__ | INFO | Pearson correlation for Personalization vs. Films Rated: -0.001
+2025-11-13 11:16:05,346 | __main__ | INFO | 'scoring_avg_personalization_score_all_users' successfully logged as artifact in W&B.
+2025-11-13 11:16:05,356 | __main__ | INFO | ### Average personalization score ('New'): 0.013 ###
+2025-11-13 11:16:05,913 | __main__ | INFO | R² for Personalization vs. Films Rated: 0.385
+2025-11-13 11:16:05,916 | __main__ | INFO | Pearson correlation for Personalization vs. Films Rated: 0.621
+2025-11-13 11:16:07,183 | __main__ | INFO | 'scoring_avg_personalization_score_new_users' successfully logged as artifact in W&B.
+2025-11-13 11:16:07,375 | __main__ | INFO | ### Average personalization score ('Existing'): 0.588 ###
+2025-11-13 11:16:07,964 | __main__ | INFO | R² for Personalization vs. Films Rated: 0.244
+2025-11-13 11:16:07,968 | __main__ | INFO | Pearson correlation for Personalization vs. Films Rated: 0.494
+2025-11-13 11:16:09,266 | __main__ | INFO | 'scoring_avg_personalization_score_existing_users' successfully logged as artifact in W&B.
+2025-11-13 11:16:09,304 | __main__ | INFO | Evaluating model performance on new (simulated) data...
+2025-11-13 11:16:09,323 | __main__ | INFO | ### Following recent batch of simulated interactions, current model performance metrics ('All' users): ###
+2025-11-13 11:16:09,331 | __main__ | INFO | Overall rmse = 0.515
+2025-11-13 11:16:09,338 | __main__ | INFO | Overall r-squared = 0.331
+2025-11-13 11:16:09,364 | __main__ | INFO | ### Following recent batch of simulated interactions, current model performance metrics ('All' users): ###
+2025-11-13 11:16:09,383 | __main__ | INFO | 'Fantasy' rmse = 0.505
+2025-11-13 11:16:09,388 | __main__ | INFO | 'Fantasy' r-squared = 0.338
+2025-11-13 11:16:09,402 | __main__ | INFO | 'Music' rmse = 0.5
+2025-11-13 11:16:09,409 | __main__ | INFO | 'Music' r-squared = 0.457
+2025-11-13 11:16:09,421 | __main__ | INFO | 'Western' rmse = 0.536
+2025-11-13 11:16:09,426 | __main__ | INFO | 'Western' r-squared = 0.4
+2025-11-13 11:16:09,441 | __main__ | INFO | 'Animation' rmse = Insufficient Data
+2025-11-13 11:16:09,446 | __main__ | INFO | 'Animation' r-squared = Insufficient Data
+2025-11-13 11:16:09,464 | __main__ | INFO | 'History' rmse = 0.522
+2025-11-13 11:16:09,472 | __main__ | INFO | 'History' r-squared = 0.325
+2025-11-13 11:16:09,482 | __main__ | INFO | 'Adventure' rmse = 0.572
+2025-11-13 11:16:09,493 | __main__ | INFO | 'Adventure' r-squared = 0.071
+2025-11-13 11:16:09,511 | __main__ | INFO | 'Comedy' rmse = 0.527
+2025-11-13 11:16:09,514 | __main__ | INFO | 'Comedy' r-squared = 0.309
+2025-11-13 11:16:09,526 | __main__ | INFO | 'War' rmse = 0.509
+2025-11-13 11:16:09,529 | __main__ | INFO | 'War' r-squared = 0.258
+2025-11-13 11:16:09,537 | __main__ | INFO | 'Foreign' rmse = 0.473
+2025-11-13 11:16:09,546 | __main__ | INFO | 'Foreign' r-squared = 0.345
+2025-11-13 11:16:09,564 | __main__ | INFO | 'Science Fiction' rmse = 0.551
+2025-11-13 11:16:09,571 | __main__ | INFO | 'Science Fiction' r-squared = 0.143
+2025-11-13 11:16:09,587 | __main__ | INFO | 'Romance' rmse = 0.522
+2025-11-13 11:16:09,590 | __main__ | INFO | 'Romance' r-squared = 0.327
+2025-11-13 11:16:09,615 | __main__ | INFO | 'Horror' rmse = 0.519
+2025-11-13 11:16:09,632 | __main__ | INFO | 'Horror' r-squared = 0.354
+2025-11-13 11:16:09,639 | __main__ | INFO | 'Action' rmse = 0.613
+2025-11-13 11:16:09,655 | __main__ | INFO | 'Action' r-squared = -0.238
+2025-11-13 11:16:09,661 | __main__ | INFO | 'TV Movie' rmse = Insufficient Data
+2025-11-13 11:16:09,664 | __main__ | INFO | 'TV Movie' r-squared = Insufficient Data
+2025-11-13 11:16:09,683 | __main__ | INFO | 'Crime' rmse = 0.499
+2025-11-13 11:16:09,695 | __main__ | INFO | 'Crime' r-squared = 0.312
+2025-11-13 11:16:09,705 | __main__ | INFO | 'Thriller' rmse = 0.517
+2025-11-13 11:16:09,707 | __main__ | INFO | 'Thriller' r-squared = 0.332
+2025-11-13 11:16:09,722 | __main__ | INFO | 'Undisclosed' rmse = Insufficient Data
+2025-11-13 11:16:09,725 | __main__ | INFO | 'Undisclosed' r-squared = Insufficient Data
+2025-11-13 11:16:09,740 | __main__ | INFO | 'Family' rmse = 0.547
+2025-11-13 11:16:09,743 | __main__ | INFO | 'Family' r-squared = 0.292
+2025-11-13 11:16:09,766 | __main__ | INFO | 'Drama' rmse = 0.511
+2025-11-13 11:16:09,768 | __main__ | INFO | 'Drama' r-squared = 0.343
+2025-11-13 11:16:09,780 | __main__ | INFO | 'Documentary' rmse = 0.491
+2025-11-13 11:16:09,785 | __main__ | INFO | 'Documentary' r-squared = 0.398
+2025-11-13 11:16:09,795 | __main__ | INFO | 'Mystery' rmse = 0.509
+2025-11-13 11:16:09,799 | __main__ | INFO | 'Mystery' r-squared = 0.351
+2025-11-13 11:16:10,996 | __main__ | INFO | 'scoring_performance_metrics_all_users' successfully logged as artifact in W&B.
+2025-11-13 11:16:11,000 | __main__ | INFO | Evaluation complete!
+2025-11-13 11:16:11,004 | __main__ | INFO | Evaluating model performance on new (simulated) data...
+2025-11-13 11:16:11,014 | __main__ | INFO | ### Following recent batch of simulated interactions, current model performance metrics ('New' users): ###
+2025-11-13 11:16:11,018 | __main__ | INFO | Overall rmse = 0.544
+2025-11-13 11:16:11,022 | __main__ | INFO | Overall r-squared = 0.091
+2025-11-13 11:16:11,030 | __main__ | INFO | ### Following recent batch of simulated interactions, current model performance metrics ('New' users): ###
+2025-11-13 11:16:11,036 | __main__ | INFO | 'Fantasy' rmse = Insufficient Data
+2025-11-13 11:16:11,045 | __main__ | INFO | 'Fantasy' r-squared = Insufficient Data
+2025-11-13 11:16:11,054 | __main__ | INFO | 'Music' rmse = Insufficient Data
+2025-11-13 11:16:11,057 | __main__ | INFO | 'Music' r-squared = Insufficient Data
+2025-11-13 11:16:11,065 | __main__ | INFO | 'Western' rmse = Insufficient Data
+2025-11-13 11:16:11,069 | __main__ | INFO | 'Western' r-squared = Insufficient Data
+2025-11-13 11:16:11,077 | __main__ | INFO | 'Animation' rmse = Insufficient Data
+2025-11-13 11:16:11,082 | __main__ | INFO | 'Animation' r-squared = Insufficient Data
+2025-11-13 11:16:11,088 | __main__ | INFO | 'History' rmse = Insufficient Data
+2025-11-13 11:16:11,096 | __main__ | INFO | 'History' r-squared = Insufficient Data
+2025-11-13 11:16:11,104 | __main__ | INFO | 'Adventure' rmse = 0.611
+2025-11-13 11:16:11,113 | __main__ | INFO | 'Adventure' r-squared = -0.172
+2025-11-13 11:16:11,121 | __main__ | INFO | 'Comedy' rmse = 0.51
+2025-11-13 11:16:11,136 | __main__ | INFO | 'Comedy' r-squared = 0.024
+2025-11-13 11:16:11,148 | __main__ | INFO | 'War' rmse = Insufficient Data
+2025-11-13 11:16:11,162 | __main__ | INFO | 'War' r-squared = Insufficient Data
+2025-11-13 11:16:11,169 | __main__ | INFO | 'Foreign' rmse = Insufficient Data
+2025-11-13 11:16:11,172 | __main__ | INFO | 'Foreign' r-squared = Insufficient Data
+2025-11-13 11:16:11,197 | __main__ | INFO | 'Science Fiction' rmse = 0.584
+2025-11-13 11:16:11,205 | __main__ | INFO | 'Science Fiction' r-squared = -0.171
+2025-11-13 11:16:11,213 | __main__ | INFO | 'Romance' rmse = Insufficient Data
+2025-11-13 11:16:11,217 | __main__ | INFO | 'Romance' r-squared = Insufficient Data
+2025-11-13 11:16:11,234 | __main__ | INFO | 'Horror' rmse = Insufficient Data
+2025-11-13 11:16:11,237 | __main__ | INFO | 'Horror' r-squared = Insufficient Data
+2025-11-13 11:16:11,245 | __main__ | INFO | 'Action' rmse = 0.626
+2025-11-13 11:16:11,250 | __main__ | INFO | 'Action' r-squared = -0.277
+2025-11-13 11:16:11,255 | __main__ | INFO | 'TV Movie' rmse = Insufficient Data
+2025-11-13 11:16:11,269 | __main__ | INFO | 'TV Movie' r-squared = Insufficient Data
+2025-11-13 11:16:11,302 | __main__ | INFO | 'Crime' rmse = 0.519
+2025-11-13 11:16:11,311 | __main__ | INFO | 'Crime' r-squared = 0.083
+2025-11-13 11:16:11,339 | __main__ | INFO | 'Thriller' rmse = 0.538
+2025-11-13 11:16:11,346 | __main__ | INFO | 'Thriller' r-squared = 0.162
+2025-11-13 11:16:11,350 | __main__ | INFO | 'Undisclosed' rmse = Insufficient Data
+2025-11-13 11:16:11,355 | __main__ | INFO | 'Undisclosed' r-squared = Insufficient Data
+2025-11-13 11:16:11,363 | __main__ | INFO | 'Family' rmse = Insufficient Data
+2025-11-13 11:16:11,379 | __main__ | INFO | 'Family' r-squared = Insufficient Data
+2025-11-13 11:16:11,391 | __main__ | INFO | 'Drama' rmse = 0.501
+2025-11-13 11:16:11,401 | __main__ | INFO | 'Drama' r-squared = 0.076
+2025-11-13 11:16:11,406 | __main__ | INFO | 'Documentary' rmse = Insufficient Data
+2025-11-13 11:16:11,410 | __main__ | INFO | 'Documentary' r-squared = Insufficient Data
+2025-11-13 11:16:11,415 | __main__ | INFO | 'Mystery' rmse = Insufficient Data
+2025-11-13 11:16:11,417 | __main__ | INFO | 'Mystery' r-squared = Insufficient Data
+2025-11-13 11:16:12,882 | __main__ | INFO | 'scoring_performance_metrics_new_users' successfully logged as artifact in W&B.
+2025-11-13 11:16:12,886 | __main__ | INFO | Evaluation complete!
+2025-11-13 11:16:12,890 | __main__ | INFO | Evaluating model performance on new (simulated) data...
+2025-11-13 11:16:12,900 | __main__ | INFO | ### Following recent batch of simulated interactions, current model performance metrics ('Existing' users): ###
+2025-11-13 11:16:12,903 | __main__ | INFO | Overall rmse = 0.511
+2025-11-13 11:16:12,906 | __main__ | INFO | Overall r-squared = 0.354
+2025-11-13 11:16:12,929 | __main__ | INFO | ### Following recent batch of simulated interactions, current model performance metrics ('Existing' users): ###
+2025-11-13 11:16:12,945 | __main__ | INFO | 'Fantasy' rmse = 0.491
+2025-11-13 11:16:12,957 | __main__ | INFO | 'Fantasy' r-squared = 0.39
+2025-11-13 11:16:12,975 | __main__ | INFO | 'Music' rmse = 0.5
+2025-11-13 11:16:12,977 | __main__ | INFO | 'Music' r-squared = 0.457
+2025-11-13 11:16:12,995 | __main__ | INFO | 'Western' rmse = 0.538
+2025-11-13 11:16:13,009 | __main__ | INFO | 'Western' r-squared = 0.398
+2025-11-13 11:16:13,023 | __main__ | INFO | 'Animation' rmse = Insufficient Data
+2025-11-13 11:16:13,025 | __main__ | INFO | 'Animation' r-squared = Insufficient Data
+2025-11-13 11:16:13,043 | __main__ | INFO | 'History' rmse = 0.526
+2025-11-13 11:16:13,058 | __main__ | INFO | 'History' r-squared = 0.361
+2025-11-13 11:16:13,075 | __main__ | INFO | 'Adventure' rmse = 0.483
+2025-11-13 11:16:13,078 | __main__ | INFO | 'Adventure' r-squared = 0.402
+2025-11-13 11:16:13,102 | __main__ | INFO | 'Comedy' rmse = 0.528
+2025-11-13 11:16:13,106 | __main__ | INFO | 'Comedy' r-squared = 0.321
+2025-11-13 11:16:13,123 | __main__ | INFO | 'War' rmse = 0.509
+2025-11-13 11:16:13,127 | __main__ | INFO | 'War' r-squared = 0.285
+2025-11-13 11:16:13,141 | __main__ | INFO | 'Foreign' rmse = 0.473
+2025-11-13 11:16:13,145 | __main__ | INFO | 'Foreign' r-squared = 0.345
+2025-11-13 11:16:13,159 | __main__ | INFO | 'Science Fiction' rmse = 0.506
+2025-11-13 11:16:13,163 | __main__ | INFO | 'Science Fiction' r-squared = 0.336
+2025-11-13 11:16:13,182 | __main__ | INFO | 'Romance' rmse = 0.522
+2025-11-13 11:16:13,186 | __main__ | INFO | 'Romance' r-squared = 0.335
+2025-11-13 11:16:13,194 | __main__ | INFO | 'Horror' rmse = 0.519
+2025-11-13 11:16:13,199 | __main__ | INFO | 'Horror' r-squared = 0.354
+2025-11-13 11:16:13,208 | __main__ | INFO | 'Action' rmse = Insufficient Data
+2025-11-13 11:16:13,216 | __main__ | INFO | 'Action' r-squared = Insufficient Data
+2025-11-13 11:16:13,242 | __main__ | INFO | 'TV Movie' rmse = Insufficient Data
+2025-11-13 11:16:13,245 | __main__ | INFO | 'TV Movie' r-squared = Insufficient Data
+2025-11-13 11:16:13,254 | __main__ | INFO | 'Crime' rmse = 0.492
+2025-11-13 11:16:13,267 | __main__ | INFO | 'Crime' r-squared = 0.364
+2025-11-13 11:16:13,281 | __main__ | INFO | 'Thriller' rmse = 0.511
+2025-11-13 11:16:13,285 | __main__ | INFO | 'Thriller' r-squared = 0.37
+2025-11-13 11:16:13,298 | __main__ | INFO | 'Undisclosed' rmse = Insufficient Data
+2025-11-13 11:16:13,300 | __main__ | INFO | 'Undisclosed' r-squared = Insufficient Data
+2025-11-13 11:16:13,321 | __main__ | INFO | 'Family' rmse = 0.551
+2025-11-13 11:16:13,327 | __main__ | INFO | 'Family' r-squared = 0.344
+2025-11-13 11:16:13,363 | __main__ | INFO | 'Drama' rmse = 0.512
+2025-11-13 11:16:13,366 | __main__ | INFO | 'Drama' r-squared = 0.356
+2025-11-13 11:16:13,380 | __main__ | INFO | 'Documentary' rmse = 0.491
+2025-11-13 11:16:13,384 | __main__ | INFO | 'Documentary' r-squared = 0.398
+2025-11-13 11:16:13,404 | __main__ | INFO | 'Mystery' rmse = 0.505
+2025-11-13 11:16:13,423 | __main__ | INFO | 'Mystery' r-squared = 0.382
+2025-11-13 11:16:14,799 | __main__ | INFO | 'scoring_performance_metrics_existing_users' successfully logged as artifact in W&B.
+2025-11-13 11:16:14,803 | __main__ | INFO | Evaluation complete!

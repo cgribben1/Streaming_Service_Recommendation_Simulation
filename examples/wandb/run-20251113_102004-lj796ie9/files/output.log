@@ -1,0 +1,44 @@
+2025-11-13 10:20:07,425 | __main__ | INFO | 'Scorer' object instantiated; W&B run initialized.
+2025-11-13 10:20:07,431 | __main__ | INFO | Loading in 'ratings' data...
+2025-11-13 10:20:11,197 | film_recommender_cg.db_connector | INFO | Successfully read collection 'ratings'. Shape of df: (139100, 4)
+2025-11-13 10:20:11,229 | __main__ | INFO | Data successfully loaded!
+2025-11-13 10:20:11,232 | __main__ | INFO | Number of 'existing' users: 506 -> Using SVD collaborative filtering model to generate these recommendations...
+2025-11-13 10:20:11,234 | __main__ | INFO | Number of 'New' users: 61 -> Falling back to cold-start strategy of recommending top 'n' films by popularity...
+2025-11-13 10:20:11,237 | __main__ | INFO | Ratings data loaded successfully.
+2025-11-13 10:20:11,411 | film_recommender_cg.db_connector | INFO | Successfully read collection 'genres'. Shape of df: (4877, 2)
+2025-11-13 10:20:11,571 | __main__ | INFO | Genres table loaded successfully.
+2025-11-13 10:20:11,573 | __main__ | INFO | Loading in model from W&B...
+[34m[1mwandb[0m:   1 of 1 files downloaded.
+2025-11-13 10:20:12,500 | __main__ | INFO | Model successfully loaded!
+2025-11-13 10:20:12,502 | __main__ | INFO | Model imported successfully.
+2025-11-13 10:20:12,505 | __main__ | INFO | Scoring for 'existing' users...
+2025-11-13 10:20:30,286 | __main__ | INFO | Scoring complete for 'existing' users!
+2025-11-13 10:20:30,311 | __main__ | INFO | Rankings for existing users generated successfully.
+2025-11-13 10:20:30,313 | __main__ | INFO | Scoring for 'new' users...
+2025-11-13 10:20:30,369 | __main__ | INFO | Scoring complete for 'new' users!
+2025-11-13 10:20:30,372 | __main__ | INFO | Rankings for new users generated successfully.
+2025-11-13 10:20:30,374 | __main__ | INFO | Simulating interactions for 'existing' users...
+DEBUGGING GENRE TO PENALIZE 3.9770160843783193
+DEBUGGING GENRE PENALTY Action
+2025-11-13 10:20:30,381 | __main__ | ERROR | Failed to simulate film choices for existing users.
+Traceback (most recent call last):
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 161, in score_simulate_and_update_ratings_table
+    new_interactions_existing_users = self._simulate_batch_of_film_choices(
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 901, in _simulate_batch_of_film_choices
+    interaction = self._simulate_single_user_film_choice(user_id, ranking, n_recs, genres_table, genre_to_penalize, genre_penalty)
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 883, in _simulate_single_user_film_choice
+    simmed_rating = self._sample_noisy_rating(chosen_film_genres, predicted_rating, genre_to_penalize, genre_penalty)
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 857, in _sample_noisy_rating
+    if genre_to_penalize.title() in chosen_film_genres:
+AttributeError: 'float' object has no attribute 'title'
+2025-11-13 10:20:30,394 | __main__ | ERROR | Error occurred in running 'score_simulate_and_update_ratings_table()'.
+Traceback (most recent call last):
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 161, in score_simulate_and_update_ratings_table
+    new_interactions_existing_users = self._simulate_batch_of_film_choices(
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 901, in _simulate_batch_of_film_choices
+    interaction = self._simulate_single_user_film_choice(user_id, ranking, n_recs, genres_table, genre_to_penalize, genre_penalty)
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 883, in _simulate_single_user_film_choice
+    simmed_rating = self._sample_noisy_rating(chosen_film_genres, predicted_rating, genre_to_penalize, genre_penalty)
+  File "/app/Streaming_Service_Recommendation_Simulation/film_recommender_cg/scorer.py", line 857, in _sample_noisy_rating
+    if genre_to_penalize.title() in chosen_film_genres:
+AttributeError: 'float' object has no attribute 'title'
