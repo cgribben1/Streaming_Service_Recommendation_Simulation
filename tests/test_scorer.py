@@ -5,6 +5,13 @@ import numpy as np
 
 from film_recommender_cg.scorer import Scorer
 
+wandb_config = {
+    'auth_key': 'fake_auth_key',
+    'team_name': 'fake_team_name',
+    'project_name': 'fake_project_name',
+    'project_path': 'fake_project_path'
+                 }
+
 @pytest.fixture
 def mock_db_connector():
     """Mock DB connector."""
@@ -18,9 +25,7 @@ def scorer_instance(mock_db_connector):
         mock_init.return_value = mock_run
         scorer = Scorer(
             db_connector=mock_db_connector,
-            wandb_auth_key="fake_key",
-            wandb_project_path="/fake/path",
-            wandb_project_name="test_project",
+            wandb_config=wandb_config,
             new_user_threshold=5,
             n_recs=10,
             max_interactions_between_scorings=3
@@ -88,9 +93,7 @@ def test_wandb_run_closed_on_exception(mock_db_connector):
         mock_init.return_value = mock_run
         scorer = Scorer(
             db_connector=mock_db_connector,
-            wandb_auth_key="fake_key",
-            wandb_project_path="/fake/path",
-            wandb_project_name="test_project",
+            wandb_config=wandb_config,
             new_user_threshold=5,
             n_recs=10,
             max_interactions_between_scorings=3
