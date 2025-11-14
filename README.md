@@ -1,13 +1,13 @@
 # Film Recommender Engine
 
-This repository represents a **film recommendation engine** built using collaborative filtering (matrix factorisation), and implemented within a full end-to-end simulation framework for evaluating model performance, monitoring predictions, detecting data distribution drift, and executing retraining strategies.
+> [!IMPORTANT]
+> **It is highly recommended that you refer to the two below resources in order to get the best possible sense of the project!**  
+> - **Full technical write-up:** `docs/overview.docx`  
+> - **End-to-end demonstration notebook:** `examples/demo.ipynb`
+
+This repository represents a **film recommendation engine** built using collaborative filtering (matrix factorisation), and implemented within a full end-to-end simulation framework for evaluating model performance, monitoring key prediction metrics, detecting data distribution drift, and executing retraining strategies.
 
 The engine is designed as a Python package (`film_recommender_cg`) that would conceptually be adapted for deployment across regions and markets. The PoC demonstrates modular architecture, offline batch scoring, model lifecycle management, and monitoring strategies aligned with real‑world MLOps practices.
-
-> [!IMPORTANT]
-> **The full, detailed technical write-up is available in:**  
-> **`docs/overview.docx`**
-
 
 ---
 
@@ -19,7 +19,7 @@ This project implements a modular, production-inspired recommendation engine pac
 
 It demonstrates:
 
-- Collaborative filtering using **scikit-surprise SVD**
+- Collaborative filtering using **`scikit-surprise`** SVD (Singular Value Decomposition) model
 - Cold-start handling through popularity-based fallback recommendations
 - Batch scoring, monitoring, and model lifecycle management
 - Simulation of user behaviour under shifting data distributions
