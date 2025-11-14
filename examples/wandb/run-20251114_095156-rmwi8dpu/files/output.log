@@ -1,0 +1,270 @@
+2025-11-14 09:51:58,907 | film_recommender_cg.scorer | INFO | 'Scorer' object instantiated; W&B run initialized.
+2025-11-14 09:51:58,909 | film_recommender_cg.scorer | INFO | Loading in 'ratings' data...
+2025-11-14 09:52:44,304 | film_recommender_cg.db_connector | INFO | Successfully read collection 'ratings'. Shape of df: (120000, 4)
+2025-11-14 09:52:44,329 | film_recommender_cg.scorer | INFO | Data successfully loaded!
+2025-11-14 09:52:44,331 | film_recommender_cg.scorer | INFO | Number of 'existing' users: 1584 -> Using SVD collaborative filtering model to generate these recommendations...
+2025-11-14 09:52:44,333 | film_recommender_cg.scorer | INFO | Number of 'New' users: 224 -> Falling back to cold-start strategy of recommending top 'n' films by popularity...
+2025-11-14 09:52:44,334 | film_recommender_cg.scorer | INFO | Ratings data loaded successfully.
+2025-11-14 09:52:48,387 | film_recommender_cg.db_connector | INFO | Successfully read collection 'genres'. Shape of df: (4877, 2)
+2025-11-14 09:52:48,485 | film_recommender_cg.scorer | INFO | Genres table loaded successfully.
+2025-11-14 09:52:48,487 | film_recommender_cg.scorer | INFO | Loading in model from W&B...
+[34m[1mwandb[0m:   1 of 1 files downloaded.
+2025-11-14 09:52:49,379 | film_recommender_cg.scorer | INFO | Model successfully loaded!
+2025-11-14 09:52:49,382 | film_recommender_cg.scorer | INFO | Model imported successfully.
+2025-11-14 09:52:49,384 | film_recommender_cg.scorer | INFO | Scoring for 'existing' users...
+2025-11-14 09:54:02,724 | film_recommender_cg.scorer | INFO | Scoring complete for 'existing' users!
+2025-11-14 09:54:02,842 | film_recommender_cg.scorer | INFO | Rankings for existing users generated successfully.
+2025-11-14 09:54:02,845 | film_recommender_cg.scorer | INFO | Scoring for 'new' users...
+2025-11-14 09:54:02,897 | film_recommender_cg.scorer | INFO | Scoring complete for 'new' users!
+2025-11-14 09:54:02,901 | film_recommender_cg.scorer | INFO | Rankings for new users generated successfully.
+2025-11-14 09:54:02,903 | film_recommender_cg.scorer | INFO | Simulating interactions for 'existing' users...
+2025-11-14 09:54:14,697 | film_recommender_cg.scorer | INFO | Simulation of 'existing' users complete!
+2025-11-14 09:54:14,708 | film_recommender_cg.scorer | INFO | New interactions for existing users simulated successfully.
+2025-11-14 09:54:14,712 | film_recommender_cg.scorer | INFO | Simulating interactions for 'new' users...
+2025-11-14 09:54:17,334 | film_recommender_cg.scorer | INFO | Simulation of 'new' users complete!
+2025-11-14 09:54:17,338 | film_recommender_cg.scorer | INFO | New interactions for new users simulated successfully.
+2025-11-14 09:54:17,345 | film_recommender_cg.scorer | INFO | Updating ratings table...
+2025-11-14 09:54:31,148 | film_recommender_cg.db_connector | INFO | Inserted 19100 documents into 'ratings'.
+2025-11-14 09:54:31,152 | film_recommender_cg.scorer | INFO | Ratings table updated.
+2025-11-14 09:54:31,158 | film_recommender_cg.scorer | INFO | Ratings table updated successfully.
+2025-11-14 09:54:31,161 | film_recommender_cg.scorer | INFO | All processing completed successfully.
+2025-11-14 09:54:37,770 | film_recommender_cg.scorer | INFO | ### Genre average counts in top 100 recommendations (all users): ###
+2025-11-14 09:54:37,773 | film_recommender_cg.scorer | INFO | Western = 3.4
+2025-11-14 09:54:37,775 | film_recommender_cg.scorer | INFO | Science Fiction = 6.3
+2025-11-14 09:54:37,778 | film_recommender_cg.scorer | INFO | Mystery = 8.9
+2025-11-14 09:54:37,783 | film_recommender_cg.scorer | INFO | Family = 3.9
+2025-11-14 09:54:37,787 | film_recommender_cg.scorer | INFO | Crime = 13.4
+2025-11-14 09:54:37,789 | film_recommender_cg.scorer | INFO | Foreign = 2.2
+2025-11-14 09:54:37,792 | film_recommender_cg.scorer | INFO | Drama = 68.9
+2025-11-14 09:54:37,795 | film_recommender_cg.scorer | INFO | Horror = 4.7
+2025-11-14 09:54:37,797 | film_recommender_cg.scorer | INFO | History = 6.1
+2025-11-14 09:54:37,799 | film_recommender_cg.scorer | INFO | Undisclosed = 0.1
+2025-11-14 09:54:37,801 | film_recommender_cg.scorer | INFO | Animation = 1.9
+2025-11-14 09:54:37,808 | film_recommender_cg.scorer | INFO | Adventure = 9.2
+2025-11-14 09:54:37,817 | film_recommender_cg.scorer | INFO | Action = 12.1
+2025-11-14 09:54:37,825 | film_recommender_cg.scorer | INFO | Thriller = 19.0
+2025-11-14 09:54:37,836 | film_recommender_cg.scorer | INFO | Comedy = 28.1
+2025-11-14 09:54:37,842 | film_recommender_cg.scorer | INFO | Music = 3.8
+2025-11-14 09:54:37,857 | film_recommender_cg.scorer | INFO | War = 9.7
+2025-11-14 09:54:37,861 | film_recommender_cg.scorer | INFO | TV Movie = 0.0
+2025-11-14 09:54:37,863 | film_recommender_cg.scorer | INFO | Romance = 18.9
+2025-11-14 09:54:37,866 | film_recommender_cg.scorer | INFO | Documentary = 4.0
+2025-11-14 09:54:37,871 | film_recommender_cg.scorer | INFO | Fantasy = 5.5
+2025-11-14 09:54:39,164 | film_recommender_cg.scorer | INFO | 'scoring_genre_avg_count_in_top_n_recs_all_users' successfully logged as artifact in W&B.
+2025-11-14 09:54:39,909 | film_recommender_cg.scorer | INFO | ### Genre average counts in top 100 recommendations (new users): ###
+2025-11-14 09:54:39,911 | film_recommender_cg.scorer | INFO | Western = 1.0
+2025-11-14 09:54:39,914 | film_recommender_cg.scorer | INFO | Science Fiction = 20.6
+2025-11-14 09:54:39,916 | film_recommender_cg.scorer | INFO | Mystery = 8.9
+2025-11-14 09:54:39,919 | film_recommender_cg.scorer | INFO | Family = 13.9
+2025-11-14 09:54:39,921 | film_recommender_cg.scorer | INFO | Crime = 19.2
+2025-11-14 09:54:39,924 | film_recommender_cg.scorer | INFO | Foreign = 0.0
+2025-11-14 09:54:39,927 | film_recommender_cg.scorer | INFO | Drama = 43.4
+2025-11-14 09:54:39,930 | film_recommender_cg.scorer | INFO | Horror = 4.0
+2025-11-14 09:54:39,933 | film_recommender_cg.scorer | INFO | History = 3.9
+2025-11-14 09:54:39,940 | film_recommender_cg.scorer | INFO | Undisclosed = 0.0
+2025-11-14 09:54:39,942 | film_recommender_cg.scorer | INFO | Animation = 6.9
+2025-11-14 09:54:39,951 | film_recommender_cg.scorer | INFO | Adventure = 29.6
+2025-11-14 09:54:39,963 | film_recommender_cg.scorer | INFO | Action = 30.6
+2025-11-14 09:54:39,967 | film_recommender_cg.scorer | INFO | Thriller = 27.7
+2025-11-14 09:54:39,970 | film_recommender_cg.scorer | INFO | Comedy = 25.0
+2025-11-14 09:54:39,978 | film_recommender_cg.scorer | INFO | Music = 1.0
+2025-11-14 09:54:39,984 | film_recommender_cg.scorer | INFO | War = 4.9
+2025-11-14 09:54:39,990 | film_recommender_cg.scorer | INFO | TV Movie = 0.0
+2025-11-14 09:54:39,995 | film_recommender_cg.scorer | INFO | Romance = 14.6
+2025-11-14 09:54:39,997 | film_recommender_cg.scorer | INFO | Documentary = 0.0
+2025-11-14 09:54:40,001 | film_recommender_cg.scorer | INFO | Fantasy = 18.0
+2025-11-14 09:54:41,101 | film_recommender_cg.scorer | INFO | 'scoring_genre_avg_count_in_top_n_recs_new_users' successfully logged as artifact in W&B.
+2025-11-14 09:54:47,375 | film_recommender_cg.scorer | INFO | ### Genre average counts in top 100 recommendations (existing users): ###
+2025-11-14 09:54:47,377 | film_recommender_cg.scorer | INFO | Western = 3.7
+2025-11-14 09:54:47,378 | film_recommender_cg.scorer | INFO | Science Fiction = 4.3
+2025-11-14 09:54:47,380 | film_recommender_cg.scorer | INFO | Mystery = 8.9
+2025-11-14 09:54:47,382 | film_recommender_cg.scorer | INFO | Family = 2.5
+2025-11-14 09:54:47,386 | film_recommender_cg.scorer | INFO | Crime = 12.5
+2025-11-14 09:54:47,388 | film_recommender_cg.scorer | INFO | Foreign = 2.5
+2025-11-14 09:54:47,390 | film_recommender_cg.scorer | INFO | Drama = 72.5
+2025-11-14 09:54:47,392 | film_recommender_cg.scorer | INFO | Horror = 4.9
+2025-11-14 09:54:47,395 | film_recommender_cg.scorer | INFO | History = 6.4
+2025-11-14 09:54:47,397 | film_recommender_cg.scorer | INFO | Undisclosed = 0.1
+2025-11-14 09:54:47,399 | film_recommender_cg.scorer | INFO | Animation = 1.1
+2025-11-14 09:54:47,402 | film_recommender_cg.scorer | INFO | Adventure = 6.4
+2025-11-14 09:54:47,405 | film_recommender_cg.scorer | INFO | Action = 9.4
+2025-11-14 09:54:47,409 | film_recommender_cg.scorer | INFO | Thriller = 17.8
+2025-11-14 09:54:47,411 | film_recommender_cg.scorer | INFO | Comedy = 28.5
+2025-11-14 09:54:47,416 | film_recommender_cg.scorer | INFO | Music = 4.2
+2025-11-14 09:54:47,424 | film_recommender_cg.scorer | INFO | War = 10.3
+2025-11-14 09:54:47,427 | film_recommender_cg.scorer | INFO | TV Movie = 0.0
+2025-11-14 09:54:47,431 | film_recommender_cg.scorer | INFO | Romance = 19.6
+2025-11-14 09:54:47,434 | film_recommender_cg.scorer | INFO | Documentary = 4.5
+2025-11-14 09:54:47,436 | film_recommender_cg.scorer | INFO | Fantasy = 3.7
+2025-11-14 09:54:48,452 | film_recommender_cg.scorer | INFO | 'scoring_genre_avg_count_in_top_n_recs_existing_users' successfully logged as artifact in W&B.
+2025-11-14 09:54:48,631 | film_recommender_cg.scorer | INFO | ### Coverage for scoring session ('All' users): 49.94% ###
+2025-11-14 09:54:49,771 | film_recommender_cg.scorer | INFO | 'scoring_coverage_all_users' successfully logged as artifact in W&B.
+2025-11-14 09:54:49,777 | film_recommender_cg.scorer | INFO | ### Coverage for scoring session ('New' users): 3.02% ###
+2025-11-14 09:54:50,833 | film_recommender_cg.scorer | INFO | 'scoring_coverage_new_users' successfully logged as artifact in W&B.
+2025-11-14 09:54:50,911 | film_recommender_cg.scorer | INFO | ### Coverage for scoring session ('Existing' users): 48.50% ###
+2025-11-14 09:54:52,058 | film_recommender_cg.scorer | INFO | 'scoring_coverage_existing_users' successfully logged as artifact in W&B.
+2025-11-14 09:55:00,200 | film_recommender_cg.scorer | INFO | ### Mean diversity score for scoring session ('All'): 0.98 ###
+2025-11-14 09:55:01,585 | film_recommender_cg.scorer | INFO | 'scoring_avg_diversity_score_all_users' successfully logged as artifact in W&B.
+2025-11-14 09:55:03,345 | film_recommender_cg.scorer | INFO | ### Mean diversity score for scoring session ('New'): 0.98 ###
+2025-11-14 09:55:04,581 | film_recommender_cg.scorer | INFO | 'scoring_avg_diversity_score_new_users' successfully logged as artifact in W&B.
+2025-11-14 09:55:13,031 | film_recommender_cg.scorer | INFO | ### Mean diversity score for scoring session ('Existing'): 0.98 ###
+2025-11-14 09:55:14,285 | film_recommender_cg.scorer | INFO | 'scoring_avg_diversity_score_existing_users' successfully logged as artifact in W&B.
+2025-11-14 09:55:14,729 | film_recommender_cg.scorer | INFO | ### Average personalization score ('All'): 0.736 ###
+2025-11-14 09:55:15,673 | film_recommender_cg.scorer | INFO | R² for Personalization vs. Films Rated: 0.006
+2025-11-14 09:55:15,706 | film_recommender_cg.scorer | INFO | Pearson correlation for Personalization vs. Films Rated: 0.077
+2025-11-14 09:55:17,281 | film_recommender_cg.scorer | INFO | 'scoring_avg_personalization_score_all_users' successfully logged as artifact in W&B.
+2025-11-14 09:55:17,308 | film_recommender_cg.scorer | INFO | ### Average personalization score ('New'): 0.013 ###
+2025-11-14 09:55:17,717 | film_recommender_cg.scorer | INFO | R² for Personalization vs. Films Rated: 0.237
+2025-11-14 09:55:17,720 | film_recommender_cg.scorer | INFO | Pearson correlation for Personalization vs. Films Rated: 0.486
+2025-11-14 09:55:18,773 | film_recommender_cg.scorer | INFO | 'scoring_avg_personalization_score_new_users' successfully logged as artifact in W&B.
+2025-11-14 09:55:19,200 | film_recommender_cg.scorer | INFO | ### Average personalization score ('Existing'): 0.678 ###
+2025-11-14 09:55:19,615 | film_recommender_cg.scorer | INFO | R² for Personalization vs. Films Rated: 0.265
+2025-11-14 09:55:19,619 | film_recommender_cg.scorer | INFO | Pearson correlation for Personalization vs. Films Rated: 0.515
+2025-11-14 09:55:20,662 | film_recommender_cg.scorer | INFO | 'scoring_avg_personalization_score_existing_users' successfully logged as artifact in W&B.
+2025-11-14 09:55:20,705 | film_recommender_cg.scorer | INFO | Evaluating model performance on new (simulated) data...
+2025-11-14 09:55:20,717 | film_recommender_cg.scorer | INFO | ### Following recent batch of simulated interactions, current model performance metrics ('All' users): ###
+2025-11-14 09:55:20,719 | film_recommender_cg.scorer | INFO | Overall rmse = 0.545
+2025-11-14 09:55:20,723 | film_recommender_cg.scorer | INFO | Overall r-squared = 0.269
+2025-11-14 09:55:20,729 | film_recommender_cg.scorer | INFO | ### Following recent batch of simulated interactions, current model performance metrics ('All' users): ###
+2025-11-14 09:55:20,747 | film_recommender_cg.scorer | INFO | 'Western' rmse = 0.549
+2025-11-14 09:55:20,750 | film_recommender_cg.scorer | INFO | 'Western' r-squared = 0.29
+2025-11-14 09:55:20,770 | film_recommender_cg.scorer | INFO | 'Science Fiction' rmse = 0.619
+2025-11-14 09:55:20,773 | film_recommender_cg.scorer | INFO | 'Science Fiction' r-squared = 0.001
+2025-11-14 09:55:20,783 | film_recommender_cg.scorer | INFO | 'Mystery' rmse = 0.523
+2025-11-14 09:55:20,797 | film_recommender_cg.scorer | INFO | 'Mystery' r-squared = 0.295
+2025-11-14 09:55:20,815 | film_recommender_cg.scorer | INFO | 'Family' rmse = 0.543
+2025-11-14 09:55:20,818 | film_recommender_cg.scorer | INFO | 'Family' r-squared = 0.218
+2025-11-14 09:55:20,835 | film_recommender_cg.scorer | INFO | 'Crime' rmse = 0.557
+2025-11-14 09:55:20,838 | film_recommender_cg.scorer | INFO | 'Crime' r-squared = 0.264
+2025-11-14 09:55:20,854 | film_recommender_cg.scorer | INFO | 'Foreign' rmse = 0.508
+2025-11-14 09:55:20,856 | film_recommender_cg.scorer | INFO | 'Foreign' r-squared = 0.265
+2025-11-14 09:55:20,877 | film_recommender_cg.scorer | INFO | 'Drama' rmse = 0.54
+2025-11-14 09:55:20,882 | film_recommender_cg.scorer | INFO | 'Drama' r-squared = 0.286
+2025-11-14 09:55:20,905 | film_recommender_cg.scorer | INFO | 'Horror' rmse = 0.513
+2025-11-14 09:55:20,907 | film_recommender_cg.scorer | INFO | 'Horror' r-squared = 0.317
+2025-11-14 09:55:20,924 | film_recommender_cg.scorer | INFO | 'History' rmse = 0.545
+2025-11-14 09:55:20,925 | film_recommender_cg.scorer | INFO | 'History' r-squared = 0.242
+2025-11-14 09:55:20,940 | film_recommender_cg.scorer | INFO | 'Undisclosed' rmse = Insufficient Data
+2025-11-14 09:55:20,941 | film_recommender_cg.scorer | INFO | 'Undisclosed' r-squared = Insufficient Data
+2025-11-14 09:55:20,955 | film_recommender_cg.scorer | INFO | 'Animation' rmse = 0.527
+2025-11-14 09:55:20,957 | film_recommender_cg.scorer | INFO | 'Animation' r-squared = 0.128
+2025-11-14 09:55:20,978 | film_recommender_cg.scorer | INFO | 'Adventure' rmse = 0.621
+2025-11-14 09:55:20,982 | film_recommender_cg.scorer | INFO | 'Adventure' r-squared = -0.003
+2025-11-14 09:55:20,997 | film_recommender_cg.scorer | INFO | 'Action' rmse = 0.672
+2025-11-14 09:55:21,000 | film_recommender_cg.scorer | INFO | 'Action' r-squared = -0.216
+2025-11-14 09:55:21,015 | film_recommender_cg.scorer | INFO | 'Thriller' rmse = 0.569
+2025-11-14 09:55:21,017 | film_recommender_cg.scorer | INFO | 'Thriller' r-squared = 0.238
+2025-11-14 09:55:21,028 | film_recommender_cg.scorer | INFO | 'Comedy' rmse = 0.534
+2025-11-14 09:55:21,031 | film_recommender_cg.scorer | INFO | 'Comedy' r-squared = 0.285
+2025-11-14 09:55:21,047 | film_recommender_cg.scorer | INFO | 'Music' rmse = 0.524
+2025-11-14 09:55:21,050 | film_recommender_cg.scorer | INFO | 'Music' r-squared = 0.299
+2025-11-14 09:55:21,062 | film_recommender_cg.scorer | INFO | 'War' rmse = 0.544
+2025-11-14 09:55:21,067 | film_recommender_cg.scorer | INFO | 'War' r-squared = 0.265
+2025-11-14 09:55:21,075 | film_recommender_cg.scorer | INFO | 'TV Movie' rmse = Insufficient Data
+2025-11-14 09:55:21,078 | film_recommender_cg.scorer | INFO | 'TV Movie' r-squared = Insufficient Data
+2025-11-14 09:55:21,091 | film_recommender_cg.scorer | INFO | 'Romance' rmse = 0.522
+2025-11-14 09:55:21,093 | film_recommender_cg.scorer | INFO | 'Romance' r-squared = 0.302
+2025-11-14 09:55:21,105 | film_recommender_cg.scorer | INFO | 'Documentary' rmse = 0.534
+2025-11-14 09:55:21,108 | film_recommender_cg.scorer | INFO | 'Documentary' r-squared = 0.294
+2025-11-14 09:55:21,119 | film_recommender_cg.scorer | INFO | 'Fantasy' rmse = 0.542
+2025-11-14 09:55:21,123 | film_recommender_cg.scorer | INFO | 'Fantasy' r-squared = 0.262
+2025-11-14 09:55:22,108 | film_recommender_cg.scorer | INFO | 'scoring_performance_metrics_all_users' successfully logged as artifact in W&B.
+2025-11-14 09:55:22,111 | film_recommender_cg.scorer | INFO | Evaluation complete!
+2025-11-14 09:55:22,114 | film_recommender_cg.scorer | INFO | Evaluating model performance on new (simulated) data...
+2025-11-14 09:55:22,120 | film_recommender_cg.scorer | INFO | ### Following recent batch of simulated interactions, current model performance metrics ('New' users): ###
+2025-11-14 09:55:22,126 | film_recommender_cg.scorer | INFO | Overall rmse = 0.572
+2025-11-14 09:55:22,134 | film_recommender_cg.scorer | INFO | Overall r-squared = 0.073
+2025-11-14 09:55:22,140 | film_recommender_cg.scorer | INFO | ### Following recent batch of simulated interactions, current model performance metrics ('New' users): ###
+2025-11-14 09:55:22,145 | film_recommender_cg.scorer | INFO | 'Western' rmse = Insufficient Data
+2025-11-14 09:55:22,148 | film_recommender_cg.scorer | INFO | 'Western' r-squared = Insufficient Data
+2025-11-14 09:55:22,163 | film_recommender_cg.scorer | INFO | 'Science Fiction' rmse = 0.661
+2025-11-14 09:55:22,166 | film_recommender_cg.scorer | INFO | 'Science Fiction' r-squared = -0.342
+2025-11-14 09:55:22,173 | film_recommender_cg.scorer | INFO | 'Mystery' rmse = 0.569
+2025-11-14 09:55:22,177 | film_recommender_cg.scorer | INFO | 'Mystery' r-squared = 0.045
+2025-11-14 09:55:22,184 | film_recommender_cg.scorer | INFO | 'Family' rmse = 0.559
+2025-11-14 09:55:22,188 | film_recommender_cg.scorer | INFO | 'Family' r-squared = -0.022
+2025-11-14 09:55:22,197 | film_recommender_cg.scorer | INFO | 'Crime' rmse = 0.492
+2025-11-14 09:55:22,221 | film_recommender_cg.scorer | INFO | 'Crime' r-squared = 0.107
+2025-11-14 09:55:22,225 | film_recommender_cg.scorer | INFO | 'Foreign' rmse = Insufficient Data
+2025-11-14 09:55:22,228 | film_recommender_cg.scorer | INFO | 'Foreign' r-squared = Insufficient Data
+2025-11-14 09:55:22,236 | film_recommender_cg.scorer | INFO | 'Drama' rmse = 0.518
+2025-11-14 09:55:22,239 | film_recommender_cg.scorer | INFO | 'Drama' r-squared = 0.104
+2025-11-14 09:55:22,253 | film_recommender_cg.scorer | INFO | 'Horror' rmse = Insufficient Data
+2025-11-14 09:55:22,257 | film_recommender_cg.scorer | INFO | 'Horror' r-squared = Insufficient Data
+2025-11-14 09:55:22,265 | film_recommender_cg.scorer | INFO | 'History' rmse = 0.525
+2025-11-14 09:55:22,291 | film_recommender_cg.scorer | INFO | 'History' r-squared = 0.077
+2025-11-14 09:55:22,295 | film_recommender_cg.scorer | INFO | 'Undisclosed' rmse = Insufficient Data
+2025-11-14 09:55:22,300 | film_recommender_cg.scorer | INFO | 'Undisclosed' r-squared = Insufficient Data
+2025-11-14 09:55:22,313 | film_recommender_cg.scorer | INFO | 'Animation' rmse = 0.529
+2025-11-14 09:55:22,316 | film_recommender_cg.scorer | INFO | 'Animation' r-squared = -0.035
+2025-11-14 09:55:22,325 | film_recommender_cg.scorer | INFO | 'Adventure' rmse = 0.639
+2025-11-14 09:55:22,328 | film_recommender_cg.scorer | INFO | 'Adventure' r-squared = -0.285
+2025-11-14 09:55:22,338 | film_recommender_cg.scorer | INFO | 'Action' rmse = 0.669
+2025-11-14 09:55:22,341 | film_recommender_cg.scorer | INFO | 'Action' r-squared = -0.402
+2025-11-14 09:55:22,353 | film_recommender_cg.scorer | INFO | 'Thriller' rmse = 0.571
+2025-11-14 09:55:22,356 | film_recommender_cg.scorer | INFO | 'Thriller' r-squared = 0.136
+2025-11-14 09:55:22,362 | film_recommender_cg.scorer | INFO | 'Comedy' rmse = 0.549
+2025-11-14 09:55:22,365 | film_recommender_cg.scorer | INFO | 'Comedy' r-squared = 0.03
+2025-11-14 09:55:22,371 | film_recommender_cg.scorer | INFO | 'Music' rmse = Insufficient Data
+2025-11-14 09:55:22,373 | film_recommender_cg.scorer | INFO | 'Music' r-squared = Insufficient Data
+2025-11-14 09:55:22,379 | film_recommender_cg.scorer | INFO | 'War' rmse = 0.527
+2025-11-14 09:55:22,383 | film_recommender_cg.scorer | INFO | 'War' r-squared = 0.081
+2025-11-14 09:55:22,401 | film_recommender_cg.scorer | INFO | 'TV Movie' rmse = Insufficient Data
+2025-11-14 09:55:22,408 | film_recommender_cg.scorer | INFO | 'TV Movie' r-squared = Insufficient Data
+2025-11-14 09:55:22,426 | film_recommender_cg.scorer | INFO | 'Romance' rmse = 0.515
+2025-11-14 09:55:22,430 | film_recommender_cg.scorer | INFO | 'Romance' r-squared = -0.049
+2025-11-14 09:55:22,435 | film_recommender_cg.scorer | INFO | 'Documentary' rmse = Insufficient Data
+2025-11-14 09:55:22,438 | film_recommender_cg.scorer | INFO | 'Documentary' r-squared = Insufficient Data
+2025-11-14 09:55:22,443 | film_recommender_cg.scorer | INFO | 'Fantasy' rmse = 0.58
+2025-11-14 09:55:22,445 | film_recommender_cg.scorer | INFO | 'Fantasy' r-squared = 0.031
+2025-11-14 09:55:23,527 | film_recommender_cg.scorer | INFO | 'scoring_performance_metrics_new_users' successfully logged as artifact in W&B.
+2025-11-14 09:55:23,530 | film_recommender_cg.scorer | INFO | Evaluation complete!
+2025-11-14 09:55:23,533 | film_recommender_cg.scorer | INFO | Evaluating model performance on new (simulated) data...
+2025-11-14 09:55:23,537 | film_recommender_cg.scorer | INFO | ### Following recent batch of simulated interactions, current model performance metrics ('Existing' users): ###
+2025-11-14 09:55:23,540 | film_recommender_cg.scorer | INFO | Overall rmse = 0.541
+2025-11-14 09:55:23,542 | film_recommender_cg.scorer | INFO | Overall r-squared = 0.292
+2025-11-14 09:55:23,550 | film_recommender_cg.scorer | INFO | ### Following recent batch of simulated interactions, current model performance metrics ('Existing' users): ###
+2025-11-14 09:55:23,560 | film_recommender_cg.scorer | INFO | 'Western' rmse = 0.549
+2025-11-14 09:55:23,566 | film_recommender_cg.scorer | INFO | 'Western' r-squared = 0.297
+2025-11-14 09:55:23,577 | film_recommender_cg.scorer | INFO | 'Science Fiction' rmse = 0.553
+2025-11-14 09:55:23,584 | film_recommender_cg.scorer | INFO | 'Science Fiction' r-squared = 0.323
+2025-11-14 09:55:23,606 | film_recommender_cg.scorer | INFO | 'Mystery' rmse = 0.517
+2025-11-14 09:55:23,610 | film_recommender_cg.scorer | INFO | 'Mystery' r-squared = 0.323
+2025-11-14 09:55:23,626 | film_recommender_cg.scorer | INFO | 'Family' rmse = 0.536
+2025-11-14 09:55:23,629 | film_recommender_cg.scorer | INFO | 'Family' r-squared = 0.294
+2025-11-14 09:55:23,648 | film_recommender_cg.scorer | INFO | 'Crime' rmse = 0.573
+2025-11-14 09:55:23,651 | film_recommender_cg.scorer | INFO | 'Crime' r-squared = 0.235
+2025-11-14 09:55:23,659 | film_recommender_cg.scorer | INFO | 'Foreign' rmse = 0.508
+2025-11-14 09:55:23,666 | film_recommender_cg.scorer | INFO | 'Foreign' r-squared = 0.265
+2025-11-14 09:55:23,698 | film_recommender_cg.scorer | INFO | 'Drama' rmse = 0.542
+2025-11-14 09:55:23,703 | film_recommender_cg.scorer | INFO | 'Drama' r-squared = 0.289
+2025-11-14 09:55:23,712 | film_recommender_cg.scorer | INFO | 'Horror' rmse = 0.511
+2025-11-14 09:55:23,715 | film_recommender_cg.scorer | INFO | 'Horror' r-squared = 0.322
+2025-11-14 09:55:23,731 | film_recommender_cg.scorer | INFO | 'History' rmse = 0.548
+2025-11-14 09:55:23,742 | film_recommender_cg.scorer | INFO | 'History' r-squared = 0.256
+2025-11-14 09:55:23,753 | film_recommender_cg.scorer | INFO | 'Undisclosed' rmse = Insufficient Data
+2025-11-14 09:55:23,755 | film_recommender_cg.scorer | INFO | 'Undisclosed' r-squared = Insufficient Data
+2025-11-14 09:55:23,764 | film_recommender_cg.scorer | INFO | 'Animation' rmse = 0.524
+2025-11-14 09:55:23,767 | film_recommender_cg.scorer | INFO | 'Animation' r-squared = 0.276
+2025-11-14 09:55:23,779 | film_recommender_cg.scorer | INFO | 'Adventure' rmse = 0.607
+2025-11-14 09:55:23,783 | film_recommender_cg.scorer | INFO | 'Adventure' r-squared = 0.151
+2025-11-14 09:55:23,795 | film_recommender_cg.scorer | INFO | 'Action' rmse = 0.673
+2025-11-14 09:55:23,799 | film_recommender_cg.scorer | INFO | 'Action' r-squared = -0.146
+2025-11-14 09:55:23,809 | film_recommender_cg.scorer | INFO | 'Thriller' rmse = 0.569
+2025-11-14 09:55:23,812 | film_recommender_cg.scorer | INFO | 'Thriller' r-squared = 0.252
+2025-11-14 09:55:23,825 | film_recommender_cg.scorer | INFO | 'Comedy' rmse = 0.533
+2025-11-14 09:55:23,833 | film_recommender_cg.scorer | INFO | 'Comedy' r-squared = 0.3
+2025-11-14 09:55:23,845 | film_recommender_cg.scorer | INFO | 'Music' rmse = 0.526
+2025-11-14 09:55:23,849 | film_recommender_cg.scorer | INFO | 'Music' r-squared = 0.302
+2025-11-14 09:55:23,865 | film_recommender_cg.scorer | INFO | 'War' rmse = 0.545
+2025-11-14 09:55:23,868 | film_recommender_cg.scorer | INFO | 'War' r-squared = 0.273
+2025-11-14 09:55:23,876 | film_recommender_cg.scorer | INFO | 'TV Movie' rmse = Insufficient Data
+2025-11-14 09:55:23,881 | film_recommender_cg.scorer | INFO | 'TV Movie' r-squared = Insufficient Data
+2025-11-14 09:55:23,894 | film_recommender_cg.scorer | INFO | 'Romance' rmse = 0.522
+2025-11-14 09:55:23,898 | film_recommender_cg.scorer | INFO | 'Romance' r-squared = 0.316
+2025-11-14 09:55:23,907 | film_recommender_cg.scorer | INFO | 'Documentary' rmse = 0.534
+2025-11-14 09:55:23,910 | film_recommender_cg.scorer | INFO | 'Documentary' r-squared = 0.294
+2025-11-14 09:55:23,920 | film_recommender_cg.scorer | INFO | 'Fantasy' rmse = 0.528
+2025-11-14 09:55:23,923 | film_recommender_cg.scorer | INFO | 'Fantasy' r-squared = 0.328
+2025-11-14 09:55:25,283 | film_recommender_cg.scorer | INFO | 'scoring_performance_metrics_existing_users' successfully logged as artifact in W&B.
+2025-11-14 09:55:25,286 | film_recommender_cg.scorer | INFO | Evaluation complete!
