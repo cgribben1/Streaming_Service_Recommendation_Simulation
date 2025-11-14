@@ -1,0 +1,44 @@
+2025-11-14 09:51:56,730 INFO    MainThread:5487 [wandb_init.py:setup_run_log_directory():706] Logging user logs to /app/Streaming_Service_Recommendation_Simulation/examples/wandb/run-20251114_095156-rmwi8dpu/logs/debug.log
+2025-11-14 09:51:56,731 INFO    MainThread:5487 [wandb_init.py:setup_run_log_directory():707] Logging internal logs to /app/Streaming_Service_Recommendation_Simulation/examples/wandb/run-20251114_095156-rmwi8dpu/logs/debug-internal.log
+2025-11-14 09:51:56,732 INFO    MainThread:5487 [wandb_init.py:monkeypatch_ipython():625] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x77f66d393190>
+2025-11-14 09:51:56,733 INFO    MainThread:5487 [wandb_init.py:init():833] calling init triggers
+2025-11-14 09:51:56,733 INFO    MainThread:5487 [wandb_init.py:init():838] wandb.init called with sweep_config: {}
+config: {'_wandb': {}}
+2025-11-14 09:51:56,733 INFO    MainThread:5487 [wandb_init.py:init():881] starting backend
+2025-11-14 09:51:56,734 INFO    MainThread:5487 [wandb_init.py:init():884] sending inform_init request
+2025-11-14 09:51:56,740 INFO    MainThread:5487 [wandb_init.py:init():892] backend started and connected
+2025-11-14 09:51:56,742 INFO    MainThread:5487 [wandb_run.py:_label_probe_notebook():1328] probe notebook
+2025-11-14 09:51:56,755 INFO    MainThread:5487 [wandb_init.py:init():962] updated telemetry
+2025-11-14 09:51:56,899 INFO    MainThread:5487 [wandb_init.py:init():986] communicating run to backend with 90.0 second timeout
+2025-11-14 09:51:57,394 INFO    MainThread:5487 [wandb_init.py:init():1033] starting run threads in backend
+2025-11-14 09:51:57,525 INFO    MainThread:5487 [wandb_run.py:_console_start():2506] atexit reg
+2025-11-14 09:51:57,526 INFO    MainThread:5487 [wandb_run.py:_redirect():2354] redirect: wrap_raw
+2025-11-14 09:51:57,526 INFO    MainThread:5487 [wandb_run.py:_redirect():2423] Wrapping output streams.
+2025-11-14 09:51:57,527 INFO    MainThread:5487 [wandb_run.py:_redirect():2446] Redirects installed.
+2025-11-14 09:51:57,530 INFO    MainThread:5487 [wandb_init.py:init():1073] run started, returning control to user process
+2025-11-14 09:54:31,321 INFO    MainThread:5487 [wandb_init.py:_post_run_cell_hook():595] [no run ID] resuming backend
+2025-11-14 09:54:31,336 INFO    MainThread:5487 [jupyter.py:save_ipynb():353] [no run ID] not saving jupyter notebook
+2025-11-14 09:54:31,339 INFO    MainThread:5487 [wandb_init.py:_pre_run_cell_hook():584] [no run ID] pausing backend
+2025-11-14 09:54:48,463 INFO    MainThread:5487 [wandb_init.py:_post_run_cell_hook():595] [no run ID] resuming backend
+2025-11-14 09:54:48,476 INFO    MainThread:5487 [jupyter.py:save_ipynb():353] [no run ID] not saving jupyter notebook
+2025-11-14 09:54:48,478 INFO    MainThread:5487 [wandb_init.py:_pre_run_cell_hook():584] [no run ID] pausing backend
+2025-11-14 09:54:52,066 INFO    MainThread:5487 [wandb_init.py:_post_run_cell_hook():595] [no run ID] resuming backend
+2025-11-14 09:54:52,114 INFO    MainThread:5487 [jupyter.py:save_ipynb():353] [no run ID] not saving jupyter notebook
+2025-11-14 09:54:52,119 INFO    MainThread:5487 [wandb_init.py:_pre_run_cell_hook():584] [no run ID] pausing backend
+2025-11-14 09:55:14,293 INFO    MainThread:5487 [wandb_init.py:_post_run_cell_hook():595] [no run ID] resuming backend
+2025-11-14 09:55:14,323 INFO    MainThread:5487 [jupyter.py:save_ipynb():353] [no run ID] not saving jupyter notebook
+2025-11-14 09:55:14,325 INFO    MainThread:5487 [wandb_init.py:_pre_run_cell_hook():584] [no run ID] pausing backend
+2025-11-14 09:55:20,672 INFO    MainThread:5487 [wandb_init.py:_post_run_cell_hook():595] [no run ID] resuming backend
+2025-11-14 09:55:20,702 INFO    MainThread:5487 [jupyter.py:save_ipynb():353] [no run ID] not saving jupyter notebook
+2025-11-14 09:55:20,702 INFO    MainThread:5487 [wandb_init.py:_pre_run_cell_hook():584] [no run ID] pausing backend
+2025-11-14 09:55:25,291 INFO    MainThread:5487 [wandb_init.py:_post_run_cell_hook():595] [no run ID] resuming backend
+2025-11-14 09:55:25,337 INFO    MainThread:5487 [jupyter.py:save_ipynb():353] [no run ID] not saving jupyter notebook
+2025-11-14 09:55:25,361 INFO    MainThread:5487 [wandb_init.py:_pre_run_cell_hook():584] [no run ID] pausing backend
+2025-11-14 09:55:25,379 INFO    MainThread:5487 [wandb_run.py:_finish():2272] finishing run curtisgribben1-personal-capital/film_recommender/rmwi8dpu
+2025-11-14 09:55:25,394 INFO    MainThread:5487 [jupyter.py:save_history():429] not saving jupyter history
+2025-11-14 09:55:25,397 INFO    MainThread:5487 [jupyter.py:save_ipynb():353] not saving jupyter notebook
+2025-11-14 09:55:25,401 INFO    MainThread:5487 [wandb_init.py:_jupyter_teardown():610] cleaning up jupyter logic
+2025-11-14 09:55:25,405 INFO    MainThread:5487 [wandb_run.py:_atexit_cleanup():2471] got exitcode: 0
+2025-11-14 09:55:25,408 INFO    MainThread:5487 [wandb_run.py:_restore():2453] restore
+2025-11-14 09:55:25,409 INFO    MainThread:5487 [wandb_run.py:_restore():2459] restore done
+2025-11-14 09:55:27,426 INFO    MainThread:5487 [wandb_run.py:_footer_sync_info():3835] logging synced files

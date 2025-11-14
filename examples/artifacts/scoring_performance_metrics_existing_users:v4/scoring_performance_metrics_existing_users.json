@@ -1,0 +1,92 @@
+{
+    "Overall": {
+        "rmse": 0.541,
+        "r_squared": 0.292
+    },
+    "By Genre": {
+        "Animation": {
+            "rmse": 0.524,
+            "r_squared": 0.276
+        },
+        "Action": {
+            "rmse": 0.673,
+            "r_squared": -0.146
+        },
+        "Western": {
+            "rmse": 0.549,
+            "r_squared": 0.297
+        },
+        "Family": {
+            "rmse": 0.536,
+            "r_squared": 0.294
+        },
+        "Documentary": {
+            "rmse": 0.534,
+            "r_squared": 0.294
+        },
+        "Music": {
+            "rmse": 0.526,
+            "r_squared": 0.302
+        },
+        "Science Fiction": {
+            "rmse": 0.553,
+            "r_squared": 0.323
+        },
+        "War": {
+            "rmse": 0.545,
+            "r_squared": 0.273
+        },
+        "Romance": {
+            "rmse": 0.522,
+            "r_squared": 0.316
+        },
+        "Undisclosed": {
+            "rmse": null,
+            "r_squared": null
+        },
+        "Drama": {
+            "rmse": 0.542,
+            "r_squared": 0.289
+        },
+        "Adventure": {
+            "rmse": 0.607,
+            "r_squared": 0.151
+        },
+        "Mystery": {
+            "rmse": 0.517,
+            "r_squared": 0.323
+        },
+        "History": {
+            "rmse": 0.548,
+            "r_squared": 0.256
+        },
+        "TV Movie": {
+            "rmse": null,
+            "r_squared": null
+        },
+        "Comedy": {
+            "rmse": 0.533,
+            "r_squared": 0.3
+        },
+        "Foreign": {
+            "rmse": 0.508,
+            "r_squared": 0.265
+        },
+        "Fantasy": {
+            "rmse": 0.528,
+            "r_squared": 0.328
+        },
+        "Horror": {
+            "rmse": 0.511,
+            "r_squared": 0.322
+        },
+        "Crime": {
+            "rmse": 0.573,
+            "r_squared": 0.235
+        },
+        "Thriller": {
+            "rmse": 0.569,
+            "r_squared": 0.252
+        }
+    }
+}
