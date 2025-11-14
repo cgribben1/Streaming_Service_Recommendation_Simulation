@@ -7,7 +7,7 @@
 
 This repository represents a **film recommendation engine** built using collaborative filtering (matrix factorisation), and implemented within a full end-to-end simulation framework for evaluating model performance, monitoring key prediction metrics, detecting data distribution drift, and executing retraining strategies.
 
-The engine is designed as a Python package (`film_recommender_cg`) that would conceptually be adapted for deployment across regions and markets. The PoC demonstrates modular architecture, offline batch scoring, model lifecycle management, and monitoring strategies aligned with real‑world MLOps practices.
+The engine is structured as a Python package (`film_recommender_cg`) that would conceptually be adapted for deployment across regions and markets. The PoC demonstrates modular architecture, offline batch scoring, model lifecycle management, and monitoring strategies aligned with real‑world MLOps practices.
 
 ---
 
@@ -93,6 +93,16 @@ Rejected challengers mirror the human-review workflow used in real production sy
 
 Training uses historical interactions only.  
 Inference requires the full ratings table to correctly filter previously watched films.
+
+---
+
+## Installation
+
+The `film_recommender_cg` package is available on [PyPI](https://pypi.org/) and can be installed using `pip`:
+
+```bash
+pip install film_recommender_cg
+```
 
 ---
 
