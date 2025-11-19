@@ -1,9 +1,9 @@
 # Film Recommender Engine
 
 > [!IMPORTANT]
-> **It is highly recommended that you refer to the two below resources in order to get the best possible sense of the project!**  
-> - **Full technical write-up:** `docs/overview.docx`  
+> **It is highly recommended that you refer to the two below resources in order to get the best possible sense of the project!**
 > - **End-to-end demonstration notebook:** `examples/demo.ipynb`
+> - **Full technical write-up:** `docs/overview.docx`  
 
 This repository represents a **film recommendation engine** built using collaborative filtering (matrix factorisation), and implemented within a full end-to-end simulation framework for evaluating model performance, monitoring key prediction metrics, detecting data distribution drift, and executing retraining strategies.
 
@@ -24,9 +24,9 @@ It demonstrates:
 - Batch scoring, monitoring, and model lifecycle management
 - Simulation of user behaviour under shifting data distributions
 - Drift detection and challenger-vs-champion retraining logic
-- Usage of real MLOps tools (Weights & Biases, Databricks, MongoDB)
+- Usage of MLOps tools (Weights & Biases, MongoDB)
 
-The design mirrors how recommendation engines operate in commercial environments with fixed content catalogs, evolving user cohorts, and regular retraining cycles.
+The design mirrors how recommendation engines operate in commercial environments with fixed content catalogs, evolving user cohorts, and monitoring-based triggering of retraining logic.
 
 ---
 
@@ -91,7 +91,7 @@ Rejected challengers mirror the human-review workflow used in real production sy
 - **Weights & Biases** – experiment tracking and model evaluation  
 - **Python package structure** – clean separation of trainer, scorer, and utilities  
 
-Training uses historical interactions only.  
+Training uses interactions within the desired retraining window only.  
 Inference requires the full ratings table to correctly filter previously watched films.
 
 ---
@@ -108,14 +108,12 @@ pip install film_recommender_cg
 
 ## Future Directions
 
-Potential next steps would include:
+Potential next steps might include:
 
-- Neural recommenders (two-tower, embedding-based, deep MF)
 - Hybrid models with metadata (genres, languages, keywords, embeddings)
 - Time-aware or rolling-window training
 - Real-time inference APIs
-- Exploration-vs-exploitation algorithms to improve coverage and diversity
-
+- 
 ---
 
 ## Full Documentation
@@ -131,5 +129,3 @@ Once again, a complete technical overview—including methodology, architecture,
 Apache 2.0 License
 
 ---
-
- 
