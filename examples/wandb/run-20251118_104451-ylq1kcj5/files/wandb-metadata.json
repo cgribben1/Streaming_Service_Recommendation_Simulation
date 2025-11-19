@@ -1,0 +1,28 @@
+{
+  "os":  "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+  "python":  "CPython 3.10.18",
+  "startedAt":  "2025-11-18T10:44:51.736930Z",
+  "program":  "/app/Streaming_Service_Recommendation_Simulation/examples/demo.ipynb",
+  "codePath":  "/app/Streaming_Service_Recommendation_Simulation/examples/demo.ipynb",
+  "codePathLocal":  "demo.ipynb",
+  "git":  {
+    "remote":  "https://github.com/cgribben1/Streaming_Service_Recommendation_Simulation.git",
+    "commit":  "8cdda6be5c02b678b09ce6a54f70a7ffc36490f7"
+  },
+  "email":  "curtisgribben1@gmail.com",
+  "root":  "/app/Streaming_Service_Recommendation_Simulation/examples",
+  "host":  "935d9355af8e",
+  "executable":  "/usr/local/bin/python",
+  "cpu_count":  6,
+  "cpu_count_logical":  6,
+  "disk":  {
+    "/":  {
+      "total":  "1081101176832",
+      "used":  "7958872064"
+    }
+  },
+  "memory":  {
+    "total":  "3773542400"
+  },
+  "writerId":  "pvnh2krnawm67yw3ncu1j1msqjwfnhcf"
+}

@@ -1,0 +1,60 @@
+2025-11-19 09:26:48,678 | film_recommender_cg.trainer | INFO | 'Trainer' object instantiated; W&B run initialized.
+2025-11-19 09:26:48,682 | film_recommender_cg.trainer | INFO | Loading in 'ratings' data...
+2025-11-19 09:26:52,323 | film_recommender_cg.db_connector | INFO | Successfully read collection 'ratings'. Shape of df: (120000, 4)
+2025-11-19 09:26:52,530 | film_recommender_cg.trainer | INFO | Data successfully loaded!
+2025-11-19 09:26:52,556 | film_recommender_cg.trainer | INFO | Training SVD model...
+2025-11-19 09:26:55,301 | film_recommender_cg.trainer | INFO | SVD model successfully trained!
+2025-11-19 09:26:55,314 | film_recommender_cg.trainer | INFO | Evaluating SVD model...
+2025-11-19 09:26:55,633 | film_recommender_cg.trainer | INFO | ### Model Performance Metrics (Overall): ###
+2025-11-19 09:26:55,636 | film_recommender_cg.trainer | INFO | RMSE: 0.873
+2025-11-19 09:26:55,639 | film_recommender_cg.trainer | INFO | squared: 0.297
+2025-11-19 09:26:55,867 | film_recommender_cg.trainer | INFO | Loading in 'genres' table...
+2025-11-19 09:26:56,045 | film_recommender_cg.db_connector | INFO | Successfully read collection 'genres'. Shape of df: (4877, 2)
+2025-11-19 09:26:56,166 | film_recommender_cg.trainer | INFO | Table successfully loaded!
+2025-11-19 09:26:56,177 | film_recommender_cg.trainer | INFO | ### Model Performance Metrics (by Genre): ###
+2025-11-19 09:26:56,187 | film_recommender_cg.trainer | INFO | 'Action' rmse = 0.849
+2025-11-19 09:26:56,191 | film_recommender_cg.trainer | INFO | 'Action' r-squared = 0.345
+2025-11-19 09:26:56,201 | film_recommender_cg.trainer | INFO | 'Horror' rmse = 0.961
+2025-11-19 09:26:56,204 | film_recommender_cg.trainer | INFO | 'Horror' r-squared = 0.289
+2025-11-19 09:26:56,219 | film_recommender_cg.trainer | INFO | 'Documentary' rmse = 0.93
+2025-11-19 09:26:56,221 | film_recommender_cg.trainer | INFO | 'Documentary' r-squared = -0.016
+2025-11-19 09:26:56,233 | film_recommender_cg.trainer | INFO | 'Comedy' rmse = 0.904
+2025-11-19 09:26:56,236 | film_recommender_cg.trainer | INFO | 'Comedy' r-squared = 0.262
+2025-11-19 09:26:56,248 | film_recommender_cg.trainer | INFO | 'Crime' rmse = 0.817
+2025-11-19 09:26:56,251 | film_recommender_cg.trainer | INFO | 'Crime' r-squared = 0.34
+2025-11-19 09:26:56,268 | film_recommender_cg.trainer | INFO | 'Science Fiction' rmse = 0.883
+2025-11-19 09:26:56,271 | film_recommender_cg.trainer | INFO | 'Science Fiction' r-squared = 0.324
+2025-11-19 09:26:56,283 | film_recommender_cg.trainer | INFO | 'History' rmse = 0.826
+2025-11-19 09:26:56,287 | film_recommender_cg.trainer | INFO | 'History' r-squared = 0.238
+2025-11-19 09:26:56,300 | film_recommender_cg.trainer | INFO | 'Mystery' rmse = 0.83
+2025-11-19 09:26:56,306 | film_recommender_cg.trainer | INFO | 'Mystery' r-squared = 0.311
+2025-11-19 09:26:56,318 | film_recommender_cg.trainer | INFO | 'Drama' rmse = 0.856
+2025-11-19 09:26:56,323 | film_recommender_cg.trainer | INFO | 'Drama' r-squared = 0.26
+2025-11-19 09:26:56,337 | film_recommender_cg.trainer | INFO | 'Music' rmse = 0.946
+2025-11-19 09:26:56,341 | film_recommender_cg.trainer | INFO | 'Music' r-squared = 0.194
+2025-11-19 09:26:56,356 | film_recommender_cg.trainer | INFO | 'Western' rmse = 0.881
+2025-11-19 09:26:56,360 | film_recommender_cg.trainer | INFO | 'Western' r-squared = 0.323
+2025-11-19 09:26:56,371 | film_recommender_cg.trainer | INFO | 'Animation' rmse = 0.844
+2025-11-19 09:26:56,374 | film_recommender_cg.trainer | INFO | 'Animation' r-squared = 0.238
+2025-11-19 09:26:56,383 | film_recommender_cg.trainer | INFO | 'TV Movie' rmse = Insufficient Data
+2025-11-19 09:26:56,388 | film_recommender_cg.trainer | INFO | 'TV Movie' r-squared = Insufficient Data
+2025-11-19 09:26:56,404 | film_recommender_cg.trainer | INFO | 'Foreign' rmse = Insufficient Data
+2025-11-19 09:26:56,407 | film_recommender_cg.trainer | INFO | 'Foreign' r-squared = Insufficient Data
+2025-11-19 09:26:56,419 | film_recommender_cg.trainer | INFO | 'Romance' rmse = 0.909
+2025-11-19 09:26:56,422 | film_recommender_cg.trainer | INFO | 'Romance' r-squared = 0.24
+2025-11-19 09:26:56,435 | film_recommender_cg.trainer | INFO | 'Adventure' rmse = 0.857
+2025-11-19 09:26:56,439 | film_recommender_cg.trainer | INFO | 'Adventure' r-squared = 0.321
+2025-11-19 09:26:56,452 | film_recommender_cg.trainer | INFO | 'War' rmse = 0.846
+2025-11-19 09:26:56,456 | film_recommender_cg.trainer | INFO | 'War' r-squared = 0.357
+2025-11-19 09:26:56,467 | film_recommender_cg.trainer | INFO | 'Thriller' rmse = 0.834
+2025-11-19 09:26:56,469 | film_recommender_cg.trainer | INFO | 'Thriller' r-squared = 0.333
+2025-11-19 09:26:56,484 | film_recommender_cg.trainer | INFO | 'Undisclosed' rmse = Insufficient Data
+2025-11-19 09:26:56,487 | film_recommender_cg.trainer | INFO | 'Undisclosed' r-squared = Insufficient Data
+2025-11-19 09:26:56,498 | film_recommender_cg.trainer | INFO | 'Fantasy' rmse = 0.894
+2025-11-19 09:26:56,501 | film_recommender_cg.trainer | INFO | 'Fantasy' r-squared = 0.286
+2025-11-19 09:26:56,524 | film_recommender_cg.trainer | INFO | 'Family' rmse = 0.889
+2025-11-19 09:26:56,528 | film_recommender_cg.trainer | INFO | 'Family' r-squared = 0.269
+2025-11-19 09:26:57,741 | film_recommender_cg.trainer | INFO | 'training_performance_metrics' successfully logged as artifact in W&B.
+2025-11-19 09:26:57,745 | film_recommender_cg.trainer | INFO | Evaluation of SVD model complete!
+2025-11-19 09:26:57,748 | film_recommender_cg.trainer | INFO | Logging SVD model in W&B...
+2025-11-19 09:26:58,952 | film_recommender_cg.trainer | INFO | SVD model successfully logged!

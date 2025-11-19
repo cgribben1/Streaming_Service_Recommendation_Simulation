@@ -1,0 +1,13 @@
+{"time":"2025-11-15T09:20:22.555408341Z","level":"INFO","msg":"stream: starting","core version":"0.22.3"}
+{"time":"2025-11-15T09:20:22.837626439Z","level":"INFO","msg":"stream: created new stream","id":"clrokj3x"}
+{"time":"2025-11-15T09:20:22.838727967Z","level":"INFO","msg":"handler: started","stream_id":"clrokj3x"}
+{"time":"2025-11-15T09:20:22.850382043Z","level":"INFO","msg":"stream: started","id":"clrokj3x"}
+{"time":"2025-11-15T09:20:22.850432876Z","level":"INFO","msg":"writer: started","stream_id":"clrokj3x"}
+{"time":"2025-11-15T09:20:22.850465191Z","level":"INFO","msg":"sender: started","stream_id":"clrokj3x"}
+{"time":"2025-11-15T09:20:36.526654974Z","level":"WARN","msg":"sender: sendUseArtifact: job builder disabled, skipping"}
+{"time":"2025-11-15T09:21:28.093529272Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-11-15T09:21:28.343693412Z","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-11-15T09:21:28.386994511Z","level":"INFO","msg":"stream: closing","id":"clrokj3x"}
+{"time":"2025-11-15T09:21:28.387695231Z","level":"INFO","msg":"handler: closed","stream_id":"clrokj3x"}
+{"time":"2025-11-15T09:21:28.40517026Z","level":"INFO","msg":"sender: closed","stream_id":"clrokj3x"}
+{"time":"2025-11-15T09:21:28.408244101Z","level":"INFO","msg":"stream: closed","id":"clrokj3x"}

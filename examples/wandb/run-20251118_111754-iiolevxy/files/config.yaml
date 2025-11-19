@@ -1,0 +1,45 @@
+_wandb:
+    value:
+        cli_version: 0.22.3
+        e:
+            dr987ubgnyota2wujm1hzg7m6y0z0b8b:
+                codePath: /app/Streaming_Service_Recommendation_Simulation/examples/demo.ipynb
+                codePathLocal: demo.ipynb
+                cpu_count: 6
+                cpu_count_logical: 6
+                disk:
+                    /:
+                        total: "1081101176832"
+                        used: "7989161984"
+                email: curtisgribben1@gmail.com
+                executable: /usr/local/bin/python
+                git:
+                    commit: 8cdda6be5c02b678b09ce6a54f70a7ffc36490f7
+                    remote: https://github.com/cgribben1/Streaming_Service_Recommendation_Simulation.git
+                host: 935d9355af8e
+                memory:
+                    total: "3773542400"
+                os: Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.41
+                program: /app/Streaming_Service_Recommendation_Simulation/examples/demo.ipynb
+                python: CPython 3.10.18
+                root: /app/Streaming_Service_Recommendation_Simulation/examples
+                startedAt: "2025-11-18T11:17:54.526134Z"
+                writerId: dr987ubgnyota2wujm1hzg7m6y0z0b8b
+        m: []
+        python_version: 3.10.18
+        t:
+            "1":
+                - 5
+                - 53
+            "2":
+                - 5
+                - 53
+            "3":
+                - 2
+                - 15
+            "4": 3.10.18
+            "5": 0.22.3
+            "8":
+                - 1
+            "12": 0.22.3
+            "13": linux-x86_64
