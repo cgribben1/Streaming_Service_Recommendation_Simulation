@@ -1,0 +1,1 @@
+{"_timestamp":1.763198446585059e+09,"_step":3,"training_data_start_date":"start_date","training_data_end_date":"end_date","_wandb":{"runtime":24},"_runtime":24,"rmse":0.559,"r_squared":0.192}
