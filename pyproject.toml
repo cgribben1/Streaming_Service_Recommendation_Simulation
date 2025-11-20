@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "film_recommender_cg"
-version = "1.0.5"
+version = "1.0.6"
 description = "A Film Recommendation Engine Package"
 authors = [{ name = "Curtis Gribben", email = "curtisgribben1@gmail.com" }]
 readme = "README.md"
