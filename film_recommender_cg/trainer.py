@@ -398,8 +398,8 @@ class Trainer:
         r2 = round(r2_score(y_true, y_pred), 3)
 
         logger_trainer.info("### Model Performance Metrics (Overall): ###")
-        logger_trainer.info(f"RMSE: {rmse}")
-        logger_trainer.info(f"squared: {r2}")
+        logger_trainer.info(f"rmse: {rmse}")
+        logger_trainer.info(f"r-squared: {r2}")
 
         performance_metrics = {'rmse': rmse, 'r_squared': r2}
 
